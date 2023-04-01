@@ -1,0 +1,7 @@
+*.meta
+.vs
+Logs
+obj
+Packages
+Temp
+Library
