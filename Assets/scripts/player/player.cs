@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,33 +17,38 @@ public class player : MonoBehaviour {
     [SerializeField] LayerMask _interactableLayer;
     [SerializeField] interactable _interactable;
 
+    public event EventHandler<evtInteractableChged> onInteractableChged;
+
+
     public Vector3 inputV3 { get => _inputV3; private set => _inputV3 = value; }
     public float spd { get => _spd; private  set => _spd = value; }
     public float rotSpd { get => _rotSpd; set => _rotSpd = value; }
+
+    public void setInteractable(interactable obj = null)
+    {
+        var pre = _interactable;
+        _interactable = obj;
+        if(pre != _interactable)
+            onInteractableChged?.Invoke(this, new evtInteractableChged() { p = pre, n = _interactable });
+    }
 
 
     void updateInteractable()
     {
         if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactDis, _interactableLayer))
         {
-            _interactable?.highlight(false);
-            _interactable = null;
+            setInteractable(null);
             return;
         }
         if (!hit.transform.TryGetComponent(out interactable obj))
             return;
-        if (_interactable != obj)
-        {
-            _interactable?.highlight(false);
-            _interactable = obj;
-        }
-        _interactable?.highlight(true);
-        Debug.Log(_interactable?.transform.tag);
+        setInteractable(obj);
     }
 
 
     void Start() {
         input.ins.onInteract += this.onInteract;
+        onInteractableChged += gameMgr.ins.onInteractableChged;
     }
 
     public void onInteract(CallbackContext ctx)
@@ -66,4 +72,9 @@ public class player : MonoBehaviour {
 
 
     }
+}
+
+public class evtInteractableChged : EventArgs {
+    public interactable p;
+    public interactable n;
 }
