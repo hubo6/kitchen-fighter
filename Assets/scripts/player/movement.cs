@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 [RequireComponent(typeof(CapsuleCollider))]
 public class movement : MonoBehaviour
 {
@@ -17,12 +19,18 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_player.inputV3 == Vector3.zero) return;
         var dis = _player.spd * Time.deltaTime;
         transform.forward = Vector3.Slerp(transform.forward, _player.inputV3.normalized, _player.rotSpd * Time.deltaTime);
-        if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, _player.inputV3.normalized, dis))
+        if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius,_player.inputV3.normalized, out RaycastHit hit, dis))
             transform.position += _player.inputV3.normalized * dis;
         else
         {
+            //if (hit.distance > 0.01f)
+            //{
+            //    transform.position += _player.inputV3.normalized * (hit.distance - 0.01f);
+            //    return;
+            //}
             var xInput = new Vector3(_player.inputV3.normalized.x, 0, 0);
             if (xInput != Vector3.zero)
             {

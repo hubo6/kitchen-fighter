@@ -75,6 +75,10 @@ MonoBehaviour:
   _inputV3: {x: 0, y: 0, z: 0}
   _spd: 6
   _rotSpd: 6
+  _interactDis: 1
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &8572774377858902400
 MonoBehaviour:
   m_ObjectHideFlags: 0
