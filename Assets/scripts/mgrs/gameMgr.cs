@@ -7,6 +7,7 @@ public class gameMgr : MonoSingleton<gameMgr>
     // Start is called before the first frame update
     public void onInteractableChged(object sender, evtInteractableChged evt)
     {
+        Debug.Log($"highlight: {evt.p?.transform.tag} -> {evt.n?.transform.tag}");
         evt.p?.highlight(false);
         evt.n?.highlight(true);
     }

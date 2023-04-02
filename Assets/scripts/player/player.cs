@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class player : MonoBehaviour {
+public class player : MonoBehaviour, owner {
     // Start is called before the first frame update
 
     [SerializeField] float _xInput;
@@ -16,6 +16,8 @@ public class player : MonoBehaviour {
     [SerializeField] float _interactDis = 1f;
     [SerializeField] LayerMask _interactableLayer;
     [SerializeField] interactable _interactable;
+    [SerializeField] Transform _objAnchor;
+    [SerializeField] Transform _holding;
 
     public event EventHandler<evtInteractableChged> onInteractableChged;
 
@@ -49,11 +51,12 @@ public class player : MonoBehaviour {
     void Start() {
         input.ins.onInteract += this.onInteract;
         onInteractableChged += gameMgr.ins.onInteractableChged;
+        if (_objAnchor == null) throw new Exception($"{transform.tag} does not have a obj_anchor.");
     }
 
     public void onInteract(CallbackContext ctx)
     {
-       
+         _interactable?.interact(this);
 
     }
 
@@ -71,6 +74,33 @@ public class player : MonoBehaviour {
 
 
 
+    }
+
+    public bool receive(Transform item)
+    {
+        if (_holding != null)
+        {
+            Debug.LogError($"item receive {_holding.name} failed exists in {transform.name}.");
+            return false;
+        }
+        _holding = item;
+        _holding.SetParent(_objAnchor);
+        _holding.localPosition = Vector3.zero;
+        Debug.Log($"item received {_holding.name} {transform.name}.");
+        return true;
+
+    }
+
+    public bool remove(Transform item)
+    {
+        if (_holding != item || _holding == null || item == null)
+        {
+            Debug.LogError($"item remove {_holding?.name} {item?.name} failed in  {transform.name}.");
+            return false;
+        }
+        Debug.Log($"item removed {item.name} {transform.name}.");
+        _holding = null;
+        return true;
     }
 }
 

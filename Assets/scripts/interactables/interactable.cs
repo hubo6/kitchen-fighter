@@ -11,7 +11,13 @@ public enum interactableType {
 public class interactable : MonoBehaviour {
     [SerializeField] GameObject _highlight;
     // Start is called before the first frame update
-    public virtual void highlight(bool select = true) { _highlight?.SetActive(select); }
+    public virtual void highlight(bool select = true) {
+        _highlight?.SetActive(select);
+    }
     public virtual interactableType type() { return interactableType.NONE; }
+    public virtual void interact(owner player) {
+        Debug.Log($"interact: {transform.tag}");
+    }
+
     //GameObject gameObj();
 }

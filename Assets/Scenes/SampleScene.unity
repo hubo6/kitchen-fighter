@@ -1069,8 +1069,14 @@ PrefabInstance:
     - target: {fileID: 2870172837964371723, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_Name
-      value: ClearCounter_Visual (1)
+      value: counter_cheese
       objectReference: {fileID: 0}
+    - target: {fileID: 3088222080621971444, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: _receipt
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1261,8 +1267,14 @@ PrefabInstance:
     - target: {fileID: 2870172837964371723, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_Name
-      value: ClearCounter_Visual
+      value: counter_tomato
       objectReference: {fileID: 0}
+    - target: {fileID: 3088222080621971444, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: _receipt
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b6d095e812a5ce4d916e1750d4a25fd,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
