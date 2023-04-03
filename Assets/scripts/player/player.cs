@@ -91,16 +91,28 @@ public class player : MonoBehaviour, owner {
 
     }
 
-    public bool remove(Transform item)
+    public Transform remove(Transform item = null)
     {
-        if (_holding != item || _holding == null || item == null)
+        Transform ret = null;
+        do
         {
-            Debug.LogError($"item remove {_holding?.name} {item?.name} failed in  {transform.name}.");
-            return false;
-        }
-        Debug.Log($"item removed {item.name} {transform.name}.");
-        _holding = null;
-        return true;
+            if (item == null)
+            {
+                if (_holding != null)
+                {
+                    ret = _holding;
+                    _holding = null;
+                }
+                break;
+            }
+
+            if (_holding != item)
+                break;
+            ret = _holding;
+            _holding = null;
+        } while (false);
+        Debug.Log($"item removed {ret?.name} {transform.name} ret: {ret != null}.");
+        return ret;
     }
 }
 

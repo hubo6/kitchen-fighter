@@ -1,41 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class counter : interactable, owner  {
     // Start is called before the first frame update
-    [SerializeField] Transform _objAnchor;
-    [SerializeField] receipt _receipt;
-    [SerializeField] Transform _holding;
+    [SerializeField] protected Transform _objAnchor;
+
+    [SerializeField] protected Transform _holding;
+
+
+
 
     public override interactableType type() { 
         return interactableType.COUNTER; 
     }
 
-    private void Start()
-    {
-        if (_receipt == null)
-            throw new System.Exception($"counter receipt is null");
+    public virtual void Start() {
+
     }
 
-    public override void interact(owner player) {
+    public override bool interact(owner src) {
 
-        base.interact(player);
-        if (_holding != null)
-        {
-            var recv = player.receive(_holding);
-            Debug.Log($"{transform.name} trans {_holding.name} {recv}");
+        var ret = false; 
+        do {
+            ret = base.interact(src);
+            if (ret) 
+                break;
+            if (_holding != null)
+            {
+                if (src.receive(_holding))
+                {
+                    remove(_holding);
+                    ret = true;
+                }
+                break;
+            }
+            var recv = src.remove();
             if (recv)
-                remove(_holding);
-           
-            return;
-        }
-        else
-        {
-            var item = Instantiate(_receipt.prefab);
-            receive(item);
-        }
-
+            {
+                receive(recv);
+                ret = true;
+            }
+        } while (false);
+        return ret;
     }
 
     public bool receive(Transform item)
@@ -53,15 +61,23 @@ public class counter : interactable, owner  {
 
     }
 
-    public bool remove(Transform item)
-    {
-        if (_holding != item || _holding == null || item == null)
-        {
-            Debug.LogError($"item remove {_holding?.name} {item?.name} failed in  {transform.name}.");
-            return false;
-        }
-        Debug.Log($"item removed {item.name} {transform.name}.");
-        _holding = null;
-        return true;
+    public Transform remove(Transform item = null) {
+        Transform ret = null;
+        do {
+            if (item == null) {
+                if (_holding != null)  {
+                    ret = _holding;
+                    _holding = null;
+                }
+                break;
+            }
+
+            if (_holding != item)
+                break;
+            ret = _holding;
+            _holding = null;
+        } while (false);
+        Debug.Log($"item removed {ret?.name} {transform.name} ret: {ret != null}.");
+        return ret;
     }
 }

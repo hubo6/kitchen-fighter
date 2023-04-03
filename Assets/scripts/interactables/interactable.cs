@@ -15,8 +15,9 @@ public class interactable : MonoBehaviour {
         _highlight?.SetActive(select);
     }
     public virtual interactableType type() { return interactableType.NONE; }
-    public virtual void interact(owner player) {
+    public virtual bool interact(owner src) {
         Debug.Log($"interact: {transform.tag}");
+        return false;
     }
 
     //GameObject gameObj();
