@@ -5,10 +5,10 @@ using UnityEngine;
 public class gameMgr : MonoSingleton<gameMgr>
 {
     // Start is called before the first frame update
-    public void onInteractableChged(object sender, evtInteractableChged evt)
+    public void onInteractableChged(interactable p, interactable n)
     {
-        Debug.Log($"highlight: {evt.p?.transform.tag} -> {evt.n?.transform.tag}");
-        evt.p?.highlight(false);
-        evt.n?.highlight(true);
+        Debug.Log($"highlight: {p?.transform.tag} -> {n?.transform.tag}");
+        p?.highlight(false);
+        n?.highlight(true);
     }
 }

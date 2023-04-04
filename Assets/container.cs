@@ -15,8 +15,8 @@ public class container : counter
         _counterAnim = GetComponentInChildren<counterAnim>();
         if (_counterAnim == null)
             throw new System.Exception($"counter receipt is null");
-        _counterAnim.OnAnimEvt += (object sender, EventArgs evt) => {
-            receive(Instantiate(_receipt.prefab));
+        _counterAnim.OnAnimEvt += () => {
+            receive(Instantiate(_receipt.prefab).GetComponent<item>());
         };
     }
 
@@ -26,6 +26,8 @@ public class container : counter
         do {
             ret = base.interact(src);
             if (ret)
+                break;
+            if (_holding != null)
                 break;
             if (_counterAnim.playing()) {
                 Debug.LogWarning($"{transform.name} is busy of interaction.");

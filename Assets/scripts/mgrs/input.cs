@@ -9,13 +9,18 @@ public class input : MonoSingleton<input>
 {
     [SerializeField] inputControl _inputCtrl;
     public event Action<CallbackContext> onInteract;
-   // Start is called before the first frame update
+    public event Action<CallbackContext> onProcess;
+    // Start is called before the first frame update
     void Awake()
     {
         _inputCtrl = new inputControl();
         _inputCtrl.player.Enable();
         _inputCtrl.player.interact.performed += (CallbackContext ctx) => {
             if (ins.onInteract != null) ins.onInteract(ctx);
+        };
+
+        _inputCtrl.player.process.performed += (CallbackContext ctx) => {
+            if (ins.onProcess != null) ins.onProcess(ctx);
         };
     }
 

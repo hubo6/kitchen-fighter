@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88c5bfa9eb4f43241a2b8191bc2419f4, type: 3}
-  m_Name: tomato
+  m_Script: {fileID: 11500000, guid: 9db780121ed62264a9f2f82bbd84dd4b, type: 3}
+  m_Name: cheese_cnf
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3812876574508226176, guid: a8cb1c3f26115a144b4102fe1d9505fe, type: 3}
-  objName: tomato
-  icon: {fileID: 21300000, guid: 91e8fe3de9249fc44b7bdd8050062896, type: 3}
+  input: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0, type: 2}
+  output: {fileID: 11400000, guid: 6d1528c2579c5064c94d3ad0e2442a70, type: 2}
+  progress: 10

@@ -7,7 +7,7 @@ using UnityEngine;
 public class counterAnim : MonoBehaviour
 {
     // Start is called before the first frame update
-    public event EventHandler OnAnimEvt;
+    public event Action OnAnimEvt;
     [SerializeField] protected Animator _animator;
     void Start() {
         _animator = GetComponent<Animator>();
@@ -16,7 +16,7 @@ public class counterAnim : MonoBehaviour
     // Update is called once per frame
     public void onClosedAnim()
     {
-        OnAnimEvt?.Invoke(this, EventArgs.Empty);
+        OnAnimEvt?.Invoke();
     }
 
     public virtual void play()

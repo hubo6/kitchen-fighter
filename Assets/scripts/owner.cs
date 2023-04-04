@@ -6,8 +6,8 @@ public interface owner
 {
     // Start is called before the first frame update
     //public interactable _interactable;
-    bool receive(Transform item);
-    Transform remove(Transform item = null);
+    bool receive(item i);
+    item remove(item i = null);
 
 }
 

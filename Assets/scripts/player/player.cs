@@ -17,9 +17,9 @@ public class player : MonoBehaviour, owner {
     [SerializeField] LayerMask _interactableLayer;
     [SerializeField] interactable _interactable;
     [SerializeField] Transform _objAnchor;
-    [SerializeField] Transform _holding;
+    [SerializeField] item _holding;
 
-    public event EventHandler<evtInteractableChged> onInteractableChged;
+    public event Action<interactable , interactable> onInteractableChged;
 
 
     public Vector3 inputV3 { get => _inputV3; private set => _inputV3 = value; }
@@ -31,7 +31,7 @@ public class player : MonoBehaviour, owner {
         var pre = _interactable;
         _interactable = obj;
         if(pre != _interactable)
-            onInteractableChged?.Invoke(this, new evtInteractableChged() { p = pre, n = _interactable });
+            onInteractableChged?.Invoke( pre, _interactable);
     }
 
 
@@ -49,8 +49,10 @@ public class player : MonoBehaviour, owner {
 
 
     void Start() {
-        input.ins.onInteract += this.onInteract;
+        input.ins.onInteract += (CallbackContext ctx) => { _interactable?.interact(this); };
+        input.ins.onProcess += (CallbackContext ctx) => { _interactable?.process(); };
         onInteractableChged += gameMgr.ins.onInteractableChged;
+
         if (_objAnchor == null) throw new Exception($"{transform.tag} does not have a obj_anchor.");
     }
 
@@ -76,27 +78,28 @@ public class player : MonoBehaviour, owner {
 
     }
 
-    public bool receive(Transform item)
+    public bool receive(item i)
     {
         if (_holding != null)
         {
-            Debug.LogError($"item receive {_holding.name} failed exists in {transform.name}.");
+            Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");
             return false;
         }
-        _holding = item;
-        _holding.SetParent(_objAnchor);
-        _holding.localPosition = Vector3.zero;
-        Debug.Log($"item received {_holding.name} {transform.name}.");
+        _holding = i;
+        var itemTrans = i.transform;
+        itemTrans.SetParent(_objAnchor);
+        itemTrans.localPosition = Vector3.zero;
+        Debug.Log($"received {_holding.name} {transform.name}.");
         return true;
 
     }
 
-    public Transform remove(Transform item = null)
+    public item remove(item i = null)
     {
-        Transform ret = null;
+        item ret = null;
         do
         {
-            if (item == null)
+            if (i == null)
             {
                 if (_holding != null)
                 {
@@ -106,17 +109,13 @@ public class player : MonoBehaviour, owner {
                 break;
             }
 
-            if (_holding != item)
+            if (_holding != i)
                 break;
             ret = _holding;
             _holding = null;
         } while (false);
-        Debug.Log($"item removed {ret?.name} {transform.name} ret: {ret != null}.");
+        Debug.Log($"removed {ret?.name} from {transform.name} ret: {ret != null}.");
         return ret;
     }
 }
 
-public class evtInteractableChged : EventArgs {
-    public interactable p;
-    public interactable n;
-}
