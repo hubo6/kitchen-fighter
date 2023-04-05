@@ -7,24 +7,32 @@ using UnityEngine;
 public class counterAnim : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] string _animTrigger;
     public event Action OnAnimEvt;
     [SerializeField] protected Animator _animator;
+    [SerializeField] protected bool _playing;
     void Start() {
         _animator = GetComponent<Animator>();
+        _playing = false;
     }
 
     // Update is called once per frame
-    public void onClosedAnim()
+    public void onTriggerAnimFinshed()
     {
+        _playing = false;
         OnAnimEvt?.Invoke();
+
     }
 
     public virtual void play()
     {
-        _animator.SetTrigger("OpenClose");
+        if (_playing)
+            return;
+        _playing = true;
+        _animator.SetTrigger(_animTrigger);
     }
 
     public virtual bool playing() {
-        return _animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f; //todo  index magic
+        return _playing; //todo  index magic
     }
 }

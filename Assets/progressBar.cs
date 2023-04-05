@@ -7,6 +7,7 @@ public class progressBar : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] Image _progress;
+    
     void Start()
     {
         if (_progress == null) throw new System.Exception($"_progress absent in {transform.name}.");
@@ -24,5 +25,13 @@ public class progressBar : MonoBehaviour
 
     public bool displaying() {
         return gameObject.activeSelf;
+    }
+
+    private void LateUpdate()
+    {
+        if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.forward)) < 90)
+            transform.forward = Camera.main.transform.forward;
+        else
+            transform.forward = -Camera.main.transform.forward;
     }
 }

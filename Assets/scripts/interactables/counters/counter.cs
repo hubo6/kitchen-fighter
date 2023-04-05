@@ -46,7 +46,7 @@ public class counter : interactable, owner  {
         return ret;
     }
 
-    public bool receive(item i)
+    public virtual bool receive(item i)
     {
         if (_holding != null)
         {
@@ -62,7 +62,7 @@ public class counter : interactable, owner  {
 
     }
 
-    public item remove(item i = null) {
+    public virtual item remove(item i = null) {
         item ret = null;
         do {
             if (i == null) {

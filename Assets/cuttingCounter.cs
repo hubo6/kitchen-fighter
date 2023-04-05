@@ -10,9 +10,26 @@ public class cuttingCounter : counter
     // Start is called before the first frame update
     [SerializeField] receiptCnf[] _receiptCnfs;
     [SerializeField] progressBar _progressBar;
+    [SerializeField] protected counterAnim _counterAnim;
+    [SerializeField] receiptCnf _holdingReciptCnf;
     public override void Start()
     {
-        if (_progressBar == null) throw new System.Exception($"_progress absent in {transform.name}.");
+        if (_progressBar == null)
+            throw new System.Exception($"_progress absent in {transform.name}.");
+        _counterAnim = GetComponentInChildren<counterAnim>();
+        if (_counterAnim == null)
+            throw new System.Exception($"counter receipt is null");
+        _counterAnim.OnAnimEvt += () => {
+            var progress = _holding.updateProgress(1);
+            Debug.Log($"cutting for {_holding.receipt} -> {_holdingReciptCnf.output} progress {progress}");
+            if (progress < _holdingReciptCnf.progress) {
+                _progressBar.progress((float)progress / _holdingReciptCnf.progress);
+                return;
+            }
+            _progressBar.display(false);
+            Destroy(remove(_holding).gameObject);
+            receive(Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>());
+        };
     }
 
     // Update is called once per frame
@@ -21,30 +38,40 @@ public class cuttingCounter : counter
         
     }
 
+    public override bool receive(item item)
+    {
+        var ret =  base.receive(item);
+        if (ret) {
+            _holdingReciptCnf = null;
+            for (var i = 0; i < _receiptCnfs.Length; i++) {
+                if (_receiptCnfs[i].input == _holding.receipt) {
+                    _holdingReciptCnf = _receiptCnfs[i];
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public override item remove(item i)
+    {
+        var ret = base.remove(i);
+        if (ret)
+        {
+            _progressBar.display(false);
+            _holdingReciptCnf = null;
+        }
+        return ret;
+    }
+
     public override void process()
     {
         if(_holding == null)
             return;
-
-        receiptCnf cnf = null;
-        for (var i = 0; i < _receiptCnfs.Length; i++) {
-            if (_receiptCnfs[i].input == _holding.receipt) {
-                cnf = _receiptCnfs[i];
-                break;
-            }
-        }
-
-        if (cnf == null)
+        if (_holdingReciptCnf == null)
             return;
-        var progress = _holding.updateProgress(1);
-        Debug.Log($"cutting for {_holding.receipt} -> {cnf.output} progress {progress}");
-        if (progress < cnf.progress)
-        {
-            _progressBar.progress((float)progress / cnf.progress);
+        if (_counterAnim.playing())
             return;
-        }
-        _progressBar.display(false);
-        Destroy(remove(_holding).gameObject);
-        receive(Instantiate(cnf.output.prefab).GetComponent<item>());
+        _counterAnim.play();
     }
 }
