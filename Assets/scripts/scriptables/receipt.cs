@@ -9,5 +9,6 @@ public class receipt : ScriptableObject
     public Transform prefab;
     public string objName;
     public Sprite icon;
+    public int stat = 0;
 
 }

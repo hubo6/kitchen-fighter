@@ -62,7 +62,9 @@
     <Compile Include="Assets\scripts\interactables\counters\counter.cs" />
     <Compile Include="Assets\functionalCounter.cs" />
     <Compile Include="Assets\scripts\player\charAnim.cs" />
+    <Compile Include="Assets\trashCan.cs" />
     <Compile Include="Assets\scripts\player\movement.cs" />
+    <Compile Include="Assets\scripts\scriptables\receiptCnf2.cs" />
     <Compile Include="Assets\scripts\owner.cs" />
     <Compile Include="Assets\scripts\mgrs\gameMgr.cs" />
     <Compile Include="Assets\scripts\interactables\interactable.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\cuttingCounter.cs" />
     <Compile Include="Assets\item.cs" />
     <Compile Include="Assets\scripts\scriptables\receipt.cs" />
+    <Compile Include="Assets\heatPanCounter.cs" />
     <Compile Include="Assets\scripts\utils\MonoSingleton.cs" />
     <Compile Include="Assets\container.cs" />
     <Compile Include="Assets\scripts\settings\inputControl.cs" />

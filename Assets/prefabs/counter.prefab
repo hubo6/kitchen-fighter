@@ -34,7 +34,7 @@ Transform:
   - {fileID: 297666378646210576}
   - {fileID: 3051426278963582900}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1726268435587550907
 BoxCollider:
@@ -71,8 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _highlight: {fileID: 4022833529681643694}
   _objAnchor: {fileID: 3051426278963582900}
-  _receipt: {fileID: 0}
-  _itemHold: {fileID: 0}
+  _holding: {fileID: 0}
 --- !u!1 &4022833529681643694
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +84,7 @@ GameObject:
   - component: {fileID: 2341165337861419041}
   - component: {fileID: 840374188734630642}
   m_Layer: 7
-  m_Name: selected
+  m_Name: highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

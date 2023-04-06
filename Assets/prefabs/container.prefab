@@ -85,6 +85,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4022833529681643694, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
+      propertyPath: m_Name
+      value: highlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022833529681643694, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -245,4 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c837089d4b3514ca68a8cda359642a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animTrigger: 
   _animator: {fileID: 0}
+  _playing: 0

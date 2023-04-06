@@ -8,6 +8,7 @@ public interface owner
     //public interactable _interactable;
     bool receive(item i);
     item remove(item i = null);
+    item holding(item i = null);
 
 }
 

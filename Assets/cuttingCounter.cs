@@ -27,8 +27,9 @@ public class cuttingCounter : counter
                 return;
             }
             _progressBar.display(false);
+            var item = Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>();
             Destroy(remove(_holding).gameObject);
-            receive(Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>());
+            receive(item);
         };
     }
 

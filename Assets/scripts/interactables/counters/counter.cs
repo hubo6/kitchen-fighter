@@ -27,27 +27,45 @@ public class counter : interactable, owner  {
             ret = base.interact(src);
             if (ret) 
                 break;
-            if (_holding != null)
-            {
-                if (src.receive(_holding))
-                {
-                    remove(_holding);
-                    ret = true;
-                }
+            if (_holding != null) {
+                var srcRecv = src.receive(_holding);
+                if (!srcRecv)
+                    break;
+                remove(_holding);
+                ret = true;
                 break;
             }
-            var recv = src.remove();
-            if (recv)
-            {
-                receive(recv);
-                ret = true;
+
+            //var rm = receive(src.holding());
+            //if (rm)
+            //{
+            //    src.remove(src.holding());
+            //    ret = true;
+            //}
+
+
+
+            var rm = src.remove();
+            if (!rm) break;
+
+            var recv =  receive(rm);
+            if (!recv) {
+                src.receive(rm);
+                break;
             }
+            ret = true;
         } while (false);
         return ret;
     }
 
+    public virtual item holding(item i = null) {
+        return null;
+    }
+
     public virtual bool receive(item i)
     {
+        if (i == null)
+            return false;
         if (_holding != null)
         {
             Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");

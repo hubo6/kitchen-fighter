@@ -56,11 +56,7 @@ public class player : MonoBehaviour, owner {
         if (_objAnchor == null) throw new Exception($"{transform.tag} does not have a obj_anchor.");
     }
 
-    public void onInteract(CallbackContext ctx)
-    {
-         _interactable?.interact(this);
 
-    }
 
 
     void updateInput() {
@@ -91,7 +87,11 @@ public class player : MonoBehaviour, owner {
         itemTrans.localPosition = Vector3.zero;
         Debug.Log($"received {_holding.name} {transform.name}.");
         return true;
+    }
 
+    public virtual item holding(item i = null)
+    {
+        return null;
     }
 
     public item remove(item i = null)
