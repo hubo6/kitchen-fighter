@@ -219,9 +219,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+--- !u!1 &3303083995111248011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5220305274835918574, guid: 93af8b85a17635f40a5b76ed82a86c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 7324214849487179365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6491135800594295502 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: 93af8b85a17635f40a5b76ed82a86c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 7324214849487179365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7321055020275238658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17251720544094567, guid: 93af8b85a17635f40a5b76ed82a86c18,
     type: 3}
   m_PrefabInstance: {fileID: 7324214849487179365}
   m_PrefabAsset: {fileID: 0}
@@ -362,8 +374,11 @@ MonoBehaviour:
   _receiptCnfs:
   - {fileID: 11400000, guid: c896c533d46a4ce4bbc43508dc69986e, type: 2}
   - {fileID: 11400000, guid: b447f30ca04b55e4d8256d425dae6afe, type: 2}
+  - {fileID: 11400000, guid: 86bb502abae29314a97256b01d8d5132, type: 2}
   _progressBar: {fileID: 7636012002062078777}
   _holdingReciptCnf: {fileID: 0}
+  _glowShim: {fileID: 7321055020275238658}
+  _splash: {fileID: 3303083995111248011}
 --- !u!4 &5615423579848539982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3051426278963582900, guid: 71f681b621696d74598b586f7757c58a,

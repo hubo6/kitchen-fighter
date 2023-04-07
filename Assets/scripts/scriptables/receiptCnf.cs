@@ -7,7 +7,7 @@ public class receiptCnf : ScriptableObject
     // Start is called before the first frame update
     public receipt input;
     public receipt output;
-    public int progress;
+    public float progress;
 }
 
 [CreateAssetMenu()]

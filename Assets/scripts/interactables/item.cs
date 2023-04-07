@@ -7,7 +7,7 @@ public class item : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] receipt _receipt;
-    [SerializeField] uint _progress = 0;
+    [SerializeField] float _progress = 0;
 
     public receipt receipt { get => _receipt; private set => _receipt = value; }
 
@@ -15,7 +15,7 @@ public class item : MonoBehaviour
     {
         if (_receipt == null ) Debug.LogWarning($"item {transform.name} does not have receipt");
     }
-    public uint updateProgress(uint u = 1) {
+    public float updateProgress(float u = 1) {
         _progress += u;
         return _progress;
     }
