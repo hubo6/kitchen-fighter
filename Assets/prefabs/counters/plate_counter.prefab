@@ -44,12 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b816fa480e447a46b86fd42bdf4c261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _receipt: {fileID: 11400000, guid: 792a352d9474bef48a0c6c524579399c, type: 2}
+  _receipt: {fileID: 0}
   _progress: 0
   _max: 5
-  _cur: []
   _genTime: 5
   _stamp: 0
+  _prefab: {fileID: 3812876574508226176, guid: c0c9afd619b40914a8f625c0535e2284, type: 3}
+  _plateRdr: {fileID: 0}
 --- !u!1001 &4782485072036222113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,9 +236,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _highlight: {fileID: 6144407056577341643}
   _objAnchor: {fileID: 5246254213455689681}
-  _holding: {fileID: 1516107264678826389}
   _receipt: {fileID: 0}
-  _max: 0
+  _max: 5
+  _gen: {fileID: 1516107264678826389}
 --- !u!4 &4990637771674744687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,

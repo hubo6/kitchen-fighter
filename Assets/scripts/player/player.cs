@@ -21,7 +21,9 @@ public class player : MonoBehaviour, owner {
 
     public event Action<interactable , interactable> onInteractableChged;
 
-
+    public item holding() {
+        return _holding;
+    }
     public Vector3 inputV3 { get => _inputV3; private set => _inputV3 = value; }
     public float spd { get => _spd; private  set => _spd = value; }
     public float rotSpd { get => _rotSpd; set => _rotSpd = value; }
@@ -79,31 +81,26 @@ public class player : MonoBehaviour, owner {
         var ret = false;
         do
         {
-            if (_holding != null)
-            {
-                if (_holding.receipt.objName.Equals("plate")) { //holding combination validation here
-                    if (i.receipt.objName.Equals("cheese")) {
-                        var k = 0;
-                    }
-                }
-                else {
-                    Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");
-                    break;
-                }
+            if (i == null)
+                break;
+            if (_holding == null) {
+                _holding = i;
+                var itemTrans = i.transform;
+                itemTrans.SetParent(_objAnchor);
+                itemTrans.localPosition = Vector3.zero;
+                Debug.Log($"received {_holding.name} {transform.name}.");
+                ret = true;
+                break;
             }
-            _holding = i;
-            var itemTrans = i.transform;
-            itemTrans.SetParent(_objAnchor);
-            itemTrans.localPosition = Vector3.zero;
-            Debug.Log($"received {_holding.name} {transform.name}.");
-            ret = true;
+            if (_holding.receipt.objName.Equals("plate")) { //_holding combination validation here
+                if (i.receipt.objName.Equals("cheese")) {
+                    var k = 0;
+                }
+                break;
+            }
+            Debug.LogWarning($"receive {_holding.name} failed exists in {transform.name}.");
         } while (false);
         return ret;
-    }
-
-    public virtual item holding(item i = null)
-    {
-        return null;
     }
 
     public item remove(item i = null)

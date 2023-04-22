@@ -59,23 +59,23 @@ public class heatPanCounter : counter
     }
 
     private void Update() {
-        if (!(_holdingReciptCnf && _holding)) {
+        if (!(_holdingReciptCnf && holding())) {
             _glowShim.SetActive(false);
             _splash.SetActive(false);
             return;
         }
 
        _glowShim.SetActive(true);
-        var progress = _holding.updateProgress(Time.deltaTime);
-        if(_holding.receipt.stat == 0)
+        var progress = holding().updateProgress(Time.deltaTime);
+        if(holding().receipt.stat == 0)
             _progressBar.progress(progress / _holdingReciptCnf.progress);
         //if (_holding.receipt.stat == 1) //warning
         //    _progressBar.progress(progress / _holdingReciptCnf.progress);
-       _splash.SetActive(_holding.receipt.stat == 1);
+       _splash.SetActive(holding().receipt.stat == 1);
         if (progress < _holdingReciptCnf.progress)
             return;
 
-        if (_holding.receipt.stat == 0)
+        if (holding().receipt.stat == 0)
             _progressBar.display(false);
 
         var nextRecv = Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>();
@@ -84,6 +84,6 @@ public class heatPanCounter : counter
 
         var nextReceiptCnf = getReceiptCnfByInput(_holdingReciptCnf.output);
         if (!nextReceiptCnf)
-            throw new System.Exception($"update burnning {transform.name} with {_holding.receipt}");
+            throw new System.Exception($"update burnning {transform.name} with {holding().receipt}");
     }
 }

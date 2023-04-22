@@ -19,5 +19,4 @@ public class item : MonoBehaviour
         _progress += u;
         return _progress;
     }
-
 }

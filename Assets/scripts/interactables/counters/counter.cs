@@ -10,6 +10,10 @@ public class counter : interactable, owner  {
     [SerializeField] protected item _holding;
 
 
+   public virtual item holding() { 
+        return _holding;
+    }
+
 
 
     public override INTERACT_TYPE type() { 
@@ -27,40 +31,45 @@ public class counter : interactable, owner  {
             ret = base.interact(src);
             if (ret) 
                 break;
-            if (_holding != null) {
-                var srcRecv = src.receive(_holding);
-                if (!srcRecv)
-                    break;
-                remove(_holding);
+            var srcRecv = src.receive(holding());
+            if (srcRecv) {
+                remove(holding());
                 ret = true;
                 break;
             }
 
-            //var rm = receive(src.holding());
-            //if (rm)
-            //{
-            //    src.remove(src.holding());
-            //    ret = true;
-            //}
-
-
-
-            var rm = src.remove();
-            if (!rm) break;
-
-            var recv =  receive(rm);
-            if (!recv) {
-                src.receive(rm);
+            var dstRecv = receive(src.holding());
+            if (dstRecv) {
+                src.remove(src.holding());
+                ret = true;
                 break;
             }
-            ret = true;
+
+
+            //if (_holding != null) {
+            //    var srcRecv = src.receive(_holding);
+            //    if (!srcRecv)
+            //        break;
+            //    remove(_holding);
+            //    ret = true;
+            //    break;
+            //}
+            //var rm = src.remove();
+            //if (!rm) break;
+
+            //var recv =  receive(rm);
+            //if (!recv) {
+            //    src.receive(rm);
+            //    break;
+            //}
+            //ret = true;
         } while (false);
         return ret;
     }
 
-    public virtual item holding(item i = null) {
-        return null;
-    }
+    //public virtual item _holding(item i = null) {//todo
+    //    return null;
+    //}
 
     public virtual bool receive(item i)
     {

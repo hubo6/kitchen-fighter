@@ -27,7 +27,7 @@ public class container : counter
             ret = base.interact(src);
             if (ret)
                 break;
-            if (_holding != null)
+            if (holding() != null)
                 break;
             if (_counterAnim.playing()) {
                 Debug.LogWarning($"{transform.name} is busy of interaction.");

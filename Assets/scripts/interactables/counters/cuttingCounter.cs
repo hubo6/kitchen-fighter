@@ -20,15 +20,15 @@ public class cuttingCounter : counter
         if (_counterAnim == null)
             throw new System.Exception($"counter receipt is null");
         _counterAnim.OnAnimEvt += () => {
-            var progress = _holding.updateProgress(1);
-            Debug.Log($"cutting for {_holding.receipt} -> {_holdingReciptCnf.output} progress {progress}");
+            var progress = holding().updateProgress(1);
+            Debug.Log($"cutting for {holding().receipt} -> {_holdingReciptCnf.output} progress {progress}");
             if (progress < _holdingReciptCnf.progress) {
                 _progressBar.progress((float)progress / _holdingReciptCnf.progress);
                 return;
             }
             _progressBar.display(false);
             var item = Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>();
-            Destroy(remove(_holding).gameObject);
+            Destroy(remove(holding()).gameObject);
             receive(item);
         };
     }
@@ -67,7 +67,7 @@ public class cuttingCounter : counter
 
     public override void process()
     {
-        if(_holding == null)
+        if(holding() == null)
             return;
         if (_holdingReciptCnf == null)
             return;
