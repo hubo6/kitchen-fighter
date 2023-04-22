@@ -76,17 +76,29 @@ public class player : MonoBehaviour, owner {
 
     public bool receive(item i)
     {
-        if (_holding != null)
+        var ret = false;
+        do
         {
-            Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");
-            return false;
-        }
-        _holding = i;
-        var itemTrans = i.transform;
-        itemTrans.SetParent(_objAnchor);
-        itemTrans.localPosition = Vector3.zero;
-        Debug.Log($"received {_holding.name} {transform.name}.");
-        return true;
+            if (_holding != null)
+            {
+                if (_holding.receipt.objName.Equals("plate")) { //holding combination validation here
+                    if (i.receipt.objName.Equals("cheese")) {
+                        var k = 0;
+                    }
+                }
+                else {
+                    Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");
+                    break;
+                }
+            }
+            _holding = i;
+            var itemTrans = i.transform;
+            itemTrans.SetParent(_objAnchor);
+            itemTrans.localPosition = Vector3.zero;
+            Debug.Log($"received {_holding.name} {transform.name}.");
+            ret = true;
+        } while (false);
+        return ret;
     }
 
     public virtual item holding(item i = null)

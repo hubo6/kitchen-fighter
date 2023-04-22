@@ -6,7 +6,7 @@ using UnityEngine;
 public class item : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] receipt _receipt;
+    [SerializeField] protected receipt _receipt;
     [SerializeField] float _progress = 0;
 
     public receipt receipt { get => _receipt; private set => _receipt = value; }
