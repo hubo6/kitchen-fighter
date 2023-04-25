@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: meet_pie_overcooked
   m_EditorClassIdentifier: 
   prefab: {fileID: 3812876574508226176, guid: 65f97a1f434a707498c3eb047e03b1c6, type: 3}
-  objName: meat_pie_overcooked
+  msk: 6
   icon: {fileID: 21300000, guid: 713ea9afa60dd6e4ebf6503a33e8cc99, type: 3}
   stat: 2

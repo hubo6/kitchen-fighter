@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: plate
   m_EditorClassIdentifier: 
   prefab: {fileID: 3812876574508226176, guid: c0c9afd619b40914a8f625c0535e2284, type: 3}
-  objName: plate
+  msk: 1
   icon: {fileID: 21300000, guid: 3928afb5321bb3d489bbd4ac581b29a2, type: 3}
   stat: 0

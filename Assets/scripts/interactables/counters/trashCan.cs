@@ -19,11 +19,34 @@ public class trashCan : counter
 
     public override bool receive(item i)
     {
-        var ret = base.receive(i);
-        if (ret) {
-            StartCoroutine(Fade(_holding.transform));
-            _holding = null;
+        if (i == null)
+            return false;
+        if (i.receipt.msk == RECEIPT_MSK.PLATE)
+        {
+
+            if (((plate)i).clear(out List<item> cleared)) {
+                foreach (var c in cleared) {
+                    i.transform.SetParent(_objAnchor);
+                    i.transform.localPosition = Vector3.zero;
+                    StartCoroutine(Fade(i.transform));
+                }
+            }
+            return false;
+
+        } else {
+            i.transform.SetParent(_objAnchor);
+            i.transform.localPosition = Vector3.zero;
+            StartCoroutine(Fade(i.transform));
+            return true;
         }
-        return ret;
+
+
+
+        //var ret = base.receive(i);
+        //if (ret) {
+        //    StartCoroutine(Fade(i.transform));
+        //    _holding = null;
+        //}
+        //return ret;
     }
 }

@@ -11,6 +11,7 @@ public class plateGen : item {
     [SerializeField] float _stamp = 0f;
     [SerializeField] Transform _prefab;
     [SerializeField] MeshRenderer _plateRdr;
+    [SerializeField] int generatedCnt = 0;
 
     public LinkedList<item> cur { get => _cur; private set => _cur = value; }
 
@@ -22,21 +23,21 @@ public class plateGen : item {
     // Update is called once per frame
     void Update()
     {
-        if (_max == _cur.Count) return;
+        if (generatedCnt == _max) return;
         _stamp += Time.deltaTime;
         if (_stamp < _genTime) return;
 
         _stamp = 0;
         var plate = Instantiate(_prefab, transform);
-        plate.localPosition = new Vector3(0, _plateRdr.bounds.size.y, 0) * _cur.Count;
-        _cur.AddLast(plate.GetComponent<item>());
+        add(Instantiate(_prefab).GetComponent<item>());
+        generatedCnt++;
     }
 
     public bool add(item plate) {
         if (plate == null)
             return false;
-        if (cur.Count == _max)
-            return false;
+        //if (generatedCnt == _max)
+        //    return false;
         plate.transform.parent = transform;
         plate.transform.localPosition = new Vector3(0, _plateRdr.bounds.size.y, 0) * _cur.Count;
         _cur.AddLast(plate);

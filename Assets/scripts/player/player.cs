@@ -92,10 +92,8 @@ public class player : MonoBehaviour, owner {
                 ret = true;
                 break;
             }
-            if (_holding.receipt.objName.Equals("plate")) { //_holding combination validation here
-                if (i.receipt.objName.Equals("cheese")) {
-                    var k = 0;
-                }
+            if (_holding.receipt.msk == RECEIPT_MSK.PLATE) { //_holding combination validation here
+             
                 break;
             }
             Debug.LogWarning($"receive {_holding.name} failed exists in {transform.name}.");
