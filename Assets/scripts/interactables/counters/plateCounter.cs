@@ -45,6 +45,8 @@ public class plateCounter : counter {
     //}
     public override bool receive(item i)
     {
+        if (i.receipt.type != ITEM_TYPE.PLATE)
+            return false;
         return _gen.add(i);
     }
 

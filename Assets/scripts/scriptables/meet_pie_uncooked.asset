@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: meet_pie_uncooked
   m_EditorClassIdentifier: 
   prefab: {fileID: 3812876574508226176, guid: 5251df42648fe054d91033ecc8f1d68e, type: 3}
-  msk: 6
+  msk: 2
+  type: 1
   icon: {fileID: 21300000, guid: aa1bacc24dde76e47b2ec0dd4e82385b, type: 3}
   stat: 0

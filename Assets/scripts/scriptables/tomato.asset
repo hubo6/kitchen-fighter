@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: tomato
   m_EditorClassIdentifier: 
   prefab: {fileID: 3812876574508226176, guid: a8cb1c3f26115a144b4102fe1d9505fe, type: 3}
-  msk: 2
+  msk: 1
+  type: 1
   icon: {fileID: 21300000, guid: 91e8fe3de9249fc44b7bdd8050062896, type: 3}
   stat: 0

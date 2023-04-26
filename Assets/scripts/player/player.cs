@@ -92,8 +92,11 @@ public class player : MonoBehaviour, owner {
                 ret = true;
                 break;
             }
-            if (_holding.receipt.msk == RECEIPT_MSK.PLATE) { //_holding combination validation here
-             
+            if (_holding.receipt.type == ITEM_TYPE.PLATE) { //_holding combination validation here
+                if(i.receipt.type == ITEM_TYPE.PLATE || i.receipt.type == ITEM_TYPE.RAW || i.receipt.type == ITEM_TYPE.BURNT)
+                    break;
+                var plate = (plate)_holding;
+                ret = plate.receive(i);
                 break;
             }
             Debug.LogWarning($"receive {_holding.name} failed exists in {transform.name}.");

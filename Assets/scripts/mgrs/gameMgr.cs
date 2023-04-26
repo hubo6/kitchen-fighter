@@ -11,4 +11,8 @@ public class gameMgr : MonoSingleton<gameMgr>
         p?.highlight(false);
         n?.highlight(true);
     }
+
+    public bool plateRedish(plate p) {
+        return false;
+    }
 }

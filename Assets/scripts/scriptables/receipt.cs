@@ -8,15 +8,23 @@ public class receipt : ScriptableObject
     // Start is called before the first frame update
     public Transform prefab;
     public RECEIPT_MSK msk;
+    public ITEM_TYPE type;
     public Sprite icon;
+    public float height;
     public int stat = 0;
 }
 
+
+
+public enum ITEM_TYPE { 
+PLATE = 0,
+RAW,
+PROCESSED,
+BURNT,
+}
 public enum RECEIPT_MSK { 
-    PLATE = 1,
+    NONE = 0,
     TOMATO,
-    TOMATO_SLICE,
     CHEESE,
-    CHEESE_SLICE,
     MEAT_PIE,
 }
