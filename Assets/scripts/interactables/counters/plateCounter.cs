@@ -4,45 +4,13 @@ using UnityEngine;
 
 public class plateCounter : counter {
     // Start is called before the first frame update
-    [SerializeField] receipt _receipt;
+    [SerializeField] itemCnf _receipt;
     [SerializeField] int _max;
     [SerializeField] plateGen _gen;
     public  override item holding() {
         return _gen.cur.Last?.Value;
     }
-//    [SerializeField] plateGen _gen;
-  
-    //public override void Start()
-    //{
-    //    base.Start();
-    //}
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
-    //public override bool interact(owner src)
-    //{
-    //    var ret = false;
-    //    do
-    //    {
-    //        if (src._holding()?.receipt.objName == "plate") {
-    //            if (_gen.cur.Count < _gen._max) { 
-    //                _gen.
-    //            }
-    //        }
-    //        if (_gen.cur.Count == 0)
-    //            break;
-    //        var srcRecv = src.receive(_gen.cur.Last.Value);
-    //        if (!srcRecv)
-    //            break;
-    //        _gen.remove();
-    //        ret = true;
-
-    //    } while (false);
-    //    return ret;
-    //}
     public override bool receive(item i)
     {
         if (i.receipt.type != ITEM_TYPE.PLATE)

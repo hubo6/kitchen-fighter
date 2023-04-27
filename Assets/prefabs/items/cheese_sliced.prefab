@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _receipt: {fileID: 11400000, guid: 6d1528c2579c5064c94d3ad0e2442a70, type: 2}
+  _progress: 0
 --- !u!1001 &4519783040888074352
 PrefabInstance:
   m_ObjectHideFlags: 0

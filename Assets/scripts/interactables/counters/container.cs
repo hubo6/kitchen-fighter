@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class container : counter
 {
-    [SerializeField] receipt _receipt;
+    [SerializeField] itemCnf _receipt;
     [SerializeField] protected counterAnim _counterAnim;
     // Start is called before the first frame update
     public override void  Start() {
         base.Start();
         if (_receipt == null)
-            throw new System.Exception($"counter receipt is null");
+            throw new System.Exception($"counter itemCnf is null");
         _counterAnim = GetComponentInChildren<counterAnim>();
         if (_counterAnim == null)
-            throw new System.Exception($"counter receipt is null");
+            throw new System.Exception($"counter itemCnf is null");
         _counterAnim.OnAnimEvt += () => {
             receive(Instantiate(_receipt.prefab).GetComponent<item>());
         };
@@ -24,8 +24,7 @@ public class container : counter
     {
         var ret = false; 
         do {
-            ret = base.interact(src);
-            if (ret)
+            if (base.interact(src))
                 break;
             if (holding() != null)
                 break;

@@ -335,7 +335,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 651612830395637729}
     - targetCorrespondingSourceObject: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
@@ -374,11 +374,11 @@ MonoBehaviour:
   _highlight: {fileID: 6725202377570758937}
   _objAnchor: {fileID: 4674620066126999043}
   _holding: {fileID: 0}
-  _receiptCnfs:
+  _cnfs:
   - {fileID: 11400000, guid: dec9a0d1f1de21b4d94fb0c2671c6b69, type: 2}
   _progressBar: {fileID: 5191949725077021036}
   _counterAnim: {fileID: 0}
-  _holdingReciptCnf: {fileID: 0}
+  _holdingCnf: {fileID: 0}
 --- !u!4 &5571982822544273085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,

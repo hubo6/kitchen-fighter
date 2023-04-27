@@ -6,14 +6,14 @@ using UnityEngine;
 public class item : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] protected receipt _receipt;
+    [SerializeField] protected itemCnf _receipt;
     [SerializeField] float _progress = 0;
 
-    public receipt receipt { get => _receipt; private set => _receipt = value; }
+    public itemCnf receipt { get => _receipt; private set => _receipt = value; }
 
     void Start()
     {
-        if (_receipt == null ) Debug.LogWarning($"item {transform.name} does not have receipt");
+        if (_receipt == null ) Debug.LogWarning($"item {transform.name} does not have itemCnf");
     }
     public float updateProgress(float u = 1) {
         _progress += u;

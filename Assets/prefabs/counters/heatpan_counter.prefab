@@ -374,7 +374,6 @@ MonoBehaviour:
   _receiptCnfs:
   - {fileID: 11400000, guid: c896c533d46a4ce4bbc43508dc69986e, type: 2}
   - {fileID: 11400000, guid: b447f30ca04b55e4d8256d425dae6afe, type: 2}
-  - {fileID: 11400000, guid: 86bb502abae29314a97256b01d8d5132, type: 2}
   _progressBar: {fileID: 7636012002062078777}
   _holdingReciptCnf: {fileID: 0}
   _glowShim: {fileID: 7321055020275238658}

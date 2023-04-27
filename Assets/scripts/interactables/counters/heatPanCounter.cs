@@ -7,14 +7,14 @@ using UnityEngine.UIElements;
 public class heatPanCounter : counter
 {
     // Start is called before the first frame update
-    [SerializeField] receiptCnf[] _receiptCnfs;
+    [SerializeField] processableCnf[] _receiptCnfs;
     [SerializeField] progressBar _progressBar;
-    [SerializeField] receiptCnf _holdingReciptCnf;
+    [SerializeField] processableCnf _holdingReciptCnf;
     [SerializeField] GameObject _glowShim;
     [SerializeField] GameObject _splash;
 
-    protected receiptCnf getReceiptCnfByInput(receipt receipt) {
-        receiptCnf reciptCnf = null;
+    protected processableCnf getReceiptCnfByInput(itemCnf receipt) {
+        processableCnf reciptCnf = null;
         for (var i = 0; i < _receiptCnfs.Length; i++)
         {
             if (_receiptCnfs[i].input == receipt)
@@ -26,7 +26,7 @@ public class heatPanCounter : counter
         return reciptCnf;
     }
 
-    protected IEnumerator progress(receiptCnf cnf) {
+    protected IEnumerator progress(processableCnf cnf) {
         yield return null;
         
     }
@@ -39,11 +39,9 @@ public class heatPanCounter : counter
 
     public override bool receive(item item)
     {
-        receiptCnf reciptCnf = getReceiptCnfByInput(item.receipt);
-        var ret = (reciptCnf != null) && base.receive(item);
-
-        if (ret) 
-            _holdingReciptCnf = reciptCnf;
+        var ret = item.receipt.msk == ITEM_MSK.MEAT_PIE && base.receive(item);
+        if(ret)
+            _holdingReciptCnf = getReceiptCnfByInput(item.receipt);
         return ret;
     }
 
@@ -69,8 +67,8 @@ public class heatPanCounter : counter
         var progress = holding().updateProgress(Time.deltaTime);
         if(holding().receipt.stat == 0)
             _progressBar.progress(progress / _holdingReciptCnf.progress);
-        //if (_holding.receipt.stat == 1) //warning
-        //    _progressBar.progress(progress / _holdingReciptCnf.progress);
+        //if (_holding.itemCnf.stat == 1) //warning
+        //    _progressBar.progress(progress / _holdingCnf.progress);
        _splash.SetActive(holding().receipt.stat == 1);
         if (progress < _holdingReciptCnf.progress)
             return;
@@ -81,9 +79,5 @@ public class heatPanCounter : counter
         var nextRecv = Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>();
         Destroy(remove()?.gameObject);
         receive(nextRecv);
-
-        var nextReceiptCnf = getReceiptCnfByInput(_holdingReciptCnf.output);
-        if (!nextReceiptCnf)
-            throw new System.Exception($"update burnning {transform.name} with {holding().receipt}");
     }
 }

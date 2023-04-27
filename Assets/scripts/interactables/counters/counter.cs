@@ -28,8 +28,7 @@ public class counter : interactable, owner  {
 
         var ret = false; 
         do {
-            ret = base.interact(src);
-            if (ret) 
+            if (base.interact(src)) 
                 break;
             var srcRecv = src.receive(holding());
             if (srcRecv) {

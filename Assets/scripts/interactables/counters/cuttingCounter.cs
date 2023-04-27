@@ -8,26 +8,31 @@ using UnityEngine.UIElements;
 public class cuttingCounter : counter
 {
     // Start is called before the first frame update
-    [SerializeField] receiptCnf[] _receiptCnfs;
+    [SerializeField] processableCnf[] _cnfs;
+    [SerializeField] Dictionary<ITEM_MSK, processableCnf> _cnfsMap = new Dictionary<ITEM_MSK, processableCnf>();
     [SerializeField] progressBar _progressBar;
     [SerializeField] protected counterAnim _counterAnim;
-    [SerializeField] receiptCnf _holdingReciptCnf;
+    [SerializeField] processableCnf _holdingCnf;
     public override void Start()
     {
         if (_progressBar == null)
             throw new System.Exception($"_progress absent in {transform.name}.");
         _counterAnim = GetComponentInChildren<counterAnim>();
         if (_counterAnim == null)
-            throw new System.Exception($"counter receipt is null");
+            throw new System.Exception($"counter itemCnf is null");
+
+        foreach (var c in _cnfs) 
+            _cnfsMap[c.input.msk] = c;
+
         _counterAnim.OnAnimEvt += () => {
             var progress = holding().updateProgress(1);
-            Debug.Log($"cutting for {holding().receipt} -> {_holdingReciptCnf.output} progress {progress}");
-            if (progress < _holdingReciptCnf.progress) {
-                _progressBar.progress((float)progress / _holdingReciptCnf.progress);
+            Debug.Log($"cutting for {holding().receipt} -> {_holdingCnf.output} progress {progress}");
+            if (progress < _holdingCnf.progress) {
+                _progressBar.progress((float)progress / _holdingCnf.progress);
                 return;
             }
             _progressBar.display(false);
-            var item = Instantiate(_holdingReciptCnf.output.prefab).GetComponent<item>();
+            var item = Instantiate(_holdingCnf.output.prefab).GetComponent<item>();
             Destroy(remove(holding()).gameObject);
             receive(item);
         };
@@ -39,17 +44,13 @@ public class cuttingCounter : counter
         
     }
 
-    public override bool receive(item item)
+    public override bool receive(item i)
     {
-        var ret =  base.receive(item);
+        var ret =  base.receive(i);
         if (ret) {
-            _holdingReciptCnf = null;
-            for (var i = 0; i < _receiptCnfs.Length; i++) {
-                if (_receiptCnfs[i].input == _holding.receipt) {
-                    _holdingReciptCnf = _receiptCnfs[i];
-                    break;
-                }
-            }
+            _holdingCnf = null;
+            if(i.receipt.type == ITEM_TYPE.RAW)
+                _cnfsMap.TryGetValue(i.receipt.msk, out _holdingCnf);
         }
         return ret;
     }
@@ -60,16 +61,14 @@ public class cuttingCounter : counter
         if (ret)
         {
             _progressBar.display(false);
-            _holdingReciptCnf = null;
+            _holdingCnf = null;
         }
         return ret;
     }
 
     public override void process()
     {
-        if(holding() == null)
-            return;
-        if (_holdingReciptCnf == null)
+        if(holding() == null || _holdingCnf == null)
             return;
         if (_counterAnim.playing())
             return;

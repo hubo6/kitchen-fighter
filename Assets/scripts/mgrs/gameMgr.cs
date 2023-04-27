@@ -15,4 +15,25 @@ public class gameMgr : MonoSingleton<gameMgr>
     public bool plateRedish(plate p) {
         return false;
     }
+
+
+    public bool changeOwnerShip(owner src, owner dst) {
+        var ret = false;
+        var srcHolding = src.holding();
+        var dstHolding = dst.holding();
+        do
+        {
+            if (srcHolding == null && dstHolding == null)
+                break;
+            if (srcHolding.receipt.type == ITEM_TYPE.PLATE) {
+                break;
+            }
+            if (dstHolding.receipt.type == ITEM_TYPE.PLATE) {
+                break;
+            }
+
+
+        } while (false);
+        return ret;
+    }
 }

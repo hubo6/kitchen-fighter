@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class plate : item, owner
 {
-    [SerializeField] receipt[]  _cnfArray;
-    //[SerializeField] LinkedList<RECEIPT_MSK, float> _cnf = new Dictionary<RECEIPT_MSK, float>();
-    [SerializeField] Dictionary<RECEIPT_MSK, LinkedList<item>> _contained = new Dictionary<RECEIPT_MSK, LinkedList<item>>();
+    [SerializeField] itemCnf[]  _cnfArray;
+    //[SerializeField] LinkedList<ITEM_MSK, float> _cnf = new Dictionary<ITEM_MSK, float>();
+    [SerializeField] Dictionary<ITEM_MSK, LinkedList<item>> _contained = new Dictionary<ITEM_MSK, LinkedList<item>>();
     [SerializeField] ulong _msk = 0;
-    [SerializeField] float _layoutOffset = 0.5f;
+    [SerializeField] static float _layoutOffset = 0.1f;
+    [SerializeField] float _curLayoutOffset = _layoutOffset;
     public item holding()
     {
         return this;
@@ -24,8 +25,8 @@ public class plate : item, owner
         var dish = gameMgr.ins.plateRedish(this);
         Debug.LogFormat($"{gameObject.tag} redish:{dish}");
         i.transform.parent = transform;
-        i.transform.localPosition = Vector3.up * _layoutOffset;
-        _layoutOffset += i.receipt.height;
+        i.transform.localPosition = Vector3.up * _curLayoutOffset;
+        _curLayoutOffset += i.receipt.height;
         if (_contained.TryGetValue(i.receipt.msk, out LinkedList<item> list))
             list.AddLast(i);
         else {
@@ -51,7 +52,7 @@ public class plate : item, owner
     public void clear(out List<item> cleared) {
         cleared = new List<item>(); //cache list todo
         _msk = 0;
-        _layoutOffset = 0;
+        _curLayoutOffset = _layoutOffset;
         foreach (var list in _contained)
             foreach(var i in list.Value)
                 cleared.Add(i);
