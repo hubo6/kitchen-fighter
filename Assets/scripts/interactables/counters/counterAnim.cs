@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class counterAnim : MonoBehaviour
-{
+public class counterAnim : MonoBehaviour {
     // Start is called before the first frame update
     [SerializeField] string _animTrigger;
     public event Action OnAnimEvt;
@@ -17,15 +16,13 @@ public class counterAnim : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void onTriggerAnimFinshed()
-    {
+    public void onTriggerAnimFinshed() {
         _playing = false;
         OnAnimEvt?.Invoke();
 
     }
 
-    public virtual void play()
-    {
+    public virtual void play() {
         if (_playing)
             return;
         _playing = true;

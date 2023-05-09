@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface owner 
-{
+public interface owner {
     bool receive(item i);
     item remove(item i = null);
     item holding();
@@ -25,7 +24,7 @@ public interface owner
 //                if (!rm) break;
 //            }
 
-           
+
 
 //        } while (false);
 //        return ret

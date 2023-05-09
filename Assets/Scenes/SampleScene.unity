@@ -308,10 +308,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1836765283}
     m_Modifications:
+    - target: {fileID: 2856833791082033124, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
+        type: 3}
+      propertyPath: _cnfs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2856833791082033124, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
+        type: 3}
+      propertyPath: _cnfs.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7d316c94c674d2e47b95b10eeab572c6,
+        type: 2}
     - target: {fileID: 4674620066126999043, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: 1.295
       objectReference: {fileID: 0}
     - target: {fileID: 5571982822544273084, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
         type: 3}
@@ -1019,6 +1030,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ac913d865084b46b2a3bd5c17e245b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _testDishCnfsV2:
+  - _refV1:
+    - {fileID: 11400000, guid: 40e1aa484a6d6454d8ada6a6f1691c42, type: 2}
+    - {fileID: 11400000, guid: 154fc0fef7459a544b1b07ba46aa5278, type: 2}
+    - {fileID: 11400000, guid: 290d1c6c4876b504e944da7087153e9b, type: 2}
+    - {fileID: 11400000, guid: 6d1528c2579c5064c94d3ad0e2442a70, type: 2}
 --- !u!4 &889774594
 Transform:
   m_ObjectHideFlags: 0
@@ -1042,6 +1059,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1836765283}
     m_Modifications:
+    - target: {fileID: -2766249992831982455, guid: 83ef15f4b2c1b294aba151dbbfbf085f,
+        type: 3}
+      propertyPath: _itemCnf
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0,
+        type: 2}
     - target: {fileID: 4766707481471938578, guid: 83ef15f4b2c1b294aba151dbbfbf085f,
         type: 3}
       propertyPath: m_RootOrder
@@ -1115,6 +1138,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1836765283}
     m_Modifications:
+    - target: {fileID: 5311597541785538702, guid: a5f52b6232df9ff45b77b1a1b659748a,
+        type: 3}
+      propertyPath: _itemCnf
+      value: 
+      objectReference: {fileID: 11400000, guid: b2f623f18d7dbca479706519287bc0d6,
+        type: 2}
     - target: {fileID: 5912211087170814996, guid: a5f52b6232df9ff45b77b1a1b659748a,
         type: 3}
       propertyPath: m_Name
@@ -1472,7 +1501,7 @@ PrefabInstance:
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.31
+      value: -7.82
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -1597,6 +1626,12 @@ PrefabInstance:
       propertyPath: _animTrigger
       value: OpenClose
       objectReference: {fileID: 0}
+    - target: {fileID: 3179043400145073538, guid: 9f06a65971655c04998f67a1f934878d,
+        type: 3}
+      propertyPath: _itemCnf
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b6d095e812a5ce4d916e1750d4a25fd,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 8602135694393566788, guid: 9f06a65971655c04998f67a1f934878d, type: 3}
     m_RemovedGameObjects: []

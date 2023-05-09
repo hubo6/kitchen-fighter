@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474ee90a5239e1d4f9d61b366ca1b1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _receipt: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0, type: 2}
+  _cnf: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0, type: 2}
+  _progress: 0
 --- !u!1001 &1845905871233530044
 PrefabInstance:
   m_ObjectHideFlags: 0

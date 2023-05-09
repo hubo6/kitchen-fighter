@@ -3,26 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class container : counter
-{
-    [SerializeField] itemCnf _receipt;
+public class container : counter {
+    [SerializeField] itemCnf _itemCnf;
     [SerializeField] protected counterAnim _counterAnim;
     // Start is called before the first frame update
-    public override void  Start() {
+    public override void Start() {
         base.Start();
-        if (_receipt == null)
+        if (_itemCnf == null)
             throw new System.Exception($"counter itemCnf is null");
         _counterAnim = GetComponentInChildren<counterAnim>();
         if (_counterAnim == null)
             throw new System.Exception($"counter itemCnf is null");
         _counterAnim.OnAnimEvt += () => {
-            receive(Instantiate(_receipt.prefab).GetComponent<item>());
+            receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
         };
     }
 
-    public override bool interact(owner src)
-    {
-        var ret = false; 
+    public override bool interact(owner src) {
+        var ret = false;
         do {
             if (base.interact(src))
                 break;
@@ -34,12 +32,11 @@ public class container : counter
             }
             _counterAnim.play();
             ret = true;
-    
+
         } while (false);
         return ret;
     }
 
-    public void onClosed()
-    { 
+    public void onClosed() {
     }
 }

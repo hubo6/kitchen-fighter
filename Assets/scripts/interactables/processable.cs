@@ -3,10 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
-
 public class processable {
     // Start is called before the first frame update
     //[SerializeField] float _processTimeSpan = 1f;

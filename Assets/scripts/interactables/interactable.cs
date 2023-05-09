@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum INTERACT_TYPE { 
+public enum INTERACT_TYPE {
     NONE = 0,
     COUNTER,
     MATERIAL,
@@ -21,8 +21,7 @@ public class interactable : MonoBehaviour {
         return false;
     }
 
-    public virtual void process()
-    {
+    public virtual void process() {
         Debug.Log($"process: {transform.tag}");
         return;
     }

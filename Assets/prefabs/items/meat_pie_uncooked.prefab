@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474ee90a5239e1d4f9d61b366ca1b1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _receipt: {fileID: 11400000, guid: b2f623f18d7dbca479706519287bc0d6, type: 2}
+  _cnf: {fileID: 11400000, guid: b2f623f18d7dbca479706519287bc0d6, type: 2}
   _progress: 0
 --- !u!1001 &2911635562203194026
 PrefabInstance:

@@ -7,8 +7,7 @@ public class trashCan : counter {
     // Start is called before the first frame update
 
     protected IEnumerator fade(Transform item) {
-        while (item.position.y > 0)
-        {
+        while (item.position.y > 0) {
             item.position -= Vector3.up * Time.deltaTime;
             yield return null;
         }
@@ -16,21 +15,16 @@ public class trashCan : counter {
 
     }
 
-    public override bool receive(item i)
-    {
+    public override bool receive(item i) {
         var ret = false;
-        do
-        {
-            if (i == null)
-                break;
-            if (i.receipt.type == ITEM_TYPE.PLATE)
-            {
+        do {
+            if (i.cnf.type == ITEM_TYPE.PLATE) {
                 ((plate)i).clear(out List<item> cleared);
                 float offset = 0;
                 foreach (var c in cleared) {
                     c.transform.SetParent(_objAnchor);
                     c.transform.localPosition = Vector3.zero + offset * Vector3.up;
-                    offset += c.receipt.height;
+                    offset += c.cnf.height;
                     StartCoroutine(fade(c.transform));
                 }
                 break;
@@ -41,8 +35,8 @@ public class trashCan : counter {
             ret = true;
         } while (false);
         return ret;
-      
-       
+
+
         //i.transform.SetParent(_objAnchor);
         //i.transform.localPosition = Vector3.zero;
         //StartCoroutine(fade(i.transform));

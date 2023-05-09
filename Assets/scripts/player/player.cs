@@ -19,28 +19,25 @@ public class player : MonoBehaviour, owner {
     [SerializeField] Transform _objAnchor;
     [SerializeField] item _holding;
 
-    public event Action<interactable , interactable> onInteractableChged;
+    public event Action<interactable, interactable> onInteractableChged;
 
     public item holding() {
         return _holding;
     }
     public Vector3 inputV3 { get => _inputV3; private set => _inputV3 = value; }
-    public float spd { get => _spd; private  set => _spd = value; }
+    public float spd { get => _spd; private set => _spd = value; }
     public float rotSpd { get => _rotSpd; set => _rotSpd = value; }
 
-    public void setInteractable(interactable obj = null)
-    {
+    public void setInteractable(interactable obj = null) {
         var pre = _interactable;
         _interactable = obj;
-        if(pre != _interactable)
-            onInteractableChged?.Invoke( pre, _interactable);
+        if (pre != _interactable)
+            onInteractableChged?.Invoke(pre, _interactable);
     }
 
 
-    void updateInteractable()
-    {
-        if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactDis, _interactableLayer))
-        {
+    void updateInteractable() {
+        if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactDis, _interactableLayer)) {
             setInteractable(null);
             return;
         }
@@ -76,13 +73,9 @@ public class player : MonoBehaviour, owner {
 
     }
 
-    public bool receive(item i)
-    {
+    public bool receive(item i) {
         var ret = false;
-        do
-        {
-            if (i == null)
-                break;
+        do {
             if (_holding == null) {
                 _holding = i;
                 var itemTrans = i.transform;
@@ -92,8 +85,8 @@ public class player : MonoBehaviour, owner {
                 ret = true;
                 break;
             }
-            if (_holding.receipt.type == ITEM_TYPE.PLATE) { //_holding combination validation here
-                if(i.receipt.type == ITEM_TYPE.PLATE || i.receipt.type == ITEM_TYPE.RAW || i.receipt.type == ITEM_TYPE.BURNT)
+            if (_holding.cnf.type == ITEM_TYPE.PLATE) { //_holding combination validation here
+                if (i.cnf.type == ITEM_TYPE.PLATE || i.cnf.type == ITEM_TYPE.RAW || i.cnf.type == ITEM_TYPE.BURNT)
                     break;
                 var plate = (plate)_holding;
                 ret = plate.receive(i);
@@ -104,15 +97,11 @@ public class player : MonoBehaviour, owner {
         return ret;
     }
 
-    public item remove(item i = null)
-    {
+    public item remove(item i = null) {
         item ret = null;
-        do
-        {
-            if (i == null)
-            {
-                if (_holding != null)
-                {
+        do {
+            if (i == null) {
+                if (_holding != null) {
                     ret = _holding;
                     _holding = null;
                 }

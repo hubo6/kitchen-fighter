@@ -5,14 +5,12 @@ using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class input : MonoSingleton<input>
-{
+public class input : MonoSingleton<input> {
     [SerializeField] inputControl _inputCtrl;
     public event Action<CallbackContext> onInteract;
     public event Action<CallbackContext> onProcess;
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         _inputCtrl = new inputControl();
         _inputCtrl.player.Enable();
         _inputCtrl.player.interact.performed += (CallbackContext ctx) => {
@@ -25,13 +23,11 @@ public class input : MonoSingleton<input>
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
-    public void updateInput(ref Vector3 input)
-    {
+    public void updateInput(ref Vector3 input) {
         //if (_inputCtrl == null) {
         //    _inputCtrl = new Input_control();
         //    _inputCtrl.player.Enable();

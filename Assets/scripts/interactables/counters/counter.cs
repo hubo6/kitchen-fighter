@@ -3,21 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class counter : interactable, owner  {
+public class counter : interactable, owner {
     // Start is called before the first frame update
     [SerializeField] protected Transform _objAnchor;
 
     [SerializeField] protected item _holding;
 
 
-   public virtual item holding() { 
+    public virtual item holding() {
         return _holding;
     }
 
 
 
-    public override INTERACT_TYPE type() { 
-        return INTERACT_TYPE.COUNTER; 
+    public override INTERACT_TYPE type() {
+        return INTERACT_TYPE.COUNTER;
     }
 
     public virtual void Start() {
@@ -26,23 +26,29 @@ public class counter : interactable, owner  {
 
     public override bool interact(owner src) {
 
-        var ret = false; 
+        var ret = false;
         do {
-            if (base.interact(src)) 
+            if (base.interact(src))
                 break;
-            var srcRecv = src.receive(holding());
-            if (srcRecv) {
-                remove(holding());
+            var holdingItem = holding();
+            if (holdingItem && src.receive(holdingItem)) {
+                remove(holdingItem);
+                ret = true;
+                break;
+            }
+            holdingItem = src.holding();
+            if (holdingItem && receive(holdingItem)) {
+                src.remove(holdingItem);
                 ret = true;
                 break;
             }
 
-            var dstRecv = receive(src.holding());
-            if (dstRecv) {
-                src.remove(src.holding());
-                ret = true;
-                break;
-            }
+            //var dstRecv = receive(src.holding());
+            //if (dstRecv) {
+            //    src.remove(src.holding());
+            //    ret = true;
+            //    break;
+            //}
 
 
             //if (_holding != null) {
@@ -70,12 +76,8 @@ public class counter : interactable, owner  {
     //    return null;
     //}
 
-    public virtual bool receive(item i)
-    {
-        if (i == null)
-            return false;
-        if (_holding != null)
-        {
+    public virtual bool receive(item i) {
+        if (_holding != null) {
             Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");
             return false;
         }
@@ -92,7 +94,7 @@ public class counter : interactable, owner  {
         item ret = null;
         do {
             if (i == null) {
-                if (_holding != null)  {
+                if (_holding != null) {
                     ret = _holding;
                     _holding = null;
                 }

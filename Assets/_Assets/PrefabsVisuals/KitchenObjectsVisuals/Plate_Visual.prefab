@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eaebcd94a947164bb4f184645e26513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _receipt: {fileID: 11400000, guid: 792a352d9474bef48a0c6c524579399c, type: 2}
+  _cnf: {fileID: 11400000, guid: 792a352d9474bef48a0c6c524579399c, type: 2}
   _progress: 0
+  _cnfArray: []
+  _msk: 0
+  _curLayoutOffset: 0.1
 --- !u!1001 &3098205093739279250
 PrefabInstance:
   m_ObjectHideFlags: 0
