@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.126
       objectReference: {fileID: 0}
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
@@ -135,7 +135,7 @@ MonoBehaviour:
   _highlight: {fileID: 1366101862742783362}
   _objAnchor: {fileID: 1116470114734467736}
   _holding: {fileID: 0}
-  _receipt: {fileID: 11400000, guid: 4b6d095e812a5ce4d916e1750d4a25fd, type: 2}
+  _itemCnf: {fileID: 11400000, guid: 4b6d095e812a5ce4d916e1750d4a25fd, type: 2}
   _counterAnim: {fileID: 0}
 --- !u!4 &1116470114734467736 stripped
 Transform:
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c837089d4b3514ca68a8cda359642a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animTrigger: 
+  _animTrigger: OpenClose
   _animator: {fileID: 0}
   _playing: 0
 --- !u!4 &1548605169803721587 stripped

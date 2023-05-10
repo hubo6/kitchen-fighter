@@ -371,11 +371,11 @@ MonoBehaviour:
   _highlight: {fileID: 5793560133479391316}
   _objAnchor: {fileID: 5615423579848539982}
   _holding: {fileID: 0}
-  _receiptCnfs:
+  _processableCnfs:
   - {fileID: 11400000, guid: c896c533d46a4ce4bbc43508dc69986e, type: 2}
   - {fileID: 11400000, guid: b447f30ca04b55e4d8256d425dae6afe, type: 2}
   _progressBar: {fileID: 7636012002062078777}
-  _holdingReciptCnf: {fileID: 0}
+  _holdingCnf: {fileID: 0}
   _glowShim: {fileID: 7321055020275238658}
   _splash: {fileID: 3303083995111248011}
 --- !u!4 &5615423579848539982 stripped

@@ -16,5 +16,5 @@ MonoBehaviour:
   msk: 3
   type: 2
   icon: {fileID: 21300000, guid: f1f50c7ef90b19741b26f2040806cf56, type: 3}
-  height: 1
+  height: 0.1
   stat: 1

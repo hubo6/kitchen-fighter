@@ -239,7 +239,7 @@ MonoBehaviour:
   _highlight: {fileID: 5918187334057537462}
   _objAnchor: {fileID: 5740543365937180844}
   _holding: {fileID: 0}
-  _receipt: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0, type: 2}
+  _itemCnf: {fileID: 11400000, guid: 3f885600b60b89744902cbddf3cfdcc0, type: 2}
   _counterAnim: {fileID: 0}
 --- !u!4 &5740543365937180844 stripped
 Transform:
