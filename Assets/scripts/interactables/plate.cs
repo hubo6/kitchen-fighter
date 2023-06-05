@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class plate : item, owner {
     [SerializeField] itemCnf[] _cnfArray;
@@ -11,6 +13,9 @@ public class plate : item, owner {
     [SerializeField] int _msk = 0;
     [SerializeField] static float _layoutOffset = 0.1f;
     [SerializeField] float _curLayoutOffset = _layoutOffset;
+
+    [SerializeField] Transform _template;
+    [SerializeField] GameObject _icons_ui;
 
     public int msk { get => _msk; }
 
@@ -32,7 +37,14 @@ public class plate : item, owner {
             newList.AddLast(i);
             _contained[i.cnf.msk] = newList;
         }
+
         var dish = gameMgr.ins.plateReArrange(this);
+
+        var icon = Instantiate(_template, _icons_ui.transform);
+        icon.gameObject.SetActive(true);
+        icon.Find("pic").GetComponent<Image>().sprite = i.cnf.icon;
+        if(!_icons_ui.activeSelf)  _icons_ui.SetActive(true);
+      
         Debug.LogFormat($"{gameObject.tag} redish:{dish}");
         return true;
     }
@@ -45,6 +57,9 @@ public class plate : item, owner {
     void Start() {
         //foreach (var i in _cnfArray)
         //    _cnf.Add(i.msk, 1);
+        _icons_ui.SetActive(false);
+        Assert.IsTrue(_template);
+        Assert.IsTrue(_icons_ui);
     }
 
     public void clear(out List<item> cleared) {
@@ -55,6 +70,9 @@ public class plate : item, owner {
             foreach (var i in list.Value)
                 cleared.Add(i);
         _contained.Clear();
+        foreach (Transform child in _icons_ui.transform)
+            if(child.gameObject.activeSelf) Destroy(child.gameObject);
+        _icons_ui.SetActive(false);
     }
 
     public void rearrange(DishSchema sch) {

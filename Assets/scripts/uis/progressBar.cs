@@ -23,11 +23,4 @@ public class progressBar : MonoBehaviour {
     public bool displaying() {
         return gameObject.activeSelf;
     }
-
-    private void LateUpdate() {
-        if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.forward)) < 90)
-            transform.forward = Camera.main.transform.forward;
-        else
-            transform.forward = -Camera.main.transform.forward;
-    }
 }

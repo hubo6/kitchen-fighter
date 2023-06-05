@@ -86,12 +86,21 @@ public class player : MonoBehaviour, owner {
                 break;
             }
             if (_holding.cnf.type == ITEM_TYPE.PLATE) { //_holding combination validation here
-                if (i.cnf.type == ITEM_TYPE.PLATE || i.cnf.type == ITEM_TYPE.RAW || i.cnf.type == ITEM_TYPE.BURNT)
-                    break;
-                var plate = (plate)_holding;
-                ret = plate.receive(i);
+                ret = (_holding as plate).receive(i);
                 break;
             }
+
+            if (_holding.cnf.type == ITEM_TYPE.PROCESSED && i.cnf.type == ITEM_TYPE.PLATE) {
+                (i as plate).receive(_holding);
+
+                i.transform.SetParent(_objAnchor);
+                i.transform.localPosition = Vector3.zero;
+                _holding = i;
+                ret = true;
+                break;
+            }
+
+
             Debug.LogWarning($"receive {_holding.name} failed exists in {transform.name}.");
         } while (false);
         return ret;
