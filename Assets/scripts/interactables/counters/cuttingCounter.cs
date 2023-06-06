@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
 public class cuttingCounter : counter {
@@ -13,15 +14,11 @@ public class cuttingCounter : counter {
     [SerializeField] protected counterAnim _counterAnim;
     [SerializeField] processableCnf _holdingCnf;
     public override void Start() {
-        if (_progressBar == null)
-            throw new System.Exception($"_progress absent in {transform.name}.");
+        Assert.IsTrue(_progressBar);
         _counterAnim = GetComponentInChildren<counterAnim>();
-        if (_counterAnim == null)
-            throw new System.Exception($"counter itemCnf is null");
-
-        foreach (var c in _cnfs)
-            _cnfsMap[c.input.msk] = c;
-
+        Assert.IsTrue(_counterAnim);
+        _progressBar.gameObject.SetActive(false);
+        foreach (var c in _cnfs) _cnfsMap[c.input.msk] = c;
         _counterAnim.OnAnimEvt += () => {
             var progress = holding().updateProgress(1);
             Debug.Log($"cutting for {holding().cnf} -> {_holdingCnf.output} progress {progress}");

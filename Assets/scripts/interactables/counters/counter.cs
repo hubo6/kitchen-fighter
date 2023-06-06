@@ -42,39 +42,9 @@ public class counter : interactable, owner {
                 ret = true;
                 break;
             }
-
-            //var dstRecv = receive(src.holding());
-            //if (dstRecv) {
-            //    src.remove(src.holding());
-            //    ret = true;
-            //    break;
-            //}
-
-
-            //if (_holding != null) {
-            //    var srcRecv = src.receive(_holding);
-            //    if (!srcRecv)
-            //        break;
-            //    remove(_holding);
-            //    ret = true;
-            //    break;
-            //}
-            //var rm = src.remove();
-            //if (!rm) break;
-
-            //var recv =  receive(rm);
-            //if (!recv) {
-            //    src.receive(rm);
-            //    break;
-            //}
-            //ret = true;
         } while (false);
         return ret;
     }
-
-    //public virtual item _holding(item i = null) {//todo
-    //    return null;
-    //}
 
     public virtual bool receive(item i) {
         if (_holding != null) {

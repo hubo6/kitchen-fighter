@@ -62,6 +62,7 @@
     <Compile Include="Assets\scripts\interactables\counters\counter.cs" />
     <Compile Include="Assets\scripts\interactables\plate.cs" />
     <Compile Include="Assets\scripts\player\charAnim.cs" />
+    <Compile Include="Assets\scripts\interactables\counters\deliveryCounter.cs" />
     <Compile Include="Assets\scripts\player\movement.cs" />
     <Compile Include="Assets\scripts\utils\lookAtCam.cs" />
     <Compile Include="Assets\scripts\interactables\counters\counterAnim.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Assets\scripts\mgrs\gameMgr.cs" />
     <Compile Include="Assets\scripts\interactables\counters\trashCan.cs" />
     <Compile Include="Assets\scripts\interactables\interactable.cs" />
-    <Compile Include="Assets\plateGen.cs" />
     <Compile Include="Assets\scripts\utils\utils.cs" />
     <Compile Include="Assets\scripts\scriptables\processableCnf.cs" />
     <Compile Include="Assets\scripts\interactables\processable.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Assets\scripts\interactables\item.cs" />
     <Compile Include="Assets\scripts\player\player.cs" />
     <Compile Include="Assets\scripts\scriptables\itemCnf.cs" />
+    <Compile Include="Assets\scripts\interactables\counters\plateGen.cs" />
     <Compile Include="Assets\scripts\utils\MonoSingleton.cs" />
     <Compile Include="Assets\scripts\uis\progressBar.cs" />
     <Compile Include="Assets\scripts\interactables\counters\plateCounter.cs" />

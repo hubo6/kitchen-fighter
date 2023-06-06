@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
 public class heatPanCounter : counter {
@@ -14,34 +15,18 @@ public class heatPanCounter : counter {
     [SerializeField] GameObject _glowShim;
     [SerializeField] GameObject _splash;
 
-    //protected processableCnf getReceiptCnfByInput(itemCnf cnf) {
-    //    processableCnf reciptCnf = null;
-    //    for (var i = 0; i < _processableCnfs.Length; i++)
-    //    {
-    //        if (_processableCnfs[i].input == cnf)
-    //        {
-    //            reciptCnf = _processableCnfs[i];
-    //            break;
-    //        }
-    //    }
-    //    return reciptCnf;
-    //}
-
     protected IEnumerator progress(processableCnf cnf) {
         yield return null;
 
     }
 
     public override void Start() {
-        if (_progressBar == null)
-            throw new System.Exception($"_progress absent in {transform.name}.");
-        processableCnf defect = Array.Find(_processableCnfs, i => {
+        Assert.IsTrue(_progressBar);
+        Assert.IsFalse(Array.Find(_processableCnfs, i => {
             return i.input.msk != ITEM_MSK.MEAT_PIE && (i.input.type != ITEM_TYPE.RAW || i.input.type != ITEM_TYPE.PROCESSED);
-        });
-        if (defect)
-            throw new System.Exception($"{transform.name} disfunction with {defect}");
-        foreach (var p in _processableCnfs)
-            _processableCnfsMap.Add(p.input, p);
+        }));
+        _progressBar.gameObject.SetActive(false);
+        foreach (var p in _processableCnfs) _processableCnfsMap.Add(p.input, p);
     }
 
     public override bool receive(item item) {
