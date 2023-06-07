@@ -222,6 +222,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: uis
       objectReference: {fileID: 0}
+    - target: {fileID: 6265423665397749196, guid: 9720061df6a6d9146a1652f95437d85c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -271,7 +276,7 @@ PrefabInstance:
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
@@ -377,6 +382,7 @@ MonoBehaviour:
   _cnfs:
   - {fileID: 11400000, guid: dec9a0d1f1de21b4d94fb0c2671c6b69, type: 2}
   - {fileID: 11400000, guid: 7d316c94c674d2e47b95b10eeab572c6, type: 2}
+  - {fileID: 11400000, guid: 104691302a6d9f5409dc3aa640c813b6, type: 2}
   _progressBar: {fileID: 5191949725077021036}
   _counterAnim: {fileID: 0}
   _holdingCnf: {fileID: 0}

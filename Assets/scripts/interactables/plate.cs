@@ -75,7 +75,7 @@ public class plate : item, owner {
         _icons_ui.SetActive(false);
     }
 
-    public void rearrange(DishSchema sch) {
+    public void rearrange(dishSchema sch) {
         _curLayoutOffset = _layoutOffset;
         foreach (var i in sch.dishOrder) {
             if (!_contained.TryGetValue(i.msk, out LinkedList<item> itemList))

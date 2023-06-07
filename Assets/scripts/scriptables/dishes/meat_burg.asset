@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100915b4c48f8da468c26ba307b7d372, type: 3}
+  m_Name: meat_burg
+  m_EditorClassIdentifier: 
+  dishOrder:
+  - {fileID: 11400000, guid: 40e1aa484a6d6454d8ada6a6f1691c42, type: 2}
+  - {fileID: 11400000, guid: 154fc0fef7459a544b1b07ba46aa5278, type: 2}
+  - {fileID: 11400000, guid: 290d1c6c4876b504e944da7087153e9b, type: 2}
+  - {fileID: 11400000, guid: 6d1528c2579c5064c94d3ad0e2442a70, type: 2}
+  waitingTime: 180
+  dishName: meatBurg

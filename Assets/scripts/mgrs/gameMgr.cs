@@ -6,25 +6,26 @@ using UnityEngine;
 
 
 [Serializable]
-public class itemCnfV2 {
-    public itemCnf[] _refV1;
-}
+//public class itemCnfV2 {
+//    public itemCnf[] _refV1;
+//}
 
-public class DishSchema {
-    public List<itemCnf> dishOrder = new List<itemCnf>();
-    public int msk = 0;
-    public DishSchema(IEnumerator<itemCnf> itr) {
-        while (itr.MoveNext()) {
-            dishOrder.Add(itr.Current);
-            msk |= 1 << (int)itr.Current.msk;
-        };
-    }
-}
+//public class DishSchema {
+//    public List<itemCnf> dishOrder = new List<itemCnf>();
+//    public int msk = 0;
+//    public DishSchema(IEnumerator<itemCnf> itr) {
+//        while (itr.MoveNext()) {
+//            dishOrder.Add(itr.Current);
+//            msk |= 1 << (int)itr.Current.msk;
+//        };
+//    }
+//}
 
 public class gameMgr : MonoSingleton<gameMgr> {
     // Start is called before the first frame update
-    [SerializeField] itemCnfV2[] _testDishCnfsV2; 
-    [SerializeField] Dictionary<int, DishSchema> _dishCnfsMap= new Dictionary<int, DishSchema>();
+   // [SerializeField] itemCnfV2[] _testDishCnfsV2;
+    [SerializeField] dishSchema[] _dishSchemas;
+    [SerializeField] Dictionary<int, dishSchema> _dishCnfsMap= new Dictionary<int, dishSchema>();
     public void onInteractableChged(interactable p, interactable n) {
         Debug.Log($"highlight: {p?.transform.tag} -> {n?.transform.tag}");
         p?.highlight(false);
@@ -32,7 +33,7 @@ public class gameMgr : MonoSingleton<gameMgr> {
     }
 
     public bool plateReArrange(plate p) {
-        DishSchema sch = null;
+        dishSchema sch = null;
         foreach (var d in _dishCnfsMap) {
             if ((p.msk & d.Key) == p.msk) {
                 sch = d.Value;
@@ -45,9 +46,10 @@ public class gameMgr : MonoSingleton<gameMgr> {
     }
 
     public void Start() {
-        foreach (var cnfv1 in _testDishCnfsV2) { 
-            var dish = new DishSchema(cnfv1._refV1.Cast<itemCnf>().GetEnumerator());
-            _dishCnfsMap.Add(dish.msk, dish); 
+        foreach (var dish in _dishSchemas) {
+            int msk = 0;
+            foreach (var cnf in dish.dishOrder) msk |= 1 << (int)cnf.msk;  
+            _dishCnfsMap.Add(msk, dish); 
         }
  
     }

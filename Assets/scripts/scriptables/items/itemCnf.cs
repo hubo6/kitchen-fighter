@@ -27,4 +27,5 @@ public enum ITEM_MSK {
     CHEESE,
     MEAT_PIE,
     BREAD,
+    CABBAGE,
 }

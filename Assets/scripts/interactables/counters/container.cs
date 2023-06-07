@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class container : counter {
     [SerializeField] itemCnf _itemCnf;
@@ -9,11 +10,9 @@ public class container : counter {
     // Start is called before the first frame update
     public override void Start() {
         base.Start();
-        if (_itemCnf == null)
-            throw new System.Exception($"counter itemCnf is null");
+        Assert.IsTrue(_itemCnf);
         _counterAnim = GetComponentInChildren<counterAnim>();
-        if (_counterAnim == null)
-            throw new System.Exception($"counter itemCnf is null");
+        Assert.IsTrue(_counterAnim);
         _counterAnim.OnAnimEvt += () => {
             receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
         };
