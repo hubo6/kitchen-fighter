@@ -26,6 +26,9 @@ public class gameMgr : MonoSingleton<gameMgr> {
    // [SerializeField] itemCnfV2[] _testDishCnfsV2;
     [SerializeField] dishSchema[] _dishSchemas;
     [SerializeField] Dictionary<int, dishSchema> _dishCnfsMap= new Dictionary<int, dishSchema>();
+
+    public dishSchema[] dishSchemas { get => _dishSchemas; }
+
     public void onInteractableChged(interactable p, interactable n) {
         Debug.Log($"highlight: {p?.transform.tag} -> {n?.transform.tag}");
         p?.highlight(false);

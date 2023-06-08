@@ -14,9 +14,9 @@ public class cuttingCounter : counter {
     [SerializeField] protected counterAnim _counterAnim;
     [SerializeField] processableCnf _holdingCnf;
     public override void Start() {
-        Assert.IsTrue(_progressBar);
+        Assert.IsNotNull(_progressBar);
         _counterAnim = GetComponentInChildren<counterAnim>();
-        Assert.IsTrue(_counterAnim);
+        Assert.IsNotNull(_counterAnim);
         _progressBar.gameObject.SetActive(false);
         foreach (var c in _cnfs) _cnfsMap[c.input.msk] = c;
         _counterAnim.OnAnimEvt += () => {

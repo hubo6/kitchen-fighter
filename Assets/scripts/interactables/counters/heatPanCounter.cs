@@ -21,8 +21,8 @@ public class heatPanCounter : counter {
     }
 
     public override void Start() {
-        Assert.IsTrue(_progressBar);
-        Assert.IsFalse(Array.Find(_processableCnfs, i => {
+        Assert.IsNotNull(_progressBar);
+        Assert.IsNull(Array.Find(_processableCnfs, i => {
             return i.input.msk != ITEM_MSK.MEAT_PIE && (i.input.type != ITEM_TYPE.RAW || i.input.type != ITEM_TYPE.PROCESSED);
         }));
         _progressBar.gameObject.SetActive(false);

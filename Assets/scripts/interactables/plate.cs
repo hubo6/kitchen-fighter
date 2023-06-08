@@ -58,8 +58,8 @@ public class plate : item, owner {
         //foreach (var i in _cnfArray)
         //    _cnf.Add(i.msk, 1);
         _icons_ui.SetActive(false);
-        Assert.IsTrue(_template);
-        Assert.IsTrue(_icons_ui);
+        Assert.IsNotNull(_template);
+        Assert.IsNotNull(_icons_ui);
     }
 
     public void clear(out List<item> cleared) {

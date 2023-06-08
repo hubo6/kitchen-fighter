@@ -10,9 +10,9 @@ public class container : counter {
     // Start is called before the first frame update
     public override void Start() {
         base.Start();
-        Assert.IsTrue(_itemCnf);
+        Assert.IsNotNull(_itemCnf);
         _counterAnim = GetComponentInChildren<counterAnim>();
-        Assert.IsTrue(_counterAnim);
+        Assert.IsNotNull(_counterAnim);
         _counterAnim.OnAnimEvt += () => {
             receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
         };
