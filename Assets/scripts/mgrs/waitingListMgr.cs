@@ -23,10 +23,10 @@ public class waitingListMgr : MonoSingleton<waitingListMgr> {
     [SerializeField] float _genGapSec = 1.0f;//test
     [SerializeField] float _timeStamp = 0f;//test
     [SerializeField] List<dishSchemaCounter> _toDel = new List<dishSchemaCounter>();
-    [SerializeField] Dictionary<dishSchemaCounter, float> _toUpdate = new Dictionary<dishSchemaCounter, float>();
+    [SerializeField] List<dishSchemaCounter> _toUpdate = new List<dishSchemaCounter>();
     public event Action<dishSchemaCounter> onAdd;
     public event Action<List<dishSchemaCounter>> onRm;
-    public event Action<Dictionary<dishSchemaCounter, float>> onUpdate;
+    public event Action<List<dishSchemaCounter>> onUpdate;
 
     void Start()
     {
@@ -47,7 +47,7 @@ public class waitingListMgr : MonoSingleton<waitingListMgr> {
                 _waiting.Remove(key);
             } else {
                 key.timepass += Time.deltaTime;
-                _toUpdate.Add(key, key.timepass);
+                _toUpdate.Add(key);
             }
         }
         if (_toDel.Count > 0) 
