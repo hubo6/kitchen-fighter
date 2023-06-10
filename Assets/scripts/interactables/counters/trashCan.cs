@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class trashCan : counter {
     // Start is called before the first frame update
-
+    [SerializeField] List<item> _clearedCache = new List<item>();
     protected IEnumerator fade(Transform item) {
         while (item.position.y > 0) {
             item.position -= Vector3.up * Time.deltaTime;
@@ -19,9 +19,9 @@ public class trashCan : counter {
         var ret = false;
         do {
             if (i.cnf.type == ITEM_TYPE.PLATE) {
-                ((plate)i).clear(out List<item> cleared);
+                ((plate)i).clear(_clearedCache);
                 float offset = 0;
-                foreach (var c in cleared) {
+                foreach (var c in _clearedCache) {
                     c.transform.SetParent(_objAnchor);
                     c.transform.localPosition = Vector3.zero + offset * Vector3.up;
                     offset += c.cnf.height;

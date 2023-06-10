@@ -76,16 +76,17 @@
     <Compile Include="Assets\scripts\interactables\counters\trashCan.cs" />
     <Compile Include="Assets\scripts\interactables\interactable.cs" />
     <Compile Include="Assets\scripts\utils\utils.cs" />
+    <Compile Include="Assets\scripts\mgrs\deliveryMgr.cs" />
     <Compile Include="Assets\scripts\interactables\counters\heatPanCounter.cs" />
     <Compile Include="Assets\scripts\mgrs\input.cs" />
     <Compile Include="Assets\scripts\interactables\item.cs" />
     <Compile Include="Assets\scripts\player\player.cs" />
     <Compile Include="Assets\scripts\scriptables\items\itemCnf.cs" />
     <Compile Include="Assets\scripts\interactables\counters\plateGen.cs" />
-    <Compile Include="Assets\scripts\mgrs\waitingListMgr.cs" />
     <Compile Include="Assets\scripts\utils\MonoSingleton.cs" />
     <Compile Include="Assets\scripts\uis\progressBar.cs" />
     <Compile Include="Assets\scripts\interactables\counters\plateCounter.cs" />
+    <Compile Include="Assets\soundMgr.cs" />
     <Compile Include="Assets\scripts\settings\inputControl.cs" />
     <Compile Include="Assets\scripts\interactables\counters\container.cs" />
   </ItemGroup>

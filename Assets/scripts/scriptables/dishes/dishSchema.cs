@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,4 +11,10 @@ public class dishSchema : ScriptableObject
     public float waitingTime;
     public string dishName;
     public Image icon;
+    public int msk = 0;
+
+    private void Awake() {
+        foreach (var d in dishOrder)
+            msk |= 1 << (int)d.msk;
+    }
 }

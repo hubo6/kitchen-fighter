@@ -24,18 +24,18 @@ public class waitingList : MonoBehaviour
         Assert.IsNotNull(_recipeTemplate);
         Assert.IsNotNull(_iconTemplate);
         Assert.IsNotNull(_list);
-        waitingListMgr.ins.onAdd += onAdd;
-        waitingListMgr.ins.onRm += onRm;
-        waitingListMgr.ins.onUpdate += onUpdate;
+        deliveryMgr.ins.onAdd += onAdd;
+        deliveryMgr.ins.onRm += onRm;
+        deliveryMgr.ins.onUpdate += onUpdate;
 
     }
     public void onAdd(dishSchemaCounter schema) {
        
         var item = Instantiate(_recipeTemplate, _list);
         item.gameObject.SetActive(true);
-        var icons = item.Find("body").Find("icons");
+        var icons = item.Find("icons");
         var name = item.GetComponentInChildren<TextMeshProUGUI>();
-        var progress = item.Find("process").Find("bar").GetComponent<Image>();
+        var progress = item.Find("name").Find("process").Find("bar").GetComponent<Image>();
         name.SetText(schema.schemaRef.dishName);
         foreach (var s in schema.schemaRef.dishOrder) {
             var icon = Instantiate(_iconTemplate, icons);

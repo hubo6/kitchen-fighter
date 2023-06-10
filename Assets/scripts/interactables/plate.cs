@@ -7,9 +7,10 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class plate : item, owner {
-    [SerializeField] itemCnf[] _cnfArray;
+    //[SerializeField] itemCnf[] _cnfArray;
     //[SerializeField] LinkedList<ITEM_MSK, float> _cnf = new Dictionary<ITEM_MSK, float>();
     [SerializeField] Dictionary<ITEM_MSK, LinkedList<item>> _contained = new Dictionary<ITEM_MSK, LinkedList<item>>();
+    [SerializeField] List<ITEM_MSK> _orderedContained = new List<ITEM_MSK>();
     [SerializeField] int _msk = 0;
     [SerializeField] static float _layoutOffset = 0.1f;
     [SerializeField] float _curLayoutOffset = _layoutOffset;
@@ -38,7 +39,7 @@ public class plate : item, owner {
             _contained[i.cnf.msk] = newList;
         }
 
-        var dish = gameMgr.ins.plateReArrange(this);
+        var dish = deliveryMgr.ins.plateReArrange(this);
 
         var icon = Instantiate(_template, _icons_ui.transform);
         icon.gameObject.SetActive(true);
@@ -62,25 +63,36 @@ public class plate : item, owner {
         Assert.IsNotNull(_icons_ui);
     }
 
-    public void clear(out List<item> cleared) {
-        cleared = new List<item>(); //cache list todo
+    public int clear(List<item> cleared, List<ITEM_MSK> withOrder = null) {
+        var ret = _msk;
         _msk = 0;
         _curLayoutOffset = _layoutOffset;
-        foreach (var list in _contained)
-            foreach (var i in list.Value)
-                cleared.Add(i);
+        if (cleared != null) {
+            cleared.Clear();
+            foreach (var list in _contained)
+                foreach (var i in list.Value)
+                    cleared.Add(i);
+        }
         _contained.Clear();
         foreach (Transform child in _icons_ui.transform)
             if(child.gameObject.activeSelf) Destroy(child.gameObject);
         _icons_ui.SetActive(false);
+        if (withOrder != null) {
+            withOrder.Clear();
+            _orderedContained.ForEach((i) => withOrder.Add(i));
+        }
+        _orderedContained.Clear();
+        return ret;
     }
 
     public void rearrange(dishSchema sch) {
+        _orderedContained.Clear();
         _curLayoutOffset = _layoutOffset;
         foreach (var i in sch.dishOrder) {
             if (!_contained.TryGetValue(i.msk, out LinkedList<item> itemList))
                 continue;
             foreach (var item in itemList) {
+                _orderedContained.Add(item.cnf.msk);
                 item.transform.localPosition = Vector3.up * _curLayoutOffset;
                 _curLayoutOffset += item.cnf.height;
             }

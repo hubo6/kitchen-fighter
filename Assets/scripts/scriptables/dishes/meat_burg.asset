@@ -17,5 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 154fc0fef7459a544b1b07ba46aa5278, type: 2}
   - {fileID: 11400000, guid: 290d1c6c4876b504e944da7087153e9b, type: 2}
   - {fileID: 11400000, guid: 6d1528c2579c5064c94d3ad0e2442a70, type: 2}
-  waitingTime: 180
+  waitingTime: 60
   dishName: meatBurg
+  icon: {fileID: 0}
+  msk: 30
