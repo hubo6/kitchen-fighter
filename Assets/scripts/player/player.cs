@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using static UnityEngine.InputSystem.InputAction;
 
 public class player : MonoBehaviour, owner {
@@ -48,11 +49,12 @@ public class player : MonoBehaviour, owner {
 
 
     void Start() {
-        input.ins.onInteract += (CallbackContext ctx) => { _interactable?.interact(this); };
+        Assert.IsNotNull(_objAnchor);
+        input.ins.onInteract += (CallbackContext ctx) => {  
+            _interactable?.interact(this); 
+        };
         input.ins.onProcess += (CallbackContext ctx) => { _interactable?.process(); };
         onInteractableChged += gameMgr.ins.onInteractableChged;
-
-        if (_objAnchor == null) throw new Exception($"{transform.tag} does not have a obj_anchor.");
     }
 
 

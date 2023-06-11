@@ -86,18 +86,19 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
         _timeStamp += Time.deltaTime;
         _toDel.Clear();
         _toUpdate.Clear();
-        var itr = _waitingList.GetEnumerator();
         foreach(var item in _waitingList) {
             if (item.timepass >= item.schemaRef.waitingTime) {
                 _toDel.Add(item);
-                _waitingList.Remove(item);
             } else {
                 item.timepass += Time.deltaTime;
                 _toUpdate.Add(item);
             }
         }
-        if (_toDel.Count > 0) 
+        if (_toDel.Count > 0) {
             onRm?.Invoke(_toDel);
+            _toDel.ForEach((i) => _waitingList.Remove(i));
+        }
+           
         if (_toUpdate.Count > 0) 
             onUpdate?.Invoke(_toUpdate);
         if (_timeStamp > _genGapSec) {

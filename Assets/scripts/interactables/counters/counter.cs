@@ -9,6 +9,9 @@ public class counter : interactable, owner {
 
     [SerializeField] protected item _holding;
 
+    public event Action<Transform> onPick;
+    public event Action<Transform> onDrop;
+
 
     public virtual item holding() {
         return _holding;
@@ -56,6 +59,7 @@ public class counter : interactable, owner {
         itemTrans.SetParent(_objAnchor);
         itemTrans.localPosition = Vector3.zero;
         Debug.Log($"received {_holding.name} {transform.name}.");
+        onDrop?.Invoke(transform);
         return true;
 
     }
@@ -77,6 +81,7 @@ public class counter : interactable, owner {
             _holding = null;
         } while (false);
         Debug.Log($"i removed {ret?.name} {transform.name} ret: {ret != null}.");
+        if(ret) onPick?.Invoke(transform);
         return ret;
     }
 }

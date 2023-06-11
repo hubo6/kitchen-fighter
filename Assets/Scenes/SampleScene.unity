@@ -151,7 +151,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6823652363143628624}
   - {fileID: 429859911}
+  - {fileID: 1821019345}
   - {fileID: 1750919902}
   - {fileID: 680484439}
   - {fileID: 1781156420}
@@ -163,23 +165,21 @@ Transform:
   - {fileID: 1674337192}
   - {fileID: 644283767}
   - {fileID: 2013962791}
-  - {fileID: 553040934}
-  - {fileID: 351967738}
-  - {fileID: 1005370034}
-  - {fileID: 2124325040}
-  - {fileID: 1660171235}
-  - {fileID: 1512102011}
-  - {fileID: 1289144613}
+  - {fileID: 284512626}
   - {fileID: 1670351263}
-  - {fileID: 1821019345}
+  - {fileID: 553040934}
+  - {fileID: 1185566375}
+  - {fileID: 1512102011}
+  - {fileID: 351967738}
+  - {fileID: 2124325040}
+  - {fileID: 1005370034}
+  - {fileID: 1660171235}
+  - {fileID: 1289144613}
   - {fileID: 1042614445}
   - {fileID: 107295346}
   - {fileID: 1268885734}
   - {fileID: 1724056444}
-  - {fileID: 284512626}
-  - {fileID: 6823652363143628624}
   - {fileID: 308944276}
-  - {fileID: 1185566375}
   - {fileID: 2878067054592016316}
   m_Father: {fileID: 1836765283}
   m_RootOrder: -1
@@ -196,6 +196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: container_meat_pie (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912211087170814996, guid: a5f52b6232df9ff45b77b1a1b659748a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
       objectReference: {fileID: 0}
     - target: {fileID: 5912211087170814997, guid: a5f52b6232df9ff45b77b1a1b659748a,
         type: 3}
@@ -618,6 +623,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_cutting
       objectReference: {fileID: 0}
+    - target: {fileID: 5571982822544273084, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterCutting
+      objectReference: {fileID: 0}
     - target: {fileID: 5571982822544273085, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
         type: 3}
       propertyPath: m_RootOrder
@@ -725,7 +735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 35.46344, y: -96.04407}
+  m_AnchoredPosition: {x: 31, y: -72}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &317895520
@@ -778,6 +788,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: trash_can
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971719028093289276, guid: 5071e39b7e00750408650fd825b29f67,
+        type: 3}
+      propertyPath: m_TagString
+      value: TrashCan
       objectReference: {fileID: 0}
     - target: {fileID: 6971719028093289277, guid: 5071e39b7e00750408650fd825b29f67,
         type: 3}
@@ -1196,6 +1211,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -1280,6 +1300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -1830,6 +1855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074ad04258d1de744bc926eb199c41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cnf: {fileID: 11400000, guid: 8a2e8526893133645b2508abf729706a, type: 2}
 --- !u!1001 &929647604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1898,6 +1924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_cheese
       objectReference: {fileID: 0}
+    - target: {fileID: 4766707481471938579, guid: 83ef15f4b2c1b294aba151dbbfbf085f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1915,6 +1946,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: container_meat_pie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912211087170814996, guid: a5f52b6232df9ff45b77b1a1b659748a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
       objectReference: {fileID: 0}
     - target: {fileID: 5912211087170814997, guid: a5f52b6232df9ff45b77b1a1b659748a,
         type: 3}
@@ -2050,6 +2086,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_tomato (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 212303956006382119, guid: 9f06a65971655c04998f67a1f934878d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2135,6 +2176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_heatpan
       objectReference: {fileID: 0}
+    - target: {fileID: 4639203546016038897, guid: 1532ff49927bfcb4c8e1ca3b4da84911,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterHeatpan
+      objectReference: {fileID: 0}
     - target: {fileID: 8450544611335014727, guid: 1532ff49927bfcb4c8e1ca3b4da84911,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -2163,6 +2209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: container_burg
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037851697250071216, guid: 65b387f71cbb8544e9a9bd59eb1303ec,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
       objectReference: {fileID: 0}
     - target: {fileID: 3037851697250071217, guid: 65b387f71cbb8544e9a9bd59eb1303ec,
         type: 3}
@@ -2292,6 +2343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_cheese (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4766707481471938579, guid: 83ef15f4b2c1b294aba151dbbfbf085f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2315,6 +2371,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -2394,6 +2455,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_plate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990637771674744686, guid: c8c366b9b8d55a14faa9dbe04ffeb9bf,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterPlate
       objectReference: {fileID: 0}
     - target: {fileID: 4990637771674744687, guid: c8c366b9b8d55a14faa9dbe04ffeb9bf,
         type: 3}
@@ -2747,6 +2813,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -2928,6 +2999,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_burg (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3037851697250071216, guid: 65b387f71cbb8544e9a9bd59eb1303ec,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     - target: {fileID: 3037851697250071217, guid: 65b387f71cbb8544e9a9bd59eb1303ec,
         type: 3}
       propertyPath: m_RootOrder
@@ -3006,6 +3082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -3091,6 +3172,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cutting_counter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5571982822544273084, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterCutting
+      objectReference: {fileID: 0}
     - target: {fileID: 5571982822544273085, guid: 50d8f7903a53b404d8cc2cdd17ce2b1c,
         type: 3}
       propertyPath: m_RootOrder
@@ -3169,6 +3255,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -3304,6 +3395,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_cabbage
       objectReference: {fileID: 0}
+    - target: {fileID: 4766707481471938579, guid: e76885cb49d20824fa08b6557d760db3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3327,6 +3423,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -3407,6 +3508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -3485,6 +3591,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -3599,6 +3710,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -3678,6 +3794,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -3756,6 +3877,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_delivery
+      objectReference: {fileID: 0}
+    - target: {fileID: 1745287529086171752, guid: acc7a6fc988f6fb42b31192f5731e4d4,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterDelivery
       objectReference: {fileID: 0}
     - target: {fileID: 1745287529086171753, guid: acc7a6fc988f6fb42b31192f5731e4d4,
         type: 3}
@@ -3865,6 +3991,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_1 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -3943,6 +4074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
       objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
@@ -4348,6 +4484,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: container_tomato
       objectReference: {fileID: 0}
+    - target: {fileID: 212303956006382119, guid: 9f06a65971655c04998f67a1f934878d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4391,6 +4532,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297205344463903163, guid: fd9a6e7e136098745a30434c15fd1292,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7923771209138114424, guid: fd9a6e7e136098745a30434c15fd1292,
         type: 3}
@@ -4612,8 +4758,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.002380371, y: 50.886}
-  m_SizeDelta: {x: 0.0048, y: 101.77}
+  m_AnchoredPosition: {x: 0.002380371, y: 30.94}
+  m_SizeDelta: {x: 0.0048, y: 61.877}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5053569675685685056
 MonoBehaviour:
@@ -4764,6 +4910,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter
       objectReference: {fileID: 0}
+    - target: {fileID: 4803101353055787164, guid: c43c01480b2871242923c55f3ade37dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     - target: {fileID: 4803101353055787165, guid: c43c01480b2871242923c55f3ade37dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -4882,6 +5033,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_plate
       objectReference: {fileID: 0}
+    - target: {fileID: 4990637771674744686, guid: c8c366b9b8d55a14faa9dbe04ffeb9bf,
+        type: 3}
+      propertyPath: m_TagString
+      value: CounterPlate
+      objectReference: {fileID: 0}
     - target: {fileID: 4990637771674744687, guid: c8c366b9b8d55a14faa9dbe04ffeb9bf,
         type: 3}
       propertyPath: m_RootOrder
@@ -4962,8 +5118,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 35.547607, y: 53.98059}
-  m_SizeDelta: {x: 321.0952, y: 142.0389}
+  m_AnchoredPosition: {x: 35.547607, y: 73.060974}
+  m_SizeDelta: {x: 321.0952, y: 103.8781}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8945850201048387482
 CanvasRenderer:

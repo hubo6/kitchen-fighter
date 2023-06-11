@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class trashCan : counter {
     // Start is called before the first frame update
     [SerializeField] List<item> _clearedCache = new List<item>();
+    public new event Action<Transform> onDrop;
     protected IEnumerator fade(Transform item) {
         while (item.position.y > 0) {
             item.position -= Vector3.up * Time.deltaTime;
@@ -34,6 +36,7 @@ public class trashCan : counter {
             StartCoroutine(fade(i.transform));
             ret = true;
         } while (false);
+        if(ret) onDrop?.Invoke(transform);
         return ret;
 
 

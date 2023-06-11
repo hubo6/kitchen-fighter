@@ -13,13 +13,8 @@ public class input : MonoSingleton<input> {
     void Awake() {
         _inputCtrl = new inputControl();
         _inputCtrl.player.Enable();
-        _inputCtrl.player.interact.performed += (CallbackContext ctx) => {
-            if (ins.onInteract != null) ins.onInteract(ctx);
-        };
-
-        _inputCtrl.player.process.performed += (CallbackContext ctx) => {
-            if (ins.onProcess != null) ins.onProcess(ctx);
-        };
+        _inputCtrl.player.interact.performed += (CallbackContext ctx) => ins?.onInteract(ctx);
+        _inputCtrl.player.process.performed += (CallbackContext ctx) => ins?.onProcess(ctx);
     }
 
     // Update is called once per frame
@@ -28,10 +23,6 @@ public class input : MonoSingleton<input> {
     }
 
     public void updateInput(ref Vector3 input) {
-        //if (_inputCtrl == null) {
-        //    _inputCtrl = new Input_control();
-        //    _inputCtrl.player.Enable();
-        //}
         var inputV2 = _inputCtrl.player.move.ReadValue<Vector2>();
         input.x = inputV2.x;
         input.y = 0;
