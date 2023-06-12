@@ -81,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 3051426278963582900, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.329
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4022833529681643694, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
@@ -135,7 +135,7 @@ MonoBehaviour:
   _highlight: {fileID: 4192711824401739029}
   _objAnchor: {fileID: 2856585017047757327}
   _holding: {fileID: 0}
-  _receipt: {fileID: 0}
+  _itemCnf: {fileID: 0}
   _counterAnim: {fileID: 0}
 --- !u!4 &3037851697250071217 stripped
 Transform:

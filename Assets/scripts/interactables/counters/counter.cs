@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class counter : interactable, owner {
     // Start is called before the first frame update
@@ -9,8 +10,8 @@ public class counter : interactable, owner {
 
     [SerializeField] protected item _holding;
 
-    public event Action<Transform> onPick;
-    public event Action<Transform> onDrop;
+    public static event Action<Transform> onPick;
+    public static event Action<Transform> onDrop;
 
 
     public virtual item holding() {

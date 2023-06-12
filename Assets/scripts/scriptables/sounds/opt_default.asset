@@ -33,7 +33,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4b70ec0f0afb9ac4ea7dfea07aca4eb4, type: 3}
   - {fileID: 8300000, guid: 6024ba1d53d005f48a96b3a9f6bacedd, type: 3}
   container: []
-  heatpanSizzle: {fileID: 8300000, guid: 511c1cbfb8b48b64083aec78fe17115f, type: 3}
+  heatpanSizzle:
+  - {fileID: 8300000, guid: 511c1cbfb8b48b64083aec78fe17115f, type: 3}
   success:
   - {fileID: 8300000, guid: 50205ffe58351d244bbcbd725dbfa802, type: 3}
   - {fileID: 8300000, guid: 4b22bfbdbacfa0445bc9bbfbb0141085, type: 3}

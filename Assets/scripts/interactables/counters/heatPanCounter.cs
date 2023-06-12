@@ -14,6 +14,8 @@ public class heatPanCounter : counter {
     [SerializeField] processableCnf _holdingCnf;
     [SerializeField] GameObject _glowShim;
     [SerializeField] GameObject _splash;
+    [SerializeField] AudioSource _audio;
+    //public static event Action<Transform> onSizzle;
 
     protected IEnumerator progress(processableCnf cnf) {
         yield return null;
@@ -22,6 +24,7 @@ public class heatPanCounter : counter {
 
     public override void Start() {
         Assert.IsNotNull(_progressBar);
+        Assert.IsNotNull(_audio);
         Assert.IsNull(Array.Find(_processableCnfs, i => {
             return i.input.msk != ITEM_MSK.MEAT_PIE && (i.input.type != ITEM_TYPE.RAW || i.input.type != ITEM_TYPE.PROCESSED);
         }));
@@ -31,8 +34,12 @@ public class heatPanCounter : counter {
 
     public override bool receive(item item) {
         var ret = item.cnf.msk == ITEM_MSK.MEAT_PIE && base.receive(item);
-        if (ret)
+        if (ret) 
             _processableCnfsMap.TryGetValue(item.cnf, out _holdingCnf);
+        if(item.cnf.msk == ITEM_MSK.MEAT_PIE && item.cnf.type == ITEM_TYPE.RAW)
+            _audio.Play();
+        else
+            _audio.Stop();
         return ret;
     }
 
@@ -41,6 +48,7 @@ public class heatPanCounter : counter {
         if (ret) {
             _progressBar.display(false);
             _holdingCnf = null;
+            _audio.Stop();
         }
         return ret;
     }
@@ -54,6 +62,7 @@ public class heatPanCounter : counter {
 
         _glowShim.SetActive(true);
         var progress = holding().updateProgress(Time.deltaTime);
+        //onSizzle?.Invoke(transform);
         if (holding().cnf.stat == 0)
             _progressBar.progress(progress / _holdingCnf.progress);
         //if (_holding.itemCnf.stat == 1) //warning

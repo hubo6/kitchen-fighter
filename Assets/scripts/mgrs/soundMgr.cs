@@ -11,26 +11,27 @@ public class soundMgr : MonoSingleton<soundMgr>
     void Start()
     {
         Assert.IsNotNull(_cnf);
-        var objs = GameObject.FindGameObjectsWithTag("Counter");
-        foreach (var i in objs) {
-            var counter = i.GetComponent<counter>();
-            counter.onPick += onPick;
-            counter.onDrop += onDrop;
-        }
+        //var objs = GameObject.FindGameObjectsWithTag("Counter");
+        //foreach (var i in objs) {
+        //    var counter = i.GetComponent<counter>();
+        //    counter.onPick += onPick;
+        //    counter.onDrop += onDrop;
+        //}
 
-        objs = GameObject.FindGameObjectsWithTag("Container");
-        foreach (var i in objs) {
-            var counter = i.GetComponent<counter>();
-            counter.onPick += onPick;
-            counter.onDrop += onDrop;
-        }
 
-        objs = GameObject.FindGameObjectsWithTag("TrashCan");
-        foreach (var i in objs) {
-            var counter = i.GetComponent<trashCan>();
-            counter.onDrop += onDump;
-        }
 
+        //objs = GameObject.FindGameObjectsWithTag("Container");
+        //foreach (var i in objs) {
+        //    var counter = i.GetComponent<counter>();
+        //    counter.onPick += onPick;
+        //    counter.onDrop += onDrop;
+        //}
+        counter.onPick += onPick;
+        counter.onDrop += onDrop;
+
+        cuttingCounter.onChop += onChop;
+        trashCan.onDrop += onDump;
+        //heatPanCounter.onSizzle += onHeadPanSizzle;
         //var player = obj.GetComponent<player>();
         //player.onPick += onPick;
         //player.onDrop += onDrop;
@@ -49,14 +50,17 @@ public class soundMgr : MonoSingleton<soundMgr>
     void onContainer() { 
     }
 
-    void onHeadPanSizzle() { 
+    void onHeadPanSizzle(Transform t) {
+        play(_cnf.heatpanSizzle, t.position);
     }
 
-     void onMove() {
-        
+     public void onMove(Transform t) {
+        play(_cnf.move, t.position);
     }
 
-    void onChop() { }
+    void onChop(Transform t) {
+        play(_cnf.chop, t.position);
+    }
 
     void onDump(Transform t) {
         play(_cnf.dump, t.position);

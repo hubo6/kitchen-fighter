@@ -13,6 +13,7 @@ public class cuttingCounter : counter {
     [SerializeField] progressBar _progressBar;
     [SerializeField] protected counterAnim _counterAnim;
     [SerializeField] processableCnf _holdingCnf;
+    public static event Action<Transform> onChop;
     public override void Start() {
         Assert.IsNotNull(_progressBar);
         _counterAnim = GetComponentInChildren<counterAnim>();
@@ -22,6 +23,7 @@ public class cuttingCounter : counter {
         _counterAnim.OnAnimEvt += () => {
             var progress = holding().updateProgress(1);
             Debug.Log($"cutting for {holding().cnf} -> {_holdingCnf.output} progress {progress}");
+            onChop?.Invoke(transform);
             if (progress < _holdingCnf.progress) {
                 _progressBar.progress((float)progress / _holdingCnf.progress);
                 return;
