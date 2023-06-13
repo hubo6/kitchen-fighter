@@ -83,6 +83,8 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
     // Update is called once per frame
     void Update()
     {
+        if (gameMgr.ins.stage != gameMgr.STAGE.STARTED)
+            return;
         _timeStamp += Time.deltaTime;
         _toDel.Clear();
         _toUpdate.Clear();
