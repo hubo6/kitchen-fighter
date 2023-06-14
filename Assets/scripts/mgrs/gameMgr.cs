@@ -7,6 +7,14 @@ using UnityEngine;
 public class gameMgr : MonoSingleton<gameMgr> {
 
 
+    public enum SCENE { 
+        HELLO,
+        MAIN,
+        GAME,
+        LOADING,
+    }
+
+
     public enum STAGE { 
             INITIAL = 0,
             LOADING,
@@ -17,45 +25,54 @@ public class gameMgr : MonoSingleton<gameMgr> {
     }
     [SerializeField] STAGE _stage = STAGE.INITIAL;
     public event Action<int> onTimerSecChg;
+    public event Action<STAGE> onStageChg;
     [SerializeField] float[] _timerStamp = { 0f, 3.0f, 180f};
+    [SerializeField] float _score = 0;
 
 
-    public STAGE stage { get => _stage; }
+    public STAGE stage { get => _stage; private set {
+            var chg = value != _stage; 
+            _stage = value;
+            if (chg) onStageChg?.Invoke(_stage);
+        } }
+
+    public float score { get => _score; set => _score = value; }
+    public float[] timerStamp { get => _timerStamp; set => _timerStamp = value; }
 
     public bool running() { return _stage == STAGE.STARTED; }
     private void Start() {
-        _stage = STAGE.INITIAL;
+        stage = STAGE.INITIAL;
         _timerStamp[0] = _timerStamp[1];
     }
 
     private void Update() {
         do {
-            if (_stage == STAGE.INITIAL) {
-                _stage = STAGE.LOADING;
+            if (stage == STAGE.INITIAL) {
+                stage = STAGE.LOADING;
                 break;
             }
 
-            if (_stage == STAGE.LOADING) {
-                _stage = STAGE.COUNT;
+            if (stage == STAGE.LOADING) {
+                stage = STAGE.COUNT;
                 break;
             }
-            if (_stage == STAGE.COUNT) {
+            if (stage == STAGE.COUNT) {
                 var curInt = (int)(_timerStamp[0] + 1);
                 _timerStamp[0] -= Time.deltaTime;
                 var nextInt = (int)(_timerStamp[0] + 1);
                 if (curInt - nextInt == 1) 
                     onTimerSecChg?.Invoke(curInt - 1);
                 if (curInt == 0) {
-                    _stage = STAGE.STARTED;
+                    stage = STAGE.STARTED;
                     _timerStamp[0] = 0;
                 }
                 break;
             }
 
-            if (_stage == STAGE.STARTED) {
+            if (stage == STAGE.STARTED) {
                 _timerStamp[0] += Time.deltaTime;
                 if (_timerStamp[0] >= _timerStamp[2]) {
-                    _stage = STAGE.END;
+                    stage = STAGE.END;
                     _timerStamp[0] = _timerStamp[1];
                 }
                 break;

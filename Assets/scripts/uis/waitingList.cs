@@ -21,12 +21,17 @@ public class waitingList : MonoBehaviour
     Dictionary<dishSchemaCounter, transformBarPair> _cache = new Dictionary<dishSchemaCounter, transformBarPair>();
 
     private void Start() {
+        gameObject.SetActive(false);
         Assert.IsNotNull(_recipeTemplate);
         Assert.IsNotNull(_iconTemplate);
         Assert.IsNotNull(_list);
         deliveryMgr.ins.onAdd += onAdd;
         deliveryMgr.ins.onRm += onRm;
         deliveryMgr.ins.onUpdate += onUpdate;
+        gameMgr.ins.onStageChg += (gameMgr.STAGE s) => {
+            if(s == gameMgr.STAGE.STARTED)
+                gameObject.SetActive(true);
+        };
 
     }
     public void onAdd(dishSchemaCounter schema) {

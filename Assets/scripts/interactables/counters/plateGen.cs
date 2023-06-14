@@ -21,6 +21,8 @@ public class plateGen : item {
 
     // Update is called once per frame
     void Update() {
+        if (!gameMgr.ins.running())
+            return;
         if (generatedCnt == _max)
             return;
         _stamp += Time.deltaTime;
