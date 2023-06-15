@@ -14,6 +14,9 @@ public class cuttingCounter : counter {
     [SerializeField] protected counterAnim _counterAnim;
     [SerializeField] processableCnf _holdingCnf;
     public static event Action<Transform> onChop;
+    public static new void resetEvt() {
+        onChop = null;
+    }
     public override void Start() {
         Assert.IsNotNull(_progressBar);
         _counterAnim = GetComponentInChildren<counterAnim>();

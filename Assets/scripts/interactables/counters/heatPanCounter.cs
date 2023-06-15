@@ -15,7 +15,6 @@ public class heatPanCounter : counter {
     [SerializeField] GameObject _glowShim;
     [SerializeField] GameObject _splash;
     [SerializeField] AudioSource _audio;
-    //public static event Action<Transform> onSizzle;
 
     protected IEnumerator progress(processableCnf cnf) {
         yield return null;

@@ -14,6 +14,7 @@ public class loadingScene : MonoBehaviour {
     void Start() {
         Assert.IsNotNull(_process);
         Assert.IsNotNull(_txt);
+        staticResetMgr.resetEnv();
         StartCoroutine(loading(3));
     }
 

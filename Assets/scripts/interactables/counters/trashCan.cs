@@ -2,19 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class trashCan : counter {
     // Start is called before the first frame update
     [SerializeField] List<item> _clearedCache = new List<item>();
     public static new event Action<Transform> onDrop;
+    public static new void resetEvt() {
+        onDrop = null;
+    }
     protected IEnumerator fade(Transform item) {
         while (item.position.y > 0) {
             item.position -= Vector3.up * Time.deltaTime;
             yield return null;
         }
         Destroy(item.gameObject);
-
     }
 
     public override bool receive(item i) {

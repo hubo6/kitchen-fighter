@@ -6,15 +6,19 @@ using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class input : MonoSingleton<input> {
-    [SerializeField] inputControl _inputCtrl;
+    [SerializeField] static inputControl _inputCtrl;
     public event Action<CallbackContext> onInteract;
     public event Action<CallbackContext> onProcess;
+    public event Action<CallbackContext> onPause;
     // Start is called before the first frame update
     void Awake() {
-        _inputCtrl = new inputControl();
-        _inputCtrl.player.Enable();
-        _inputCtrl.player.interact.performed += (CallbackContext ctx) => ins?.onInteract(ctx);
-        _inputCtrl.player.process.performed += (CallbackContext ctx) => ins?.onProcess(ctx);
+        if (_inputCtrl == null) {
+            _inputCtrl = new inputControl();
+            _inputCtrl.player.Enable();
+            _inputCtrl.player.interact.performed += (CallbackContext ctx) => ins?.onInteract(ctx);
+            _inputCtrl.player.process.performed += (CallbackContext ctx) => ins?.onProcess(ctx);
+            _inputCtrl.player.pause.performed += (CallbackContext ctx) => ins?.onPause(ctx);
+        }
     }
 
     // Update is called once per frame

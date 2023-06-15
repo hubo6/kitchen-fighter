@@ -53,6 +53,15 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""965b6011-5bcb-421a-a2b4-6f3006f823a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
                     ""action"": ""process"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6c4633d-1aa4-40bb-8f42-bb63afa68d2c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
         m_player_move = m_player.FindAction("move", throwIfNotFound: true);
         m_player_interact = m_player.FindAction("interact", throwIfNotFound: true);
         m_player_process = m_player.FindAction("process", throwIfNotFound: true);
+        m_player_pause = m_player.FindAction("pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_move;
     private readonly InputAction m_player_interact;
     private readonly InputAction m_player_process;
+    private readonly InputAction m_player_pause;
     public struct PlayerActions
     {
         private @inputControl m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
         public InputAction @move => m_Wrapper.m_player_move;
         public InputAction @interact => m_Wrapper.m_player_interact;
         public InputAction @process => m_Wrapper.m_player_process;
+        public InputAction @pause => m_Wrapper.m_player_pause;
         public InputActionMap Get() { return m_Wrapper.m_player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
             @process.started += instance.OnProcess;
             @process.performed += instance.OnProcess;
             @process.canceled += instance.OnProcess;
+            @pause.started += instance.OnPause;
+            @pause.performed += instance.OnPause;
+            @pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -245,6 +271,9 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
             @process.started -= instance.OnProcess;
             @process.performed -= instance.OnProcess;
             @process.canceled -= instance.OnProcess;
+            @pause.started -= instance.OnPause;
+            @pause.performed -= instance.OnPause;
+            @pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -267,5 +296,6 @@ public partial class @inputControl: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnProcess(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

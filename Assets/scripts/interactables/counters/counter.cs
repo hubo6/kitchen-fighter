@@ -50,6 +50,9 @@ public class counter : interactable, owner {
         return ret;
     }
 
+    public static  void resetEvt() {
+        onPick = onDrop = null;
+    }
     public virtual bool receive(item i) {
         if (_holding != null) {
             Debug.LogError($"receive {_holding.name} failed exists in {transform.name}.");

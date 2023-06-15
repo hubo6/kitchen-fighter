@@ -66,6 +66,7 @@
     <Compile Include="Assets\scripts\interactables\plate.cs" />
     <Compile Include="Assets\scripts\player\charAnim.cs" />
     <Compile Include="Assets\scripts\interactables\counters\deliveryCounter.cs" />
+    <Compile Include="Assets\scripts\mgrs\staticResetMgr.cs" />
     <Compile Include="Assets\scripts\player\movement.cs" />
     <Compile Include="Assets\scripts\utils\lookAtCam.cs" />
     <Compile Include="Assets\scripts\interactables\counters\counterAnim.cs" />

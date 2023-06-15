@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class gameMgr : MonoSingleton<gameMgr> {
 
@@ -29,7 +31,15 @@ public class gameMgr : MonoSingleton<gameMgr> {
     [SerializeField] float[] _timerStamp = { 0f, 3.0f, 180f};
     [SerializeField] float _score = 0;
 
-
+    public bool togglePause() {
+        var ret = false;
+        if (stage == STAGE.PAUSED || stage == STAGE.STARTED) {
+            Time.timeScale = Time.timeScale == 1.0f ? 0 : 1.0f;
+            stage = stage == STAGE.PAUSED ? STAGE.STARTED : STAGE.PAUSED;
+            ret = true;
+        }
+        return ret;
+    }
     public STAGE stage { get => _stage; private set {
             var chg = value != _stage; 
             _stage = value;
@@ -42,7 +52,17 @@ public class gameMgr : MonoSingleton<gameMgr> {
     public bool running() { return _stage == STAGE.STARTED; }
     private void Start() {
         stage = STAGE.INITIAL;
+        input.ins.onPause += (CallbackContext cb) => togglePause();
         _timerStamp[0] = _timerStamp[1];
+    }
+
+
+    public static void resetEnv() {
+        Time.timeScale = 1f;
+        ins.stage = STAGE.INITIAL;
+        counter.resetEvt();
+        cuttingCounter.resetEvt();
+        trashCan.resetEvt();
     }
 
     private void Update() {
