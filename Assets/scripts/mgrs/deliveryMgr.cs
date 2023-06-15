@@ -52,9 +52,7 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
             _dishCnfsMap.Add(dish.msk, dish);
     }
 
-    public bool validate(int msk, List<item> items, List<ITEM_MSK> withOrder) {
-        if (items.Count != withOrder.Count)
-            return false;
+    public bool validate(int msk, List<item> items) {
         dishSchemaCounter ret = null;
         foreach (var dish in _waitingList) {
             if (dish.schemaRef.msk != msk)
@@ -62,10 +60,10 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
             if (dish.schemaRef.dishOrder.Count != items.Count)
                 continue;
             var itr0 = dish.schemaRef.dishOrder.GetEnumerator();
-            var itr1 = withOrder.GetEnumerator();
+            var itr1 = items.GetEnumerator();
             var match = false;
             while (itr1.MoveNext() && itr0.MoveNext()) {
-                if (!(match = (itr1.Current == itr0.Current.msk)))
+                if (!(match = (itr1.Current.cnf.msk == itr0.Current.msk)))
                     break;
             }
             if (!match)

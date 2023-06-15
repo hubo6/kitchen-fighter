@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
@@ -7,10 +9,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class plate : item, owner {
-    //[SerializeField] itemCnf[] _cnfArray;
-    //[SerializeField] LinkedList<ITEM_MSK, float> _cnf = new Dictionary<ITEM_MSK, float>();
-    [SerializeField] Dictionary<ITEM_MSK, LinkedList<item>> _contained = new Dictionary<ITEM_MSK, LinkedList<item>>();
-    [SerializeField] List<ITEM_MSK> _orderedContained = new List<ITEM_MSK>();
+    [SerializeField] OrderedDictionary _contained = new OrderedDictionary();
     [SerializeField] int _msk = 0;
     [SerializeField] static float _layoutOffset = 0.1f;
     [SerializeField] float _curLayoutOffset = _layoutOffset;
@@ -31,21 +30,15 @@ public class plate : item, owner {
         i.transform.parent = transform;
         i.transform.localPosition = Vector3.up * _curLayoutOffset;
         _curLayoutOffset += i.cnf.height;
-        if (_contained.TryGetValue(i.cnf.msk, out LinkedList<item> list))
-            list.AddLast(i);
-        else {
-            var newList = new LinkedList<item>();
-            newList.AddLast(i);
-            _contained[i.cnf.msk] = newList;
-        }
-
+        if (!_contained.Contains(i.cnf.msk)) 
+            _contained[i.cnf.msk] = new List<item>();
+        (_contained[i.cnf.msk] as List<item>).Add(i);
         var dish = deliveryMgr.ins.plateReArrange(this);
-
         var icon = Instantiate(_template, _icons_ui.transform);
         icon.gameObject.SetActive(true);
         icon.Find("pic").GetComponent<Image>().sprite = i.cnf.icon;
-        if(!_icons_ui.activeSelf)  _icons_ui.SetActive(true);
-      
+        if(!_icons_ui.activeSelf)
+            _icons_ui.SetActive(true);
         Debug.LogFormat($"{gameObject.tag} redish:{dish}");
         return true;
     }
@@ -56,43 +49,35 @@ public class plate : item, owner {
 
     // Start is called before the first frame update
     void Start() {
-        //foreach (var i in _cnfArray)
-        //    _cnf.Add(i.msk, 1);
         _icons_ui.SetActive(false);
         Assert.IsNotNull(_template);
         Assert.IsNotNull(_icons_ui);
     }
 
-    public int clear(List<item> cleared, List<ITEM_MSK> withOrder = null) {
+    public int clear(List<item> cleared) {
         var ret = _msk;
         _msk = 0;
         _curLayoutOffset = _layoutOffset;
         if (cleared != null) {
             cleared.Clear();
-            foreach (var list in _contained)
-                foreach (var i in list.Value)
-                    cleared.Add(i);
+            foreach (DictionaryEntry sub  in _contained)
+                cleared.AddRange(sub.Value as List<item>);  
         }
+
         _contained.Clear();
         foreach (Transform child in _icons_ui.transform)
             if(child.gameObject.activeSelf) Destroy(child.gameObject);
         _icons_ui.SetActive(false);
-        if (withOrder != null) {
-            withOrder.Clear();
-            _orderedContained.ForEach((i) => withOrder.Add(i));
-        }
-        _orderedContained.Clear();
         return ret;
     }
 
     public void rearrange(dishSchema sch) {
-        _orderedContained.Clear();
         _curLayoutOffset = _layoutOffset;
         foreach (var i in sch.dishOrder) {
-            if (!_contained.TryGetValue(i.msk, out LinkedList<item> itemList))
+            if (!_contained.Contains(i.msk))
                 continue;
-            foreach (var item in itemList) {
-                _orderedContained.Add(item.cnf.msk);
+            //todo the dish re-arrangement
+            foreach (var item in (_contained[i.msk] as List<item>)) {
                 item.transform.localPosition = Vector3.up * _curLayoutOffset;
                 _curLayoutOffset += item.cnf.height;
             }
