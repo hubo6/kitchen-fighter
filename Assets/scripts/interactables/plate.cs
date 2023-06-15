@@ -49,22 +49,21 @@ public class plate : item, owner {
 
     // Start is called before the first frame update
     void Start() {
-        _icons_ui.SetActive(false);
         Assert.IsNotNull(_template);
         Assert.IsNotNull(_icons_ui);
+        _icons_ui.SetActive(false);
     }
 
     public int clear(List<item> cleared) {
         var ret = _msk;
-        _msk = 0;
         _curLayoutOffset = _layoutOffset;
         if (cleared != null) {
             cleared.Clear();
             foreach (DictionaryEntry sub  in _contained)
                 cleared.AddRange(sub.Value as List<item>);  
         }
-
         _contained.Clear();
+        _msk = 0;
         foreach (Transform child in _icons_ui.transform)
             if(child.gameObject.activeSelf) Destroy(child.gameObject);
         _icons_ui.SetActive(false);
