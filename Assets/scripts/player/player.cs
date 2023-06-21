@@ -50,11 +50,11 @@ public class player : MonoBehaviour, owner {
 
     void Start() {
         Assert.IsNotNull(_objAnchor);
-        input.ins.onInteract += (CallbackContext ctx) => {
+        input.ins.onInteract +=  ctx => {
             if (!gameMgr.ins.running()) return;
             _interactable?.interact(this); 
         };
-        input.ins.onProcess += (CallbackContext ctx) => {
+        input.ins.onProcess +=  ctx => {
             if (!gameMgr.ins.running()) return;
             _interactable?.process(); 
         };

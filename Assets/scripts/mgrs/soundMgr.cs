@@ -8,34 +8,22 @@ public class soundMgr : MonoSingleton<soundMgr>
 {
     // Start is called before the first frame update
     [SerializeField] soundCnf _cnf;
+    [SerializeField] float _music_vol = 0.5f;
+    [SerializeField] float _effect_vol = 0.5f;
+    [SerializeField] AudioSource _music;
+
+    public float music_vol { get => _music.volume; set => _music.volume = value; }
+    public float effect_vol { get => _effect_vol; set => _effect_vol = value; }
+
     void Start()
     {
         Assert.IsNotNull(_cnf);
-        //var objs = GameObject.FindGameObjectsWithTag("Counter");
-        //foreach (var i in objs) {
-        //    var counter = i.GetComponent<counter>();
-        //    counter.onPick += onPick;
-        //    counter.onDrop += onDrop;
-        //}
-
-
-
-        //objs = GameObject.FindGameObjectsWithTag("Container");
-        //foreach (var i in objs) {
-        //    var counter = i.GetComponent<counter>();
-        //    counter.onPick += onPick;
-        //    counter.onDrop += onDrop;
-        //}
+        Assert.IsNotNull(_music);
         counter.onPick += onPick;
         counter.onDrop += onDrop;
 
         cuttingCounter.onChop += onChop;
         trashCan.onDrop += onDump;
-        //heatPanCounter.onSizzle += onHeadPanSizzle;
-        //var player = obj.GetComponent<player>();
-        //player.onPick += onPick;
-        //player.onDrop += onDrop;
-
     }
 
 
@@ -77,7 +65,7 @@ public class soundMgr : MonoSingleton<soundMgr>
 
 
     void play(AudioClip[] clips, Vector3 pos, float vol = 1f, bool random = true) {
-        AudioSource.PlayClipAtPoint(clips[random ? Random.Range(0, clips.Length) : 0], pos, vol);
+        AudioSource.PlayClipAtPoint(clips[random ? Random.Range(0, clips.Length) : 0], pos, effect_vol);
     }
 
 

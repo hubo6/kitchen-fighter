@@ -12,7 +12,7 @@ public class startTimer : MonoBehaviour
         gameObject.SetActive(false);
         Assert.IsNotNull(_txt);
         gameMgr.ins.onTimerSecChg += onTimerSecChg;
-        gameMgr.ins.onStageChg += (gameMgr.STAGE s) => {
+        gameMgr.ins.onStageChg +=s => {
             if (s == gameMgr.STAGE.COUNT)
                 gameObject.SetActive(true);
             else if (s == gameMgr.STAGE.STARTED)
@@ -23,6 +23,6 @@ public class startTimer : MonoBehaviour
     // Update is called once per frame
     void onTimerSecChg(int num)
     {
-        _txt.SetText(num.ToString());
+        _txt.SetText($"{num}");
     }
 }

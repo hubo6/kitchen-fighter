@@ -1,21 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
+using static input;
 
 public class gameMgr : MonoSingleton<gameMgr> {
-
-
-    public enum SCENE { 
+    public enum SCENE {
         HELLO,
         MAIN,
         GAME,
         LOADING,
     }
-
 
     public enum STAGE { 
             INITIAL = 0,
@@ -52,7 +46,7 @@ public class gameMgr : MonoSingleton<gameMgr> {
     public bool running() { return _stage == STAGE.STARTED; }
     private void Start() {
         stage = STAGE.INITIAL;
-        input.ins.onPause += (CallbackContext cb) => togglePause();
+        input.ins.onPause +=  cb => togglePause();
         _timerStamp[0] = _timerStamp[1];
     }
 

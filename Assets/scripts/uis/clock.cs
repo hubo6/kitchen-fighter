@@ -10,7 +10,7 @@ public class clock : MonoBehaviour {
     void Start() {
         Assert.IsNotNull(_indicator);
         gameObject.SetActive(false);
-        gameMgr.ins.onStageChg += (gameMgr.STAGE s) => {
+        gameMgr.ins.onStageChg +=  s => {
             if (s == gameMgr.STAGE.STARTED)
                 gameObject.SetActive(true);
             else if (s == gameMgr.STAGE.END)

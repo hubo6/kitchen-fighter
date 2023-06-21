@@ -13,9 +13,7 @@ public class container : counter {
         Assert.IsNotNull(_itemCnf);
         _counterAnim = GetComponentInChildren<counterAnim>();
         Assert.IsNotNull(_counterAnim);
-        _counterAnim.OnAnimEvt += () => {
-            receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
-        };
+        _counterAnim.OnAnimEvt += () =>  receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
     }
 
     public override bool interact(owner src) {

@@ -28,7 +28,7 @@ public class waitingList : MonoBehaviour
         deliveryMgr.ins.onAdd += onAdd;
         deliveryMgr.ins.onRm += onRm;
         deliveryMgr.ins.onUpdate += onUpdate;
-        gameMgr.ins.onStageChg += (gameMgr.STAGE s) => {
+        gameMgr.ins.onStageChg +=s => {
             if(s == gameMgr.STAGE.STARTED)
                 gameObject.SetActive(true);
         };
