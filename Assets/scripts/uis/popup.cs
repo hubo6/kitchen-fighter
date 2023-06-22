@@ -38,31 +38,27 @@ public class popup : MonoBehaviour {
         Assert.IsNotNull(_btnSoundVol);
         Assert.IsNotNull(_btnSettingsBack);
 
-
         Assert.IsNotNull(_btnKeyBind);
         Assert.IsNotNull(_bindHint);
 
-        _btnKeyBind.gameObject.SetActive(false);
-
-        gameObject.SetActive(false);
-        _score.gameObject.SetActive(false);
-        _options.gameObject.SetActive(false);
         _btnResume.onClick.AddListener(() => gameMgr.ins.togglePause());
         _btnQuit.onClick.AddListener(() => SceneManager.LoadScene(gameMgr.SCENE.MAIN.ToString()));
         _btnOpt.onClick.AddListener(() => {
             hide();
             gameObject.SetActive(true);
             _settings.gameObject.SetActive(true);
+            _btnMusicVol.Select();
         });
         gameMgr.ins.onStageChg += s => {
             hide();
             if (s == gameMgr.STAGE.END) {
                 gameObject.SetActive(true);
-                _score.gameObject.SetActive(true);
+                _gameOver.gameObject.SetActive(true);
 
             } else if (s == gameMgr.STAGE.PAUSED) {
                 gameObject.SetActive(true);
                 _options.gameObject.SetActive(true);
+                _btnResume.Select();
             }
         };
         _btnMusicVol.GetComponentInChildren<TextMeshProUGUI>().text = $"Music Vol:{soundMgr.ins.music_vol:F1}";
@@ -80,11 +76,12 @@ public class popup : MonoBehaviour {
             hide();
             gameObject.SetActive(true);
             _options.gameObject.SetActive(true);
+            _btnResume.Select();
         });
 
-        var keys = _settings.Find("options");
+        var keysContainer = _settings.Find("options").Find("container_bind");
         foreach (var key in input.ins.inputMap) {
-            var item = Instantiate(_btnKeyBind, keys);
+            var item = Instantiate(_btnKeyBind, keysContainer);
             item.gameObject.SetActive(true);
             item.Find("key").GetComponent<TextMeshProUGUI>().text = key.key;
             var btn = item.Find("btn");
@@ -99,17 +96,20 @@ public class popup : MonoBehaviour {
                     btnTxt.text = wordNew;
                     _bindHint.gameObject.SetActive(false);
                  });
-             
             });
         }
-    
+        _btnKeyBind.gameObject.SetActive(false);
+        var containerForm = keysContainer.GetComponent<RectTransform>();
+        containerForm.sizeDelta =
+            new Vector2(containerForm.sizeDelta.x, containerForm.sizeDelta.y * input.ins.inputMap.Count);
+        hide();
     }
 
     void hide() {
         if (gameObject.activeSelf) gameObject.SetActive(false);
         if (_options.gameObject.activeSelf) _options.gameObject.SetActive(false);
         if (_settings.gameObject.activeSelf) _settings.gameObject.SetActive(false);
-        if (_score.gameObject.activeSelf) _score.gameObject.SetActive(false);
+        if (_gameOver.gameObject.activeSelf) _gameOver.gameObject.SetActive(false);
         if (_bindHint.gameObject.activeSelf) _bindHint.gameObject.SetActive(false);
     }
 
