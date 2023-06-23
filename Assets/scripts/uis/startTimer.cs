@@ -8,9 +8,12 @@ public class startTimer : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] TextMeshProUGUI _txt;
+    [SerializeField] Animator _animator;
     void Start() {
-        gameObject.SetActive(false);
         Assert.IsNotNull(_txt);
+        Assert.IsNotNull(_animator);
+        gameObject.SetActive(false);
+      
         gameMgr.ins.onTimerSecChg += onTimerSecChg;
         gameMgr.ins.onStageChg +=s => {
             if (s == gameMgr.STAGE.COUNT)
@@ -24,5 +27,6 @@ public class startTimer : MonoBehaviour
     void onTimerSecChg(int num)
     {
         _txt.SetText($"{num}");
+        _animator.SetTrigger("pop");
     }
 }

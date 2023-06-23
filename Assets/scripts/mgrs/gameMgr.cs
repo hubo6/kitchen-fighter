@@ -22,7 +22,7 @@ public class gameMgr : MonoSingleton<gameMgr> {
     [SerializeField] STAGE _stage = STAGE.INITIAL;
     public event Action<int> onTimerSecChg;
     public event Action<STAGE> onStageChg;
-    [SerializeField] float[] _timerStamp = { 0f, 3.0f, 180f};
+    [SerializeField] float[] _timerStamp = { 1f, 3.0f, 180f};
     [SerializeField] float _score = 0;
 
     public bool togglePause() {
@@ -47,7 +47,6 @@ public class gameMgr : MonoSingleton<gameMgr> {
     private void Start() {
         stage = STAGE.INITIAL;
         input.ins.onPause +=  cb => togglePause();
-        _timerStamp[0] = _timerStamp[1];
     }
 
 
@@ -68,18 +67,18 @@ public class gameMgr : MonoSingleton<gameMgr> {
 
             if (stage == STAGE.LOADING) {
                 stage = STAGE.COUNT;
+                onTimerSecChg?.Invoke((int)_timerStamp[1]);
                 break;
             }
             if (stage == STAGE.COUNT) {
-                var curInt = (int)(_timerStamp[0] + 1);
                 _timerStamp[0] -= Time.deltaTime;
-                var nextInt = (int)(_timerStamp[0] + 1);
-                if (curInt - nextInt == 1) 
-                    onTimerSecChg?.Invoke(curInt - 1);
-                if (curInt == 0) {
-                    stage = STAGE.STARTED;
-                    _timerStamp[0] = 0;
+                if (_timerStamp[0] <= .0f) {
+                    _timerStamp[0] = 1;
+                    _timerStamp[1] -= 1;
+                    onTimerSecChg?.Invoke((int)_timerStamp[1]);
                 }
+                if(_timerStamp[1] <= -1)
+                    stage = STAGE.STARTED;
                 break;
             }
 
