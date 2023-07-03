@@ -5,8 +5,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using static UnityEngine.InputSystem.InputAction;
+using Unity.Netcode;
 
-public class player : MonoBehaviour, owner {
+public class player : NetworkBehaviour, owner {
     // Start is called before the first frame update
 
     [SerializeField] float _xInput;

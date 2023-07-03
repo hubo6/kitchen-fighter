@@ -45,14 +45,14 @@ public class gameMgr : MonoSingleton<gameMgr> {
 
     public bool running() { return _stage == STAGE.STARTED; }
     private void Start() {
-        stage = STAGE.INITIAL;
+        stage = STAGE.STARTED; // STAGE.INITIAL;
         input.ins.onPause +=  cb => togglePause();
     }
 
 
     public static void resetEnv() {
         Time.timeScale = 1f;
-        ins.stage = STAGE.INITIAL;
+        ins.stage =  STAGE.INITIAL;
         counter.resetEvt();
         cuttingCounter.resetEvt();
         trashCan.resetEvt();

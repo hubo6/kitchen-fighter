@@ -1,13 +1,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using UnityEditor.Overlays;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
-using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
 public class dishSchemaCounter {
