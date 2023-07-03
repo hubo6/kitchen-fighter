@@ -65,13 +65,15 @@ public class player : NetworkBehaviour, owner {
 
 
 
-    void updateInput() {
-        _inputV3.x = Input.GetAxisRaw("Horizontal");
-        _inputV3.z = Input.GetAxisRaw("Vertical");
-    }
+    //void updateInput() {
+    //    _inputV3.x = Input.GetAxisRaw("Horizontal");
+    //    _inputV3.z = Input.GetAxisRaw("Vertical");
+    //}
 
     // Update is called once per frame
     void Update() {
+        if (!IsOwner)
+            return;
         input.ins.updateInput(ref _inputV3);
         updateInteractable();
         //updateInput();
