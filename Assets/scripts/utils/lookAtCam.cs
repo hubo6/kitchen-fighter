@@ -5,6 +5,7 @@ using UnityEngine;
 public class lookAtCam : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] bool invert = false;
     void Start()
     {
         
@@ -12,9 +13,9 @@ public class lookAtCam : MonoBehaviour
 
     // Update is called once per frame
     private void LateUpdate() {
-        if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.forward)) < 90)
-            transform.forward = Camera.main.transform.forward;
-        else
-            transform.forward = -Camera.main.transform.forward;
+        //  if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.forward)) < 90)
+        transform.forward =Camera.main.transform.forward  *  (invert ? -1 : 1);
+       // else
+       //     transform.forward = -Camera.main.transform.forward;
     }
 }
