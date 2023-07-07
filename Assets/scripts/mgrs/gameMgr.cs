@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static input;
 
-public class gameMgr : MonoSingleton<gameMgr> {
+public class gameMgr : monoSingleton<gameMgr> {
     public enum SCENE {
         HELLO,
         MAIN,

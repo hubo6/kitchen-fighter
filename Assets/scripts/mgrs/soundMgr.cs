@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class soundMgr : MonoSingleton<soundMgr>
+public class soundMgr : monoSingleton<soundMgr>
 {
     // Start is called before the first frame update
     [SerializeField] soundCnf _cnf;

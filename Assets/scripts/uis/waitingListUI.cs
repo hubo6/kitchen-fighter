@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class waitingList : MonoBehaviour
+public class waitingListUI : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] Transform _recipeTemplate;
@@ -15,10 +17,11 @@ public class waitingList : MonoBehaviour
         public Transform obj;
         public Image bar;
     }
-    Dictionary<dishSchemaCounter, transformBarPair> _cache = new Dictionary<dishSchemaCounter, transformBarPair>();
+    //Dictionary<dishSchemaCounter, transformBarPair> _cache = new Dictionary<dishSchemaCounter, transformBarPair>();
+    List<transformBarPair> _cache = new();
 
     private void Start() {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         Assert.IsNotNull(_recipeTemplate);
         Assert.IsNotNull(_iconTemplate);
         Assert.IsNotNull(_list);
@@ -32,7 +35,6 @@ public class waitingList : MonoBehaviour
 
     }
     public void onAdd(dishSchemaCounter schema) {
-       
         var item = Instantiate(_recipeTemplate, _list);
         item.gameObject.SetActive(true);
         var icons = item.Find("icons");
@@ -44,21 +46,19 @@ public class waitingList : MonoBehaviour
             icon.gameObject.SetActive(true);
             icon.GetComponent<Image>().sprite = s.icon;
         }
-        _cache.Add(schema, new transformBarPair() { obj = item, bar = progress });
+        _cache.Add(new transformBarPair() { obj = item, bar = progress });
     }
 
-    public void onRm(List<dishSchemaCounter> toRm) {
-        foreach (var i in toRm) {
-            if (!_cache.TryGetValue(i, out transformBarPair child)) continue;
-            _cache.Remove(i);
-            Destroy(child.obj.gameObject);
-        }
+    public void onRm(int idx) {
+         var toRm = _cache.ElementAt(idx);
+        _cache.RemoveAt(idx);
+        Destroy(toRm.obj.gameObject);
     }
 
     public void onUpdate(List<dishSchemaCounter> toUpdate) {
-        foreach (var i in toUpdate) {
-            if (!_cache.TryGetValue(i, out transformBarPair child)) continue;
-            child.bar.fillAmount = i.timepass / i.schemaRef.waitingTime;
-        }
+        //foreach (var i in toUpdate) {
+        //    if (!_cache.TryGetValue(i, out transformBarPair child)) continue;
+        //    child.bar.fillAmount = i.timepass / i.schemaRef.waitingTime;
+        //}
     }
 }

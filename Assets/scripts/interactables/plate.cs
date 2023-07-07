@@ -62,7 +62,7 @@ public class plate : item, owner {
         _contained.Clear();
         _msk = 0;
         foreach (Transform child in _icons_ui.transform)
-            if(child.gameObject.activeSelf) Destroy(child.gameObject);
+            if(child.gameObject.activeSelf) Destroy(child.gameObject); //template is here
         _icons_ui.SetActive(false);
         return ret;
     }

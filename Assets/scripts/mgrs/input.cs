@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using static utils;
 
-public class input : MonoSingleton<input> {
+public class input : monoSingleton<input> {
     public const string INPUT_SAVE = "input_map_save";
     [SerializeField] static inputControl _inputCtrl;
     public event Action<CallbackContext> onInteract;

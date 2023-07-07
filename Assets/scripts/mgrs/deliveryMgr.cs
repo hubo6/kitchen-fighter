@@ -1,6 +1,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,7 +13,7 @@ public class dishSchemaCounter {
 
 
 
-public class deliveryMgr : MonoSingleton<deliveryMgr> {
+public class deliveryMgr : netSingleton<deliveryMgr> {
     // Start is called before the first frame update
     [SerializeField] dishSchema[] _dishSchemas;
     public dishSchema[] dishSchemas { get => _dishSchemas; }
@@ -23,7 +25,7 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
     [SerializeField] List<dishSchemaCounter> _toDel = new List<dishSchemaCounter>();
     [SerializeField] List<dishSchemaCounter> _toUpdate = new List<dishSchemaCounter>();
     public event Action<dishSchemaCounter> onAdd;
-    public event Action<List<dishSchemaCounter>> onRm;
+    public event Action<int> onRm;
     public event Action<List<dishSchemaCounter>> onUpdate;
     public event Action<dishSchemaCounter> onDeliver;
     public int max;
@@ -48,33 +50,67 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
 
     public bool validate(int msk, List<item> items) {
         dishSchemaCounter ret = null;
+        var idx = 0;
         foreach (var dish in _waitingList) {
-            if (dish.schemaRef.msk != msk)
+            if (dish.schemaRef.msk != msk) {
+                idx++;
                 continue;
-            if (dish.schemaRef.dishOrder.Count != items.Count)
-                continue;
-            var itr0 = dish.schemaRef.dishOrder.GetEnumerator();
-            var itr1 = items.GetEnumerator();
-            var match = false;
-            while (itr1.MoveNext() && itr0.MoveNext()) {
-                if (!(match = (itr1.Current.cnf.msk == itr0.Current.msk)))
-                    break;
             }
-            if (!match)
+            if (dish.schemaRef.dishOrder.Count != items.Count) {
+                idx++;
                 continue;
+            }
+            //var itr0 = dish.schemaRef.dishOrder.GetEnumerator();
+
+            //var match = false;
+            //while (itr0.MoveNext()) {
+            //    if (items.Any())
+            //        break;
+            //}
+            //if (!match) {
+            //    idx++;
+            //    continue;
+            //}
             ret = dish;
             break;
         }
         onDeliver?.Invoke(ret);
-        if (ret != null) {
-            _waitingList.Remove(ret);
-            onRm?.Invoke(new List<dishSchemaCounter>() { ret });
+        if (idx < _waitingList.Count) {
+            deliverySuccessServerRpc(idx);
+            //_waitingList.Remove(ret);
+            //onRm?.Invoke(idx);
         }
         return ret != null;
     }
+
+    [ServerRpc(RequireOwnership = false)]
+
+    void deliverySuccessServerRpc(int idx) {
+        deliverySuccessClientRpc(idx);
+       
+    }
+    [ClientRpc]
+    void deliverySuccessClientRpc(int idx) {
+        onRm?.Invoke(idx);
+        _waitingList.RemoveAt(idx);
+    }
+
+    [ClientRpc]
+
+    void recipeAddClientRpc(int dishIdx) {
+        var dish = new dishSchemaCounter() {
+            schemaRef = ins.dishSchemas[dishIdx],
+            timepass = 0
+        };
+        _waitingList.Add(dish);
+        onAdd?.Invoke(dish);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer)
+            return;
         if (!gameMgr.ins.running())
             return;
         _timeStamp += Time.deltaTime;
@@ -89,8 +125,7 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
             }
         }
         if (_toDel.Count > 0) {
-            onRm?.Invoke(_toDel);
-            _toDel.ForEach((i) => _waitingList.Remove(i));
+           // recipeRmClientRpc(_toDel);
         }
            
         if (_toUpdate.Count > 0) 
@@ -98,13 +133,7 @@ public class deliveryMgr : MonoSingleton<deliveryMgr> {
         if (_timeStamp > _genGapSec) {
             _timeStamp = 0;
             if (_waitingList.Count < max) {
-                var dish = new dishSchemaCounter() { 
-                    schemaRef = ins.dishSchemas[Random.Range(0, ins.dishSchemas.Length)], 
-                    timepass = 0
-                };
-                //_waitingMap.Add(dish, dish);
-                _waitingList.Add(dish);
-                onAdd?.Invoke(dish);
+                recipeAddClientRpc(Random.Range(0, ins.dishSchemas.Length));
             }
         }
     }

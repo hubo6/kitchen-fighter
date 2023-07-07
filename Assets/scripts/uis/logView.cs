@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class logView : MonoSingleton<logView>
+public class logView : monoSingleton<logView>
 {
     // Start is called before the first frame update
     [SerializeField] Text _txt;
