@@ -10,7 +10,7 @@ public class movement : MonoBehaviour {
     [SerializeField] player _player;
     [SerializeField] LayerMask _maskLayer;
     [SerializeField] CapsuleCollider _capsuleCldr;
-    [SerializeField] float[] _stepCounter;
+    [SerializeField] float[] _stepCounter = { 0, 0, 0, 0.3f }; //x, z ,cur, threshold
     RaycastHit _hit;
     void Start() {
         Assert.IsNotNull(_capsuleCldr);
@@ -18,6 +18,18 @@ public class movement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //step counter;
+        _stepCounter[2] += Time.deltaTime;
+        if (_stepCounter[2] > _stepCounter[3]) {
+            _stepCounter[2] = 0;
+            if (Mathf.Abs(_stepCounter[0] - transform.position.x) > 0.01f || Mathf.Abs(_stepCounter[1] - transform.position.z) > 0.01f)
+                soundMgr.ins.onMove(transform);
+        }
+        _stepCounter[0] = transform.position.x;
+        _stepCounter[1] = transform.position.z;
+        //step counter end;
+
+
         if (_player.inputV3 == Vector3.zero) return;
         var dis = _player.spd * Time.deltaTime;
         var offset = Vector3.zero;
@@ -40,14 +52,6 @@ public class movement : MonoBehaviour {
                     offset = zInput * dis;
             }
         }
-        _stepCounter[0] = offset != Vector3.zero ? _stepCounter[0] : 0;
-        if (offset != Vector3.zero) {
-            transform.position += offset;
-            _stepCounter[0] += Time.deltaTime;
-            if (_stepCounter[0] > _stepCounter[1]) {
-                soundMgr.ins.onMove(transform);
-                _stepCounter[0] = 0;
-            }
-        }
+        transform.position += offset;
     }
 }

@@ -17,6 +17,8 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
     // Start is called before the first frame update
     [SerializeField] dishSchema[] _dishSchemas;
     public dishSchema[] dishSchemas { get => _dishSchemas; }
+    public Dictionary<ITEM_TYPE, Dictionary<ITEM_MSK, itemCnf>> itemCnfsCache { get => _itemCnfsCache; }
+
     [SerializeField] Dictionary<int, dishSchema> _dishCnfsMap = new Dictionary<int, dishSchema>();
     //[SerializeField] Dictionary<dishSchemaCounter, dishSchemaCounter> _waitingMap = new Dictionary<dishSchemaCounter, dishSchemaCounter>();
     [SerializeField] List<dishSchemaCounter> _waitingList = new List<dishSchemaCounter>();
@@ -24,11 +26,14 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
     [SerializeField] float _timeStamp = 0f;//test
     [SerializeField] List<dishSchemaCounter> _toDel = new List<dishSchemaCounter>();
     [SerializeField] List<dishSchemaCounter> _toUpdate = new List<dishSchemaCounter>();
+    [SerializeField] itemCnf[] _itemCnfs;
     public event Action<dishSchemaCounter> onAdd;
     public event Action<int> onRm;
     public event Action<List<dishSchemaCounter>> onUpdate;
     public event Action<dishSchemaCounter> onDeliver;
     public int max;
+
+    [SerializeField] Dictionary<ITEM_TYPE, Dictionary<ITEM_MSK, itemCnf>> _itemCnfsCache = new();
 
     public bool plateReArrange(plate p) {
         dishSchema sch = null;
@@ -46,6 +51,12 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
     public void Start() {
         foreach (var dish in _dishSchemas)
             _dishCnfsMap.Add(dish.msk, dish);
+
+        foreach (var cnf in _itemCnfs) {
+            if (!_itemCnfsCache.ContainsKey(cnf.type))
+                _itemCnfsCache.Add(cnf.type, new Dictionary<ITEM_MSK, itemCnf>());
+            _itemCnfsCache[cnf.type][cnf.msk] = cnf;
+        }
     }
 
     public bool validate(int msk, List<item> items) {

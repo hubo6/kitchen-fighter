@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -27,14 +28,14 @@ public class plate : item, owner {
         i.transform.parent = transform;
         i.transform.localPosition = Vector3.up * _curLayoutOffset;
         _curLayoutOffset += i.cnf.height;
-        if (!_contained.Contains(i.cnf.msk)) 
+        if (!_contained.Contains(i.cnf.msk))
             _contained[i.cnf.msk] = new List<item>();
         (_contained[i.cnf.msk] as List<item>).Add(i);
         var dish = deliveryMgr.ins.plateReArrange(this);
         var icon = Instantiate(_template, _icons_ui.transform);
         icon.gameObject.SetActive(true);
         icon.Find("pic").GetComponent<Image>().sprite = i.cnf.icon;
-        if(!_icons_ui.activeSelf)
+        if (!_icons_ui.activeSelf)
             _icons_ui.SetActive(true);
         Debug.LogFormat($"{gameObject.tag} redish:{dish}");
         return true;
@@ -56,13 +57,13 @@ public class plate : item, owner {
         _curLayoutOffset = _layoutOffset;
         if (cleared != null) {
             cleared.Clear();
-            foreach (DictionaryEntry sub  in _contained)
-                cleared.AddRange(sub.Value as List<item>);  
+            foreach (DictionaryEntry sub in _contained)
+                cleared.AddRange(sub.Value as List<item>);
         }
         _contained.Clear();
         _msk = 0;
         foreach (Transform child in _icons_ui.transform)
-            if(child.gameObject.activeSelf) Destroy(child.gameObject); //template is here
+            if (child.gameObject.activeSelf) Destroy(child.gameObject); //template is here
         _icons_ui.SetActive(false);
         return ret;
     }
@@ -84,4 +85,6 @@ public class plate : item, owner {
     void Update() {
 
     }
+
+    public NetworkObject netRef() { return NetworkObject; }
 }

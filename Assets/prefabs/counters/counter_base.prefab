@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2870172837964371722}
   - component: {fileID: 1726268435587550907}
+  - component: {fileID: 4728826917004252796}
+  - component: {fileID: 541075123270355752}
   m_Layer: 7
   m_Name: counter_base
   m_TagString: Untagged
@@ -56,6 +58,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.2752736, z: 1.45299}
   m_Center: {x: 0, y: 0.62020063, z: 0.037305087}
+--- !u!114 &4728826917004252796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870172837964371723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3539ab39604af4a91dd38f7d0b5ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _highlight: {fileID: 4022833529681643694}
+  _objAnchor: {fileID: 3051426278963582900}
+  _holding: {fileID: 0}
+--- !u!114 &541075123270355752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870172837964371723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &4022833529681643694
 GameObject:
   m_ObjectHideFlags: 0

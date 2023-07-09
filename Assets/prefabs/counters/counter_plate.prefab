@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b816fa480e447a46b86fd42bdf4c261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cnf: {fileID: 0}
+  _cnf: {fileID: 11400000, guid: 792a352d9474bef48a0c6c524579399c, type: 2}
   _progress: 0
   _max: 5
-  _genTime: 1
+  _genTime: 4
   _stamp: 0
   _prefab: {fileID: 3812876574508226176, guid: c0c9afd619b40914a8f625c0535e2284, type: 3}
   _plateRdr: {fileID: 0}
@@ -139,6 +139,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 541075123270355752, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_RootOrder
@@ -197,9 +202,10 @@ PrefabInstance:
     - target: {fileID: 2870172837964371723, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_Name
-      value: plate_counter
+      value: counter_plate
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4728826917004252796, guid: 71f681b621696d74598b586f7757c58a, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7902390127424925934, guid: 71f681b621696d74598b586f7757c58a, type: 3}
     m_AddedGameObjects:

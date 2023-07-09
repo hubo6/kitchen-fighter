@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
 
-public class item : MonoBehaviour {
+public class item : NetworkBehaviour {
     // Start is called before the first frame update
     [SerializeField] protected itemCnf _cnf;
     [SerializeField] float _progress = 0;

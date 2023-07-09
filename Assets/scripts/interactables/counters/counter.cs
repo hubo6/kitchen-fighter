@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -88,4 +89,6 @@ public class counter : interactable, owner {
         if(ret) onPick?.Invoke(transform);
         return ret;
     }
+
+    public NetworkObject netRef() { return NetworkObject;  }
 }

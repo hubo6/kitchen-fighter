@@ -137,7 +137,9 @@ MonoBehaviour:
   _capsuleCldr: {fileID: 8958038436088532997}
   _stepCounter:
   - 0
-  - 0.2
+  - 0
+  - 0
+  - 0.3
 --- !u!82 &6076529517253265629
 AudioSource:
   m_ObjectHideFlags: 0

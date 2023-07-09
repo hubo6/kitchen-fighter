@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
-using static UnityEngine.InputSystem.InputAction;
 using Unity.Netcode;
+
 
 public class player : NetworkBehaviour, owner {
     // Start is called before the first frame update
@@ -20,6 +17,8 @@ public class player : NetworkBehaviour, owner {
     [SerializeField] interactable _interactable;
     [SerializeField] Transform _objAnchor;
     [SerializeField] item _holding;
+
+   
 
     public event Action<interactable, interactable> onInteractableChged;
 
@@ -37,6 +36,14 @@ public class player : NetworkBehaviour, owner {
             onInteractableChged?.Invoke(pre, _interactable);
     }
 
+    public override void OnNetworkSpawn() {
+        Debug.Log($"player nid {this.NetworkObjectId}");
+        if (IsClient) { 
+            
+        
+        }
+    }
+
 
     void updateInteractable() {
         if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactDis, _interactableLayer)) {
@@ -47,7 +54,6 @@ public class player : NetworkBehaviour, owner {
             return;
         setInteractable(obj);
     }
-
 
     void Start() {
         Assert.IsNotNull(_objAnchor);
@@ -61,25 +67,12 @@ public class player : NetworkBehaviour, owner {
         };
         onInteractableChged += gameMgr.ins.onInteractableChged;
     }
-
-
-
-
-    //void updateInput() {
-    //    _inputV3.x = Input.GetAxisRaw("Horizontal");
-    //    _inputV3.z = Input.GetAxisRaw("Vertical");
-    //}
-
     // Update is called once per frame
     void Update() {
         if (!IsOwner)
             return;
         input.ins.updateInput(ref _inputV3);
         updateInteractable();
-        //updateInput();
-
-
-
     }
 
     public bool receive(item i) {
@@ -108,8 +101,6 @@ public class player : NetworkBehaviour, owner {
                 ret = true;
                 break;
             }
-
-
             Debug.LogWarning($"receive {_holding.name} failed exists in {transform.name}.");
         } while (false);
         return ret;
@@ -125,7 +116,6 @@ public class player : NetworkBehaviour, owner {
                 }
                 break;
             }
-
             if (_holding != i)
                 break;
             ret = _holding;
@@ -134,5 +124,7 @@ public class player : NetworkBehaviour, owner {
         Debug.Log($"removed {ret?.name} from {transform.name} ret: {ret != null}.");
         return ret;
     }
+
+    public NetworkObject netRef() { return NetworkObject; }
 }
 

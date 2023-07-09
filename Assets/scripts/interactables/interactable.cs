@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public enum INTERACT_TYPE {
@@ -9,7 +10,7 @@ public enum INTERACT_TYPE {
     MAX_SIZE
 }
 
-public class interactable : MonoBehaviour {
+public class interactable : NetworkBehaviour {
     [SerializeField] GameObject _highlight;
     // Start is called before the first frame update
     public virtual void highlight(bool select = true) {

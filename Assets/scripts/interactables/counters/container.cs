@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,8 +14,9 @@ public class container : counter {
         Assert.IsNotNull(_itemCnf);
         _counterAnim = GetComponentInChildren<counterAnim>();
         Assert.IsNotNull(_counterAnim);
-        _counterAnim.OnAnimEvt += () =>  receive(Instantiate(_itemCnf.prefab).GetComponent<item>());
-    }
+        _counterAnim.OnAnimEvt += () => { onSpawnItemServerRpc((int)_itemCnf.type, (int)_itemCnf.msk , this.NetworkObject); };
+     }
+
 
     public override bool interact(owner src) {
         var ret = false;
@@ -27,12 +29,39 @@ public class container : counter {
                 Debug.LogWarning($"{transform.name} is busy of interaction.");
                 break;
             }
-            _counterAnim.play();
+            onOpenLidServerRpc();
             ret = true;
 
         } while (false);
         return ret;
     }
+
+
+    [ServerRpc(RequireOwnership = false)]
+
+    void onOpenLidServerRpc() {
+        onOpenLidClientRpc();
+    }
+    [ClientRpc]
+
+    void onOpenLidClientRpc() {
+        _counterAnim.play();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+
+    void onSpawnItemServerRpc(int type, int msk, NetworkObjectReference parent) {
+
+        var cnf = deliveryMgr.ins.itemCnfsCache[(ITEM_TYPE)type][(ITEM_MSK)msk];
+        var prefab = Instantiate(cnf.prefab);
+        prefab.GetComponent<NetworkObject>().Spawn(true);
+        parent.TryGet(out NetworkObject netRef);
+        netRef.GetComponent<owner>().receive(prefab.GetComponent<item>());
+
+        //receive(prefab.GetComponent<item>());
+    }
+
+
 
     public void onClosed() {
     }

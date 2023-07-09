@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Animator))]
 public class counterAnim : MonoBehaviour {
@@ -11,7 +12,7 @@ public class counterAnim : MonoBehaviour {
     [SerializeField] protected Animator _animator;
     [SerializeField] protected bool _playing;
     void Start() {
-        _animator = GetComponent<Animator>();
+        Assert.IsNotNull(_animator);
         _playing = false;
     }
 
@@ -22,11 +23,12 @@ public class counterAnim : MonoBehaviour {
 
     }
 
-    public virtual void play() {
+    public virtual bool play() {
         if (_playing)
-            return;
+            return false;
         _playing = true;
         _animator.SetTrigger(_animTrigger);
+        return true;
     }
 
     public virtual bool playing() {
