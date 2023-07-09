@@ -18,6 +18,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.7058
       objectReference: {fileID: 0}
+    - target: {fileID: 541075123270355752, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 2870172837964371722, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: m_RootOrder

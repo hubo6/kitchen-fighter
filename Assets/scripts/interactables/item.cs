@@ -8,6 +8,8 @@ public class item : NetworkBehaviour {
     // Start is called before the first frame update
     [SerializeField] protected itemCnf _cnf;
     [SerializeField] float _progress = 0;
+    [SerializeField] Transform _follow;
+    [SerializeField] Vector3 _followPosOffset = Vector3.zero;
 
     public itemCnf cnf { get => _cnf; private set => _cnf = value; }
 
@@ -17,5 +19,18 @@ public class item : NetworkBehaviour {
     public float updateProgress(float u = 1) {
         _progress += u;
         return _progress;
+    }
+
+    public item setNetTransformParentAgent(Transform t, Vector3 posOffset = default(Vector3)) {
+        _follow = t;
+        _followPosOffset = posOffset;
+        return this;
+    }
+
+    public void LateUpdate() {
+        if (_follow == null)
+            return;
+        transform.position = _follow.position + _followPosOffset;
+        transform.rotation = _follow.rotation;
     }
 }

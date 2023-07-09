@@ -38,9 +38,18 @@ public class player : NetworkBehaviour, owner {
 
     public override void OnNetworkSpawn() {
         Debug.Log($"player nid {this.NetworkObjectId}");
-        if (IsClient) { 
-            
-        
+        if (IsOwner) {
+            input.ins.onInteract += ctx => {
+                if (!IsOwner) return;
+                if (!gameMgr.ins.running()) return;
+                interactServerRpc(netRef(), _interactable.NetworkObject);
+            };
+            input.ins.onProcess += ctx => {
+                if (!gameMgr.ins.running()) return;
+                _interactable?.process();
+            };
+            onInteractableChged += gameMgr.ins.onInteractableChged;
+
         }
     }
 
@@ -57,16 +66,22 @@ public class player : NetworkBehaviour, owner {
 
     void Start() {
         Assert.IsNotNull(_objAnchor);
-        input.ins.onInteract +=  ctx => {
-            if (!gameMgr.ins.running()) return;
-            _interactable?.interact(this); 
-        };
-        input.ins.onProcess +=  ctx => {
-            if (!gameMgr.ins.running()) return;
-            _interactable?.process(); 
-        };
-        onInteractableChged += gameMgr.ins.onInteractableChged;
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    void interactServerRpc(NetworkObjectReference from, NetworkObjectReference to) {
+        interactClientRpc(from, to);
+    }
+    [ClientRpc]
+    void interactClientRpc(NetworkObjectReference from, NetworkObjectReference to) {
+
+        from.TryGet(out var fromNetObj);
+        to.TryGet(out var toNetObj);
+        Assert.IsNotNull(fromNetObj); Assert.IsNotNull(toNetObj);
+        toNetObj.GetComponent<interactable>()?.interact(fromNetObj.GetComponent<owner>());
+    }
+
+
     // Update is called once per frame
     void Update() {
         if (!IsOwner)
@@ -79,10 +94,12 @@ public class player : NetworkBehaviour, owner {
         var ret = false;
         do {
             if (_holding == null) {
+                i.setNetTransformParentAgent(_objAnchor, Vector3.zero);
                 _holding = i;
-                var itemTrans = i.transform;
-                itemTrans.SetParent(_objAnchor);
-                itemTrans.localPosition = Vector3.zero;
+                //var itemTrans = i.transform;
+                //itemTrans.SetParent(_objAnchor);
+                //itemTrans.localPosition = Vector3.zero;
+              
                 Debug.Log($"received {_holding.name} {transform.name}.");
                 ret = true;
                 break;
@@ -94,9 +111,9 @@ public class player : NetworkBehaviour, owner {
 
             if (_holding.cnf.type == ITEM_TYPE.PROCESSED && i.cnf.type == ITEM_TYPE.PLATE) {
                 (i as plate).receive(_holding);
-
-                i.transform.SetParent(_objAnchor);
-                i.transform.localPosition = Vector3.zero;
+                i.setNetTransformParentAgent(_objAnchor, Vector3.zero);
+                //i.transform.SetParent(_objAnchor);
+                //i.transform.localPosition = Vector3.zero;
                 _holding = i;
                 ret = true;
                 break;

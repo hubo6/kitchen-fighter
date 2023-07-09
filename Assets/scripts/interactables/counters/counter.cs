@@ -60,9 +60,10 @@ public class counter : interactable, owner {
             return false;
         }
         _holding = i;
-        var itemTrans = _holding.transform;
-        itemTrans.SetParent(_objAnchor);
-        itemTrans.localPosition = Vector3.zero;
+        //var itemTrans = _holding.transform;
+        //itemTrans.SetParent(_objAnchor);
+        //itemTrans.localPosition = Vector3.zero;
+        i.setNetTransformParentAgent(_objAnchor, Vector3.zero);
         Debug.Log($"received {_holding.name} {transform.name}.");
         onDrop?.Invoke(transform);
         return true;

@@ -11,11 +11,20 @@ public class container : counter {
     // Start is called before the first frame update
     public override void Start() {
         base.Start();
-        Assert.IsNotNull(_itemCnf);
         _counterAnim = GetComponentInChildren<counterAnim>();
+        Assert.IsNotNull(_itemCnf);
         Assert.IsNotNull(_counterAnim);
-        _counterAnim.OnAnimEvt += () => { onSpawnItemServerRpc((int)_itemCnf.type, (int)_itemCnf.msk , this.NetworkObject); };
-     }
+        _counterAnim.OnAnimEvt += () => {
+            if(IsServer)
+                onSpawnItemServerRpc((int)_itemCnf.type, (int)_itemCnf.msk, this.NetworkObject);
+        };
+    }
+
+    //public override void OnNetworkSpawn() {
+    //    _counterAnim.OnAnimEvt += () => {
+    //        onSpawnItemServerRpc((int)_itemCnf.type, (int)_itemCnf.msk, this.NetworkObject);
+    //    };
+    //}
 
 
     public override bool interact(owner src) {
@@ -51,14 +60,19 @@ public class container : counter {
     [ServerRpc(RequireOwnership = false)]
 
     void onSpawnItemServerRpc(int type, int msk, NetworkObjectReference parent) {
-
         var cnf = deliveryMgr.ins.itemCnfsCache[(ITEM_TYPE)type][(ITEM_MSK)msk];
         var prefab = Instantiate(cnf.prefab);
         prefab.GetComponent<NetworkObject>().Spawn(true);
         parent.TryGet(out NetworkObject netRef);
-        netRef.GetComponent<owner>().receive(prefab.GetComponent<item>());
+        recvClientRpc(prefab.GetComponent<item>().NetworkObject, parent);
+    }
 
-        //receive(prefab.GetComponent<item>());
+    [ClientRpc]
+    void recvClientRpc(NetworkObjectReference child, NetworkObjectReference parent) {
+        parent.TryGet(out var netRefParent);
+        child.TryGet(out var netRefchild);
+        Assert.IsNotNull(netRefParent); Assert.IsNotNull(netRefchild);
+        netRefParent.GetComponent<container>().receive(netRefchild.GetComponent<item>());
     }
 
 

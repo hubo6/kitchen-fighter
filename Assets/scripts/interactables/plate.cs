@@ -25,8 +25,9 @@ public class plate : item, owner {
         if (i.cnf.type != ITEM_TYPE.PROCESSED)
             return false;
         _msk |= 1 << (int)i.cnf.msk;
-        i.transform.parent = transform;
-        i.transform.localPosition = Vector3.up * _curLayoutOffset;
+        // i.transform.parent = transform;
+        // i.transform.localPosition = Vector3.up * _curLayoutOffset;
+        i.setNetTransformParentAgent(transform, Vector3.up * _curLayoutOffset);
         _curLayoutOffset += i.cnf.height;
         if (!_contained.Contains(i.cnf.msk))
             _contained[i.cnf.msk] = new List<item>();

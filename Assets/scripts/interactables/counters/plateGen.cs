@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class plateGen : item {
     // Start is called before the first frame update
@@ -21,6 +23,8 @@ public class plateGen : item {
 
     // Update is called once per frame
     void Update() {
+        if (!IsServer)
+            return;
         if (!gameMgr.ins.running())
             return;
         if (generatedCnt == _max)
@@ -30,16 +34,34 @@ public class plateGen : item {
             return;
 
         _stamp = 0;
-        add(Instantiate(_prefab).GetComponent<item>());
+        var prefab = Instantiate(_prefab);
+        prefab.GetComponent<NetworkObject>().Spawn(true);
+        updateItemParentClientRpc(prefab.GetComponent<item>().NetworkObject, NetworkObject);
         generatedCnt++;
     }
 
+    [ClientRpc]
+    public void updateItemParentClientRpc(NetworkObjectReference child, NetworkObjectReference parent) {
+        parent.TryGet(out var netRefParent);
+        child.TryGet(out var netRefchild);
+        Assert.IsNotNull(netRefParent );
+        Assert.IsNotNull(netRefchild);
+        netRefParent.GetComponent<plateGen>().add(netRefchild.GetComponent<plate>());
+    }
+
+
     public bool add(item plate) {
-        plate.transform.parent = transform;
-        plate.transform.localPosition = new Vector3(0, _plateRdr.bounds.size.y, 0) * _cur.Count;
+        plate.setNetTransformParentAgent(transform, new Vector3(0, _plateRdr.bounds.size.y, 0) * _cur.Count);
         _cur.AddLast(plate);
         return true;
     }
+
+    //public bool add(item plate) {
+    //    plate.transform.parent = transform;
+    //    plate.transform.localPosition = new Vector3(0, _plateRdr.bounds.size.y, 0) * _cur.Count;
+    //    _cur.AddLast(plate);
+    //    return true;
+    //}
     public item remove(int count = 1) {
         if (_cur.Count == 0)
             return null;
