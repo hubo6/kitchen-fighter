@@ -12,6 +12,8 @@ public class item : NetworkBehaviour {
     [SerializeField] Vector3 _followPosOffset = Vector3.zero;
 
     public itemCnf cnf { get => _cnf; private set => _cnf = value; }
+    public Vector3 followTranOffset { get => _followPosOffset; set => _followPosOffset = value; }
+    public Transform follow { get => _follow; set => _follow = value; }
 
     void Start() {
         if (_cnf == null) Debug.LogWarning($"item {transform.name} does not have itemCnf");
@@ -21,7 +23,7 @@ public class item : NetworkBehaviour {
         return _progress;
     }
 
-    public item setNetTransformParentAgent(Transform t, Vector3 posOffset = default(Vector3)) {
+    public item setNetTransformParentAgent(Transform t = null, Vector3 posOffset = default(Vector3)) {
         _follow = t;
         _followPosOffset = posOffset;
         return this;

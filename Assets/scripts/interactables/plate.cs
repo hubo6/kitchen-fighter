@@ -76,7 +76,7 @@ public class plate : item, owner {
                 continue;
             //todo the dish re-arrangement
             foreach (var item in (_contained[i.msk] as List<item>)) {
-                item.transform.localPosition = Vector3.up * _curLayoutOffset;
+                item.followTranOffset = Vector3.up * _curLayoutOffset;
                 _curLayoutOffset += item.cnf.height;
             }
         }

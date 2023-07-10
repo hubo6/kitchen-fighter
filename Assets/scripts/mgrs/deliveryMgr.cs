@@ -30,7 +30,7 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
     public event Action<dishSchemaCounter> onAdd;
     public event Action<int> onRm;
     public event Action<List<dishSchemaCounter>> onUpdate;
-    public event Action<dishSchemaCounter> onDeliver;
+    public event Action<bool> onDeliver;
     public int max;
 
     [SerializeField] Dictionary<ITEM_TYPE, Dictionary<ITEM_MSK, itemCnf>> _itemCnfsCache = new();
@@ -79,31 +79,37 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
             //        break;
             //}
             //if (!match) {
-            //    idx++;
+            //    dishIdx++;
             //    continue;
             //}
             ret = dish;
             break;
         }
-        onDeliver?.Invoke(ret);
-        if (idx < _waitingList.Count) {
-            deliverySuccessServerRpc(idx);
-            //_waitingList.Remove(ret);
-            //onRm?.Invoke(idx);
-        }
+
+        deliveryFinishedServerRpc(idx, idx < _waitingList.Count);
+        //if (dishIdx < _waitingList.Count) {
+        //    deliveryFinishedServerRpc(dishIdx);
+        //    //_waitingList.Remove(ret);
+        //    //onRm?.Invoke(dishIdx);
+        //}
         return ret != null;
     }
 
     [ServerRpc(RequireOwnership = false)]
 
-    void deliverySuccessServerRpc(int idx) {
-        deliverySuccessClientRpc(idx);
+    void deliveryFinishedServerRpc(int dishIdx, bool succ) {
+        deliveryFinishClientRpc(dishIdx, succ);
        
     }
     [ClientRpc]
-    void deliverySuccessClientRpc(int idx) {
-        onRm?.Invoke(idx);
-        _waitingList.RemoveAt(idx);
+    void deliveryFinishClientRpc(int idx, bool succ) {
+        if (succ) {
+            onRm?.Invoke(idx);
+            _waitingList.RemoveAt(idx);
+        }
+         
+        onDeliver?.Invoke(succ);
+      
     }
 
     [ClientRpc]

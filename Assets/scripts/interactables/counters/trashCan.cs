@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 
 public class trashCan : counter {
@@ -12,12 +11,13 @@ public class trashCan : counter {
     public static new void resetEvt() {
         onDrop = null;
     }
-    protected IEnumerator fade(Transform item) {
-        while (item.position.y > 0) {
-            item.position -= Vector3.up * Time.deltaTime;
+    protected IEnumerator fade(item i) {
+        while (i.transform.position.y > 0) {
+            i.transform.position -= Vector3.up * Time.deltaTime;
             yield return null;
         }
-        Destroy(item.gameObject);
+        if (IsServer) 
+            i.GetComponent<NetworkObject>().Despawn();       
     }
 
     public override bool receive(item i) {
@@ -31,18 +31,22 @@ public class trashCan : counter {
                 ((plate)i).clear(_clearedCache);
                 float offset = 0;
                 foreach (var c in _clearedCache) {
-                    c.transform.SetParent(_objAnchor);
-                    c.transform.localPosition = Vector3.zero + offset * Vector3.up;
+                    //c.transform.SetParent(_objAnchor);
+                    //c.transform.localPosition = Vector3.zero + offset * Vector3.up;
+                    c.setNetTransformParentAgent();
+                    c.transform.position = _objAnchor.position +  offset * Vector3.up;
                     offset += c.cnf.height;
-                    StartCoroutine(fade(c.transform));
+                    StartCoroutine(fade(c));
                 }
                 dump = true;
                 break;
             }
             {
-                i.transform.SetParent(_objAnchor);
-                i.transform.localPosition = Vector3.zero;
-                StartCoroutine(fade(i.transform));
+                //i.transform.SetParent(_objAnchor);
+                //i.transform.localPosition = Vector3.zero;
+                i.setNetTransformParentAgent();
+                i.transform.position = _objAnchor.position;
+                StartCoroutine(fade(i));
                 dump = ret = true;
                 break;
             }

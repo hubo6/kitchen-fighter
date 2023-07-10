@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7390366258114170087}
   - component: {fileID: 9101410245454974746}
   - component: {fileID: 4895280927143229751}
-  - component: {fileID: 4262499270941253074}
+  - component: {fileID: 1165875395346701818}
   m_Layer: 5
   m_Name: progress_bar
   m_TagString: Untagged
@@ -118,7 +118,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &4262499270941253074
+--- !u!114 &1165875395346701818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

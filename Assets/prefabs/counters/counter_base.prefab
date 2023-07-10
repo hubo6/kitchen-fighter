@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2870172837964371722}
   - component: {fileID: 1726268435587550907}
   - component: {fileID: 4728826917004252796}
-  - component: {fileID: 541075123270355752}
+  - component: {fileID: 7080551984294362171}
   m_Layer: 7
   m_Name: counter_base
   m_TagString: Untagged
@@ -73,7 +73,7 @@ MonoBehaviour:
   _highlight: {fileID: 4022833529681643694}
   _objAnchor: {fileID: 3051426278963582900}
   _holding: {fileID: 0}
---- !u!114 &541075123270355752
+--- !u!114 &7080551984294362171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

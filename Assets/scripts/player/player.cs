@@ -42,6 +42,7 @@ public class player : NetworkBehaviour, owner {
             input.ins.onInteract += ctx => {
                 if (!IsOwner) return;
                 if (!gameMgr.ins.running()) return;
+                if (_interactable == null) return;
                 interactServerRpc(netRef(), _interactable.NetworkObject);
             };
             input.ins.onProcess += ctx => {
