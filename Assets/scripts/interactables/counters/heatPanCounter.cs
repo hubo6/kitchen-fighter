@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -79,8 +80,31 @@ public class heatPanCounter : counter {
         if (holding().cnf.stat == 0)
             _progress.display(false);
 
-        var nextRecv = Instantiate(_holdingCnf.output.prefab).GetComponent<item>();
-        Destroy(remove()?.gameObject);
-        receive(nextRecv);
+        if (IsServer)
+            onSpawnItemServerRpc((int)_holdingCnf.output.type, (int)_holdingCnf.output.msk, holding().NetworkObject, netRef());
+
+        //var nextRecv = Instantiate(_holdingCnf.output.prefab).GetComponent<item>();
+        //Destroy(remove()?.gameObject);
+        //receive(nextRecv);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void onSpawnItemServerRpc(int type, int msk, NetworkObjectReference toDel, NetworkObjectReference parent) {
+        toDel.TryGet(out var toDelNetObj);
+        toDelNetObj.Despawn();
+        var cnf = deliveryMgr.ins.itemCnfsCache[(ITEM_TYPE)type][(ITEM_MSK)msk];
+        var item = Instantiate(cnf.prefab);
+        var netObj = item.GetComponent<NetworkObject>();
+        netObj.Spawn(true);
+        onSpawnItemClientRpc(type, msk, netObj, parent);
+    }
+
+    [ClientRpc]
+    void onSpawnItemClientRpc(int type, int msk, NetworkObjectReference child, NetworkObjectReference parent) {
+        parent.TryGet(out var netRefParent);
+        child.TryGet(out var netRefchild);
+        Assert.IsNotNull(netRefParent); Assert.IsNotNull(netRefchild);
+        remove(holding());
+        netRefParent.GetComponent<heatPanCounter>().receive(netRefchild.GetComponent<item>());
     }
 }
