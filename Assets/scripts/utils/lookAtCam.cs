@@ -13,9 +13,6 @@ public class lookAtCam : MonoBehaviour
 
     // Update is called once per frame
     private void LateUpdate() {
-        //  if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.forward)) < 90)
         transform.forward =Camera.main.transform.forward  *  (invert ? -1 : 1);
-       // else
-       //     transform.forward = -Camera.main.transform.forward;
     }
 }

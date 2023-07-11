@@ -10,24 +10,26 @@ public class heatPanCounter : counter {
     // Start is called before the first frame update
     [SerializeField] processableCnf[] _processableCnfs;
     [SerializeField] Dictionary<itemCnf, processableCnf> _processableCnfsMap = new Dictionary<itemCnf, processableCnf>();
-    [SerializeField] progressBar _progressBar;
+    [SerializeField] progress _progress;
+    [SerializeField] alert _alert;
     [SerializeField] processableCnf _holdingCnf;
     [SerializeField] GameObject _glowShim;
     [SerializeField] GameObject _splash;
     [SerializeField] AudioSource _audio;
 
-    protected IEnumerator progress(processableCnf cnf) {
-        yield return null;
+    //protected IEnumerator progress(processableCnf cnf) {
+    //    yield return null;
 
-    }
+    //}
 
     public override void Start() {
-        Assert.IsNotNull(_progressBar);
+        Assert.IsNotNull(_progress);
         Assert.IsNotNull(_audio);
         Assert.IsNull(Array.Find(_processableCnfs, i => {
             return i.input.msk != ITEM_MSK.MEAT_PIE && (i.input.type != ITEM_TYPE.RAW || i.input.type != ITEM_TYPE.PROCESSED);
         }));
-        _progressBar.gameObject.SetActive(false);
+        _progress.display(false);
+        _alert.display(false);
         foreach (var p in _processableCnfs) _processableCnfsMap.Add(p.input, p);
     }
 
@@ -39,13 +41,15 @@ public class heatPanCounter : counter {
             _audio.Play();
         else
             _audio.Stop();
+        _progress.display(_holding.cnf.stat == 0);
         return ret;
     }
 
     public override item remove(item i = null) {
         var ret = base.remove(i);
         if (ret) {
-            _progressBar.display(false);
+            _progress.display(false);
+            _alert.display(false);
             _holdingCnf = null;
             _audio.Stop();
         }
@@ -60,18 +64,20 @@ public class heatPanCounter : counter {
         }
 
         _glowShim.SetActive(true);
-        var progress = holding().updateProgress(Time.deltaTime);
+        var curProgress = holding().updateProgress(Time.deltaTime);
         //onSizzle?.Invoke(transform);
+        var ratio = curProgress / _holdingCnf.progress;
         if (holding().cnf.stat == 0)
-            _progressBar.progress(progress / _holdingCnf.progress);
+            _progress.update(ratio);
         //if (_holding.itemCnf.stat == 1) //warning
-        //    _progressBar.progress(progress / _holdingCnf.progress);
+        //    _progress.update(update / _holdingCnf.update);
         _splash.SetActive(holding().cnf.stat == 1);
-        if (progress < _holdingCnf.progress)
+        _alert.display(!(ratio < progress.warningThreshold));
+        if (curProgress < _holdingCnf.progress)
             return;
 
         if (holding().cnf.stat == 0)
-            _progressBar.display(false);
+            _progress.display(false);
 
         var nextRecv = Instantiate(_holdingCnf.output.prefab).GetComponent<item>();
         Destroy(remove()?.gameObject);

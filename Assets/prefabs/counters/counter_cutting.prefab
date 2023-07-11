@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3978890419439401193}
   - component: {fileID: 2531440380163599447}
   - component: {fileID: 2043249887184847648}
+  - component: {fileID: 4792334140731405460}
   m_Layer: 5
   m_Name: uis
   m_TagString: Untagged
@@ -37,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3978890419439401193
@@ -102,6 +103,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4792334140731405460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201454838065849594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65f108161ad63b459bfb8e7e4836c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invert: 1
 --- !u!1001 &1212017413953285015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 4877978087419715179, guid: 3b47b28fff600114c8e85f46c325b01c,
         type: 3}
       propertyPath: m_Name
-      value: progress_bar
+      value: progress
       objectReference: {fileID: 0}
     - target: {fileID: 8659114559725293341, guid: 3b47b28fff600114c8e85f46c325b01c,
         type: 3}
@@ -203,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 8659114559725293341, guid: 3b47b28fff600114c8e85f46c325b01c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8659114559725293341, guid: 3b47b28fff600114c8e85f46c325b01c,
         type: 3}
@@ -232,24 +246,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b47b28fff600114c8e85f46c325b01c, type: 3}
---- !u!224 &7564545144571241610 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8659114559725293341, guid: 3b47b28fff600114c8e85f46c325b01c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1212017413953285015}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7971167995340006541 stripped
+--- !u!114 &2518119417975146740 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9101410245454974746, guid: 3b47b28fff600114c8e85f46c325b01c,
+  m_CorrespondingSourceObject: {fileID: 3612972318812922723, guid: 3b47b28fff600114c8e85f46c325b01c,
     type: 3}
   m_PrefabInstance: {fileID: 1212017413953285015}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0f779c8352add4b9275c20f6ddbef5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7305e22387b424643997e2829ce429a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7564545144571241610 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8659114559725293341, guid: 3b47b28fff600114c8e85f46c325b01c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1212017413953285015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6104214729175079486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -318,6 +332,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: counter_cutting
       objectReference: {fileID: 0}
+    - target: {fileID: 3051426278963582900, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7080551984294362171, guid: 71f681b621696d74598b586f7757c58a,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -379,7 +398,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 104691302a6d9f5409dc3aa640c813b6, type: 2}
   - {fileID: 11400000, guid: dec9a0d1f1de21b4d94fb0c2671c6b69, type: 2}
   - {fileID: 11400000, guid: 7d316c94c674d2e47b95b10eeab572c6, type: 2}
-  _progressBar: {fileID: 7971167995340006541}
+  _progress: {fileID: 2518119417975146740}
   _counterAnim: {fileID: 4744817192240781544}
   _holdingCnf: {fileID: 0}
 --- !u!4 &9146352333735234954 stripped

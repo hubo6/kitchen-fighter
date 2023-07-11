@@ -46,8 +46,9 @@ public class player : NetworkBehaviour, owner {
                 interactServerRpc(netRef(), _interactable.NetworkObject);
             };
             input.ins.onProcess += ctx => {
+                if (!IsOwner) return;
                 if (!gameMgr.ins.running()) return;
-                _interactable?.process();
+                processServerRpc(netRef(), _interactable.NetworkObject);
             };
             onInteractableChged += gameMgr.ins.onInteractableChged;
 
@@ -75,11 +76,22 @@ public class player : NetworkBehaviour, owner {
     }
     [ClientRpc]
     void interactClientRpc(NetworkObjectReference from, NetworkObjectReference to) {
-
         from.TryGet(out var fromNetObj);
         to.TryGet(out var toNetObj);
         Assert.IsNotNull(fromNetObj); Assert.IsNotNull(toNetObj);
         toNetObj.GetComponent<interactable>()?.interact(fromNetObj.GetComponent<owner>());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void processServerRpc(NetworkObjectReference from, NetworkObjectReference to) {
+        processClientRpc(from, to);
+    }
+    [ClientRpc]
+    void processClientRpc(NetworkObjectReference from, NetworkObjectReference to) {
+        from.TryGet(out var fromNetObj);
+        to.TryGet(out var toNetObj);
+        Assert.IsNotNull(fromNetObj); Assert.IsNotNull(toNetObj);
+        toNetObj.GetComponent<interactable>()?.process();
     }
 
 

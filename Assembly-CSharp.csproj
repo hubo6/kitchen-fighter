@@ -75,6 +75,7 @@
     <Compile Include="Assets\scripts\scriptables\items\itemCnf.cs" />
     <Compile Include="Assets\scripts\uis\logView.cs" />
     <Compile Include="Assets\scripts\mgrs\soundMgr.cs" />
+    <Compile Include="Assets\scripts\uis\progress.cs" />
     <Compile Include="Assets\scripts\interactables\counters\plateCounter.cs" />
     <Compile Include="Assets\scripts\settings\inputControl.cs" />
     <Compile Include="Assets\scripts\scens\mainMenu.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Assets\scripts\interactables\counters\plateGen.cs" />
     <Compile Include="Assets\scripts\scens\helloScene.cs" />
     <Compile Include="Assets\scripts\scens\loadingScene.cs" />
-    <Compile Include="Assets\scripts\uis\progressBar.cs" />
+    <Compile Include="Assets\alert.cs" />
     <Compile Include="Assets\scripts\interactables\counters\container.cs" />
   </ItemGroup>
   <ItemGroup>
