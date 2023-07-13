@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cnf: {fileID: 11400000, guid: 792a352d9474bef48a0c6c524579399c, type: 2}
   _progress: 0
+  _follow: {fileID: 0}
+  _followPosOffset: {x: 0, y: 0, z: 0}
   _max: 5
   _genTime: 4
   _stamp: 0
@@ -220,6 +222,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: counter_plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080551984294362171, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4728826917004252796, guid: 71f681b621696d74598b586f7757c58a, type: 3}

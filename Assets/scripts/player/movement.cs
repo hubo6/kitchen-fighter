@@ -34,13 +34,13 @@ public class movement : MonoBehaviour {
         var dis = _player.spd * Time.deltaTime;
         var offset = Vector3.zero;
         transform.forward = Vector3.Slerp(transform.forward, _player.inputV3.normalized, _player.rotSpd * Time.deltaTime);
-        if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, _player.inputV3.normalized, out RaycastHit hit, dis))
+        if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, _player.inputV3.normalized, out RaycastHit hit, dis, _maskLayer))
             offset = _player.inputV3.normalized * dis;
         else {
             var xInput = new Vector3(_player.inputV3.normalized.x, 0, 0);
             if (xInput != Vector3.zero) {
                 var xDis = dis * Mathf.Abs(_player.inputV3.normalized.x);
-                if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, xInput, xDis))
+                if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, xInput, xDis, _maskLayer))
                     offset = xInput * dis;
             }
 
@@ -48,7 +48,7 @@ public class movement : MonoBehaviour {
             var zInput = new Vector3(0, 0, _player.inputV3.normalized.z);
             if (zInput != Vector3.zero) {
                 var zDis = dis * Mathf.Abs(_player.inputV3.normalized.z);
-                if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, zInput, zDis))
+                if (!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * _capsuleCldr.height, _capsuleCldr.radius, zInput, zDis, _maskLayer))
                     offset = zInput * dis;
             }
         }

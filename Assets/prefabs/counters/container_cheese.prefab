@@ -172,6 +172,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7080551984294362171, guid: 71f681b621696d74598b586f7757c58a,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 4728826917004252796, guid: 71f681b621696d74598b586f7757c58a, type: 3}

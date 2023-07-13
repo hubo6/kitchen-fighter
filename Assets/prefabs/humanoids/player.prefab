@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6076529517253265629}
   - component: {fileID: 4086383449079206425}
   - component: {fileID: -7084440335256656351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   _player: {fileID: 5408512513905552982}
   _maskLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 200
   _capsuleCldr: {fileID: 8958038436088532997}
   _stepCounter:
   - 0
