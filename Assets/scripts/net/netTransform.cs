@@ -5,7 +5,7 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 
 [DisallowMultipleComponent]
-public class nObject : NetworkTransform {
+public class netTransform : NetworkTransform {
     // Start is called before the first frame update
 
 

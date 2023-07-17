@@ -19,7 +19,8 @@ public class input : monoSingleton<input> {
     , new keyBinds() { key = "active_1" }, new keyBinds() { key = "active_2" } };
     public List<keyBinds> inputMap { get => _inputMap; }
     // Start is called before the first frame update
-    void Awake() {
+    public override void Awake() {
+        base.Awake();
         if (_inputCtrl == null) {
             _inputCtrl = new inputControl();
             if(PlayerPrefs.HasKey(INPUT_SAVE))
@@ -30,10 +31,6 @@ public class input : monoSingleton<input> {
             _inputCtrl.player.pause.performed +=  ctx => ins?.onPause(ctx);
         }
        
-    }
-
-    // Update is called once per frame
-    void Update() {
     }
 
     public class keyBinds {

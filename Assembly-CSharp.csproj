@@ -61,6 +61,7 @@
     <Compile Include="Assets\scripts\interactables\counters\functionalCounter.cs" />
     <Compile Include="Assets\scripts\scriptables\processables\processableCnf.cs" />
     <Compile Include="Assets\scripts\interactables\counters\counter.cs" />
+    <Compile Include="Assets\scripts\utils\singleton.cs" />
     <Compile Include="Assets\scripts\interactables\counters\deliveryCounter.cs" />
     <Compile Include="Assets\scripts\mgrs\staticResetMgr.cs" />
     <Compile Include="Assets\scripts\net\netTransform.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Assets\scripts\scriptables\sounds\soundCnf.cs" />
     <Compile Include="Assets\scripts\interactables\plate.cs" />
     <Compile Include="Assets\scripts\player\charAnim.cs" />
-    <Compile Include="Assets\scripts\utils\monoSingleton.cs" />
     <Compile Include="Assets\scoreFlag.cs" />
     <Compile Include="Assets\scripts\player\movement.cs" />
     <Compile Include="Assets\scripts\utils\lookAtCam.cs" />

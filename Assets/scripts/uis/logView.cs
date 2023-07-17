@@ -19,7 +19,7 @@ public class logView : monoSingleton<logView> {
         log(condition);
     }
 
-    void Start() {
+    public void Start() {
         Application.logMessageReceived += logCb;
         _btnClose?.onClick.AddListener(() => {
         });

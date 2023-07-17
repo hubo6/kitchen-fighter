@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-
+using System.Collections.Generic;
 
 public class player : NetworkBehaviour, owner {
     // Start is called before the first frame update
@@ -17,8 +17,13 @@ public class player : NetworkBehaviour, owner {
     [SerializeField] interactable _interactable;
     [SerializeField] Transform _objAnchor;
     [SerializeField] item _holding;
+    [SerializeField] static float[] _spwanArea = { 0,0,0,8,0}; //xyzwh
+    [SerializeField] Material[] _meterials;
+    [SerializeField] Transform _ready;
+    [SerializeField] static Dictionary<ulong, bool> _players = new Dictionary<ulong, bool>();
 
-   
+
+
 
     public event Action<interactable, interactable> onInteractableChged;
 
@@ -38,20 +43,35 @@ public class player : NetworkBehaviour, owner {
 
     public override void OnNetworkSpawn() {
         Debug.Log($"player nid {this.NetworkObjectId}");
+
+        if (IsServer) {
+            var cnt = NetworkManager.Singleton.ConnectedClients.Count;
+            var gap = _spwanArea[3] / (cnt + 1);
+            var xStart = _spwanArea[0] - (cnt + 1) / 2f * gap;
+            transform.position = new Vector3(xStart + gap * cnt, _spwanArea[1], _spwanArea[2]);
+        }
+
+
+
         if (IsOwner) {
             input.ins.onInteract += ctx => {
-                if (!IsOwner) return;
-                if (!gameMgr.ins.running()) return;
-                if (_interactable == null) return;
-                interactServerRpc(netRef(), _interactable.NetworkObject);
+                do {
+                    if (gameMgr.ins.stage == gameMgr.STAGE.WAITING) {
+                        setReadyServerRpc();
+                        break;
+                    }
+                    if (!gameMgr.ins.running())
+                        break;
+                    if (_interactable == null)
+                        break;
+                    interactServerRpc(netRef(), _interactable.NetworkObject);
+                } while (false);
             };
             input.ins.onProcess += ctx => {
-                if (!IsOwner) return;
                 if (!gameMgr.ins.running()) return;
                 processServerRpc(netRef(), _interactable.NetworkObject);
             };
             onInteractableChged += gameMgr.ins.onInteractableChged;
-
         }
     }
 
@@ -68,6 +88,8 @@ public class player : NetworkBehaviour, owner {
 
     void Start() {
         Assert.IsNotNull(_objAnchor);
+        Assert.IsNotNull(_ready);
+        _ready.gameObject.SetActive(false);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -156,5 +178,11 @@ public class player : NetworkBehaviour, owner {
     }
 
     public NetworkObject netRef() { return NetworkObject; }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void setReadyServerRpc(ServerRpcParams p = default) {
+            _players[p.Receive.SenderClientId] = true;
+            Debug.Log($"{ _players.Count }");
+    }
 }
 

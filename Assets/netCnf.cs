@@ -14,9 +14,8 @@ public class netCnf : MonoBehaviour
     {
         Assert.IsNotNull(_btn_host);
         Assert.IsNotNull(_btn_client);
-
-        _btn_host.onClick.AddListener(() => NetworkManager.Singleton.StartHost());
-        _btn_client.onClick.AddListener(() => NetworkManager.Singleton.StartClient());
+       _btn_host.onClick.AddListener(() => NetworkManager.Singleton.StartHost());
+       _btn_client.onClick.AddListener(() => NetworkManager.Singleton.StartClient());
 
     }
 

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static input;
 
-public class gameMgr : monoSingleton<gameMgr> {
+public class gameMgr : netSingleton<gameMgr> {
     public enum SCENE {
         HELLO,
         MAIN,
@@ -14,6 +13,8 @@ public class gameMgr : monoSingleton<gameMgr> {
     public enum STAGE { 
             INITIAL = 0,
             LOADING,
+            LOBBY,
+            WAITING,
             COUNT,
             STARTED,
             PAUSED,
@@ -34,6 +35,7 @@ public class gameMgr : monoSingleton<gameMgr> {
         }
         return ret;
     }
+
     public STAGE stage { get => _stage; private set {
             var chg = value != _stage; 
             _stage = value;
@@ -44,8 +46,8 @@ public class gameMgr : monoSingleton<gameMgr> {
     public float[] timerStamp { get => _timerStamp; set => _timerStamp = value; }
 
     public bool running() { return _stage == STAGE.STARTED; }
-    private void Start() {
-        stage = STAGE.STARTED; // STAGE.INITIAL;
+    public  void Start() {
+        stage = STAGE.WAITING; // STAGE.INITIAL;
         input.ins.onPause +=  cb => togglePause();
     }
 
@@ -100,4 +102,18 @@ public class gameMgr : monoSingleton<gameMgr> {
         p?.highlight(false);
         n?.highlight(true);
     }
+
+    //public void onInteract(InputAction.CallbackContext ctx) {
+    //    if ((ins.stage == STAGE.WAITING || true)) {
+    //        setReadyServerRpc();
+
+    //    }
+    //}
+
+    //[ServerRpc(RequireOwnership = false)]
+    //public void setReadyServerRpc(ServerRpcParams p = default) {
+    //    if (IsServer) {
+    //        _playersCache[p.Receive.SenderClientId] = true;
+    //    }
+    //}
 }
