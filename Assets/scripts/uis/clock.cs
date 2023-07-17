@@ -16,10 +16,7 @@ public class clock : MonoBehaviour {
             else if (s == gameMgr.STAGE.END)
                 gameObject.SetActive(false);
         };
-    }
 
-    // Update is called once per frame
-    void Update() {
-        _indicator.fillAmount = 1- gameMgr.ins.timerStamp[0] / gameMgr.ins.timerStamp[2];
+        gameMgr.ins.onTimePlayChg += (s) =>  _indicator.fillAmount = 1 - s / gameMgr.ins.timerStamp[2];
     }
 }

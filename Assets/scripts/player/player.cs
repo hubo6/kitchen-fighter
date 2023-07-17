@@ -20,7 +20,7 @@ public class player : NetworkBehaviour, owner {
     [SerializeField] static float[] _spwanArea = { 0,0,0,8,0}; //xyzwh
     [SerializeField] Material[] _meterials;
     [SerializeField] Transform _ready;
-    [SerializeField] static Dictionary<ulong, bool> _players = new Dictionary<ulong, bool>();
+
 
 
 
@@ -33,6 +33,7 @@ public class player : NetworkBehaviour, owner {
     public Vector3 inputV3 { get => _inputV3; private set => _inputV3 = value; }
     public float spd { get => _spd; private set => _spd = value; }
     public float rotSpd { get => _rotSpd; set => _rotSpd = value; }
+    public Transform ready { get => _ready;}
 
     public void setInteractable(interactable obj = null) {
         var pre = _interactable;
@@ -56,10 +57,6 @@ public class player : NetworkBehaviour, owner {
         if (IsOwner) {
             input.ins.onInteract += ctx => {
                 do {
-                    if (gameMgr.ins.stage == gameMgr.STAGE.WAITING) {
-                        setReadyServerRpc();
-                        break;
-                    }
                     if (!gameMgr.ins.running())
                         break;
                     if (_interactable == null)
@@ -67,9 +64,15 @@ public class player : NetworkBehaviour, owner {
                     interactServerRpc(netRef(), _interactable.NetworkObject);
                 } while (false);
             };
-            input.ins.onProcess += ctx => {
-                if (!gameMgr.ins.running()) return;
-                processServerRpc(netRef(), _interactable.NetworkObject);
+           input.ins.onInteract += gameMgr.ins.onInteract;
+           input.ins.onProcess += ctx => {
+               do {
+                   if (!gameMgr.ins.running())
+                       break;
+                   if (_interactable == null)
+                       break;
+                   processServerRpc(netRef(), _interactable.NetworkObject);
+               } while (false);
             };
             onInteractableChged += gameMgr.ins.onInteractableChged;
         }
@@ -178,11 +181,5 @@ public class player : NetworkBehaviour, owner {
     }
 
     public NetworkObject netRef() { return NetworkObject; }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void setReadyServerRpc(ServerRpcParams p = default) {
-            _players[p.Receive.SenderClientId] = true;
-            Debug.Log($"{ _players.Count }");
-    }
 }
 
