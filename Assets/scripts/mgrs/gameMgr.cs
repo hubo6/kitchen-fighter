@@ -54,10 +54,10 @@ public class gameMgr : netSingleton<gameMgr> {
         };
 
        input.ins.onPause += cb => togglePauseServerRpc();
-        
-     
         if (IsServer)
             _stage.Value = STAGE.WAITING;
+        else
+            onStageChg?.Invoke(_stage.Value);
     }
 
     [ServerRpc(RequireOwnership = false)]
