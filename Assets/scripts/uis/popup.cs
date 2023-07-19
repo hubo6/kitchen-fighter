@@ -41,26 +41,26 @@ public class popup : MonoBehaviour {
         Assert.IsNotNull(_btnKeyBind);
         Assert.IsNotNull(_bindHint);
 
-        _btnResume.onClick.AddListener(() => gameMgr.ins.togglePause());
-        _btnQuit.onClick.AddListener(() => SceneManager.LoadScene(gameMgr.SCENE.MAIN.ToString()));
-        _btnOpt.onClick.AddListener(() => {
-            hide();
-            gameObject.SetActive(true);
-            _settings.gameObject.SetActive(true);
-            _btnMusicVol.Select();
-        });
-        gameMgr.ins.onStageChg += s => {
-            hide();
-            if (s == gameMgr.STAGE.END) {
-                gameObject.SetActive(true);
-                _gameOver.gameObject.SetActive(true);
+        //_btnResume.onClick.AddListener(() => gameMgr.ins.togglePauseServerRpc());
+        //_btnQuit.onClick.AddListener(() => SceneManager.LoadScene(gameMgr.SCENE.MAIN.ToString()));
+        //_btnOpt.onClick.AddListener(() => {
+        //    hide();
+        //    gameObject.SetActive(true);
+        //    _settings.gameObject.SetActive(true);
+        //    _btnMusicVol.Select();
+        //});
+        //gameMgr.ins.onStageChg += s => {
+        //    hide();
+        //    if (s == gameMgr.STAGE.END) {
+        //        gameObject.SetActive(true);
+        //        _gameOver.gameObject.SetActive(true);
 
-            } else if (s == gameMgr.STAGE.PAUSED) {
-                gameObject.SetActive(true);
-                _options.gameObject.SetActive(true);
-                _btnResume.Select();
-            }
-        };
+        //    } else if (s == gameMgr.STAGE.PAUSED) {
+        //        gameObject.SetActive(true);
+        //        _options.gameObject.SetActive(true);
+        //        _btnResume.Select();
+        //    }
+        //};
         _btnMusicVol.GetComponentInChildren<TextMeshProUGUI>().text = $"Music Vol:{soundMgr.ins.music_vol:F1}";
         _btnMusicVol.onClick.AddListener(() => {
             soundMgr.ins.music_vol = (soundMgr.ins.music_vol + 0.1f) % 1f;

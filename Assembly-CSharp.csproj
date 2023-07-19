@@ -61,6 +61,7 @@
     <Compile Include="Assets\scripts\interactables\counters\functionalCounter.cs" />
     <Compile Include="Assets\scripts\scriptables\processables\processableCnf.cs" />
     <Compile Include="Assets\scripts\interactables\counters\counter.cs" />
+    <Compile Include="Assets\scripts\uis\timer.cs" />
     <Compile Include="Assets\scripts\utils\singleton.cs" />
     <Compile Include="Assets\scripts\interactables\counters\deliveryCounter.cs" />
     <Compile Include="Assets\scripts\mgrs\staticResetMgr.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="Assets\scripts\interactables\counters\trashCan.cs" />
     <Compile Include="Assets\counterAnchor.cs" />
     <Compile Include="Assets\scripts\utils\utils.cs" />
-    <Compile Include="Assets\scripts\uis\startTimer.cs" />
+    <Compile Include="Assets\pauseUi.cs" />
     <Compile Include="Assets\scripts\interactables\item.cs" />
     <Compile Include="Assets\scripts\player\player.cs" />
     <Compile Include="Assets\scripts\uis\clock.cs" />
@@ -97,7 +98,10 @@
     <Compile Include="Assets\netCnf.cs" />
     <Compile Include="Assets\scripts\uis\popup.cs" />
     <Compile Include="Assets\scripts\interactables\counters\heatPanCounter.cs" />
+    <Compile Include="Assets\gameOverUi.cs" />
+    <Compile Include="Assets\settingUi.cs" />
     <Compile Include="Assets\scripts\mgrs\input.cs" />
+    <Compile Include="Assets\uiMgr.cs" />
     <Compile Include="Assets\scripts\interactables\counters\plateGen.cs" />
     <Compile Include="Assets\scripts\scens\helloScene.cs" />
     <Compile Include="Assets\scripts\scens\loadingScene.cs" />

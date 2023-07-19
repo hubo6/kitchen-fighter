@@ -36,21 +36,37 @@ public class gameMgr : netSingleton<gameMgr> {
 
 
     public override void OnNetworkSpawn() {
-        _stage.OnValueChanged += (STAGE p, STAGE n) => onStageChg?.Invoke(n);
+
+        _stage.OnValueChanged += (STAGE p, STAGE n) => {
+            onStageChg?.Invoke(n);
+        };
+
+        _stage.OnValueChanged += (STAGE p, STAGE n) => {
+            if (n == STAGE.PAUSED)
+                Time.timeScale = 0;
+            else if (n == STAGE.STARTED)
+                Time.timeScale = 1.0f;
+        };
+
         _timerSec.OnValueChanged += (int p, int n) => onTimerSecChg?.Invoke(n);
         _timerPlay.OnValueChanged += (float p, float n) => {
             onTimePlayChg?.Invoke(n);
         };
+
+       input.ins.onPause += cb => togglePauseServerRpc();
+        
+     
+        if (IsServer)
+            _stage.Value = STAGE.WAITING;
     }
-    public bool togglePause() {
-        var ret = false;
+
+    [ServerRpc(RequireOwnership = false)]
+    public void togglePauseServerRpc() {
         if (stage.Value == STAGE.PAUSED || stage.Value == STAGE.STARTED) {
-            Time.timeScale = Time.timeScale == 1.0f ? 0 : 1.0f;
             stage.Value = stage.Value == STAGE.PAUSED ? STAGE.STARTED : STAGE.PAUSED;
-            ret = true;
         }
-        return ret;
     }
+
 
     public NetworkVariable<STAGE> stage { get => _stage; private set => _stage = value;}
 
@@ -59,8 +75,7 @@ public class gameMgr : netSingleton<gameMgr> {
 
     public bool running() { return _stage.Value == STAGE.STARTED; }
     public  void Start() {
-        stage = new(STAGE.WAITING); // STAGE.INITIAL;
-        input.ins.onPause +=  cb => togglePause();
+        stage = new(STAGE.LOBBY); // STAGE.INITIAL;
     }
 
 
@@ -92,10 +107,12 @@ public class gameMgr : netSingleton<gameMgr> {
                 if (_timerStamp[0] <= .0f) {
                     _timerStamp[0] = 1;
                     _timerStamp[1] -= 1;
+                    if (_timerStamp[1] <= -1) {
+                        stage.Value = STAGE.STARTED;
+                        break;
+                    }
                     _timerSec.Value = (int)_timerStamp[1];
                 }
-                if (_timerStamp[1] <= -1) 
-                    stage.Value = STAGE.STARTED;
                 break;
             }
 

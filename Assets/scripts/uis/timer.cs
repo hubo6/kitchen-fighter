@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class startTimer : MonoBehaviour
+public class timer : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] TextMeshProUGUI _txt;
@@ -15,12 +15,12 @@ public class startTimer : MonoBehaviour
         gameObject.SetActive(false);
       
         gameMgr.ins.onTimerSecChg += onTimerSecChg;
-        gameMgr.ins.onStageChg +=s => {
-            if (s == gameMgr.STAGE.COUNT)
-                gameObject.SetActive(true);
-            else if (s == gameMgr.STAGE.STARTED)
-                gameObject.SetActive(false);
-        };
+        //gameMgr.ins.onStageChg +=s => {
+        //    if (s == gameMgr.STAGE.COUNT)
+        //        gameObject.SetActive(true);
+        //    else if (s == gameMgr.STAGE.STARTED)
+        //        gameObject.SetActive(false);
+        //};
     }
 
     // Update is called once per frame

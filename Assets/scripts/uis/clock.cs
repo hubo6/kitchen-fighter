@@ -9,14 +9,6 @@ public class clock : MonoBehaviour {
     [SerializeField] Image _indicator;
     void Start() {
         Assert.IsNotNull(_indicator);
-        gameObject.SetActive(false);
-        gameMgr.ins.onStageChg +=  s => {
-            if (s == gameMgr.STAGE.STARTED)
-                gameObject.SetActive(true);
-            else if (s == gameMgr.STAGE.END)
-                gameObject.SetActive(false);
-        };
-
         gameMgr.ins.onTimePlayChg += (s) =>  _indicator.fillAmount = 1 - s / gameMgr.ins.timerStamp[2];
     }
 }
