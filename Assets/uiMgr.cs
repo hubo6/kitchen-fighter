@@ -63,6 +63,7 @@ public class uiMgr : MonoBehaviour {
 
             if (s == STAGE.WAITING) {
                 hide();
+                show(UI_COMPONENT.LOG_VIEW);
                 return;
             }
 

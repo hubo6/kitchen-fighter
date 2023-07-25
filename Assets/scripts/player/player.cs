@@ -50,9 +50,8 @@ public class player : NetworkBehaviour, owner {
             var gap = _spwanArea[3] / (cnt + 1);
             var xStart = _spwanArea[0] - (cnt + 1) / 2f * gap;
             transform.position = new Vector3(xStart + gap * cnt, _spwanArea[1], _spwanArea[2]);
+            NetworkManager.Singleton.OnClientDisconnectCallback += onClientDisconn;
         }
-
-
 
         if (IsOwner) {
             input.ins.onInteract += ctx => {
@@ -78,6 +77,12 @@ public class player : NetworkBehaviour, owner {
         }
     }
 
+    private void onClientDisconn(ulong cid) {
+        Debug.Log($"{cid}");
+        if (cid == OwnerClientId) {
+            holding().GetComponent<NetworkObject>().Despawn();
+        }
+    }
 
     void updateInteractable() {
         if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactDis, _interactableLayer)) {
