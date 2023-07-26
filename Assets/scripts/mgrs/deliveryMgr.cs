@@ -22,8 +22,8 @@ public class deliveryMgr : netSingleton<deliveryMgr> {
     [SerializeField] Dictionary<int, dishSchema> _dishCnfsMap = new Dictionary<int, dishSchema>();
     //[SerializeField] Dictionary<dishSchemaCounter, dishSchemaCounter> _waitingMap = new Dictionary<dishSchemaCounter, dishSchemaCounter>();
     [SerializeField] List<dishSchemaCounter> _waitingList = new List<dishSchemaCounter>();
-    [SerializeField] float _genGapSec = 5.0f;//test
-    [SerializeField] float _timeStamp = 0f;//test
+    [SerializeField] float _genGapSec = 5.0f;
+    [SerializeField] float _timeStamp = 0f;
     [SerializeField] List<dishSchemaCounter> _toDel = new List<dishSchemaCounter>();
     [SerializeField] List<dishSchemaCounter> _toUpdate = new List<dishSchemaCounter>();
     [SerializeField] itemCnf[] _itemCnfs;

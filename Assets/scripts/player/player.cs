@@ -3,9 +3,26 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 public class player : NetworkBehaviour, owner {
     // Start is called before the first frame update
+
+    public struct info : IEquatable<info>, INetworkSerializable {
+        public ulong cid;
+        public Color color;
+        public bool ready;
+        public bool Equals(info other) {
+            return cid == other.cid;
+        }
+
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
+            serializer.SerializeValue(ref cid);
+            serializer.SerializeValue(ref color);
+            serializer.SerializeValue(ref ready);
+        }
+    }
 
     [SerializeField] float _xInput;
     [SerializeField] float _zInput;
@@ -20,10 +37,8 @@ public class player : NetworkBehaviour, owner {
     [SerializeField] static float[] _spwanArea = { 0,0,0,8,0}; //xyzwh
     [SerializeField] Material[] _meterials;
     [SerializeField] Transform _ready;
-
-
-
-
+    [SerializeField] Transform _head;
+    [SerializeField] Transform _body;
 
     public event Action<interactable, interactable> onInteractableChged;
 
@@ -43,15 +58,16 @@ public class player : NetworkBehaviour, owner {
     }
 
     public override void OnNetworkSpawn() {
-        Debug.Log($"player nid {this.NetworkObjectId}");
+        Debug.Log($"player ownerClientId :{OwnerClientId}  nid{ NetworkObjectId} nbehaviorid {NetworkBehaviourId} ");
 
         if (IsServer) {
             var cnt = NetworkManager.Singleton.ConnectedClients.Count;
             var gap = _spwanArea[3] / (cnt + 1);
             var xStart = _spwanArea[0] - (cnt + 1) / 2f * gap;
             transform.position = new Vector3(xStart + gap * cnt, _spwanArea[1], _spwanArea[2]);
-            NetworkManager.Singleton.OnClientDisconnectCallback += onClientDisconn;
+            NetworkManager.Singleton.OnClientDisconnectCallback += onClientDisconnected;
         }
+        gameMgr.ins.onPlayerCnfChg += onPlayerChanged;
 
         if (IsOwner) {
             input.ins.onInteract += ctx => {
@@ -77,11 +93,28 @@ public class player : NetworkBehaviour, owner {
         }
     }
 
-    private void onClientDisconn(ulong cid) {
-        Debug.Log($"{cid}");
-        if (cid == OwnerClientId) {
-            holding().GetComponent<NetworkObject>().Despawn();
+    private void onPlayerChanged(NetworkListEvent<info> evt) {
+        if (evt.Type == NetworkListEvent<info>.EventType.Add) {
+            foreach (var cnf in gameMgr.ins._playerCnf) {
+                if (cnf.cid == OwnerClientId) {
+                    _head.GetComponent<MeshRenderer>().material.color = cnf.color;
+                    _body.GetComponent<MeshRenderer>().material.color = cnf.color;
+                    _ready.gameObject.SetActive(cnf.ready);
+                    break;
+                }
+            }
+        } else if (evt.Type == NetworkListEvent<info>.EventType.Value) {//todo
+            if (evt.Value.cid == OwnerClientId) {
+                _head.GetComponent<MeshRenderer>().material.color = evt.Value.color;
+                _body.GetComponent<MeshRenderer>().material.color = evt.Value.color;
+                _ready.gameObject.SetActive(evt.Value.ready);
+            }
         }
+    }
+
+    private void onClientDisconnected(ulong cid) {
+        if (cid == OwnerClientId) 
+            holding()?.GetComponent<NetworkObject>().Despawn();
     }
 
     void updateInteractable() {
@@ -97,7 +130,10 @@ public class player : NetworkBehaviour, owner {
     void Start() {
         Assert.IsNotNull(_objAnchor);
         Assert.IsNotNull(_ready);
+        Assert.IsNotNull(_head);
+        Assert.IsNotNull(_body);
         _ready.gameObject.SetActive(false);
+
     }
 
     [ServerRpc(RequireOwnership = false)]

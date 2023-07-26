@@ -34,25 +34,33 @@ public class uiMgr : MonoBehaviour {
     [SerializeField] Dictionary<UI_COMPONENT, GameObject> _components = new();
     // Start is called before the first frame update
     void Start() {
-        Assert.IsNotNull(_timer);
-        Assert.IsNotNull(_clock);
-        Assert.IsNotNull(_gameOver);
-        Assert.IsNotNull(_pause);
-        Assert.IsNotNull(_logView);
-        Assert.IsNotNull(_waitingList);
-        Assert.IsNotNull(_setting);
-        Assert.IsNotNull(_netCnf);
-        Assert.IsNotNull(_clock);
+        //Assert.IsNotNull(_timer);
+        //Assert.IsNotNull(_clock);
+        //Assert.IsNotNull(_gameOver);
+        //Assert.IsNotNull(_pause);
+        //Assert.IsNotNull(_logView);
+        //Assert.IsNotNull(_waitingList);
+        //Assert.IsNotNull(_setting);
+        //Assert.IsNotNull(_netCnf);
+        //Assert.IsNotNull(_clock);
 
-        _components.Add(UI_COMPONENT.LOG_VIEW, _logView.gameObject);
-        _components.Add(UI_COMPONENT.WAITING_LIST, _waitingList.gameObject);
-        _components.Add(UI_COMPONENT.TIMER, _timer.gameObject);
-        _components.Add(UI_COMPONENT.CLOCK, _clock.gameObject);
-        _components.Add(UI_COMPONENT.NET, _netCnf.gameObject);
-        _components.Add(UI_COMPONENT.GAME_OVER, _gameOver.gameObject);
-        _components.Add(UI_COMPONENT.PAUSE, _pause.gameObject);
-        _components.Add(UI_COMPONENT.SETTING, _setting.gameObject);
-        hide();
+        if (_logView != null)
+            _components.Add(UI_COMPONENT.LOG_VIEW, _logView.gameObject);
+        if (_waitingList != null)
+            _components.Add(UI_COMPONENT.WAITING_LIST, _waitingList.gameObject);
+        if (_timer != null)
+            _components.Add(UI_COMPONENT.TIMER, _timer.gameObject);
+        if (_clock != null)
+            _components.Add(UI_COMPONENT.CLOCK, _clock.gameObject);
+        if (_netCnf != null)
+            _components.Add(UI_COMPONENT.NET, _netCnf.gameObject);
+        if (_gameOver != null)
+            _components.Add(UI_COMPONENT.GAME_OVER, _gameOver.gameObject);
+        if (_pause != null)
+            _components.Add(UI_COMPONENT.PAUSE, _pause.gameObject);
+        if (_setting != null)
+            _components.Add(UI_COMPONENT.SETTING, _setting.gameObject);
+            hide();
         show(UI_COMPONENT.NET);
         gameMgr.ins.onStageChg += (STAGE s) => {
             if (s == STAGE.LOBBY) {

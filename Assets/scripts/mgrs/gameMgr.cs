@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 using static UnityEngine.InputSystem.InputAction;
 using static UnityEngine.Rendering.DebugUI;
+
+
+
 
 public class gameMgr : netSingleton<gameMgr> {
     public enum SCENE {
@@ -14,7 +19,6 @@ public class gameMgr : netSingleton<gameMgr> {
         GAME,
         LOADING,
     }
-    [SerializeField] Dictionary<ulong, bool> _players = new Dictionary<ulong, bool>();
     public enum STAGE { 
             INITIAL = 0,
             LOADING,
@@ -31,8 +35,11 @@ public class gameMgr : netSingleton<gameMgr> {
     public event Action<int> onTimerSecChg;
     public event Action<float> onTimePlayChg;
     public event Action<STAGE> onStageChg;
+    public event Action<NetworkListEvent<player.info>>  onPlayerCnfChg;
     [SerializeField] float[] _timerStamp = { 1f, 3.0f, 180f};
     [SerializeField] float _score = 0;
+    [SerializeField] player _playerPrefab;
+    [SerializeField] public NetworkList<player.info> _playerCnf;
 
 
     public override void OnNetworkSpawn() {
@@ -53,12 +60,39 @@ public class gameMgr : netSingleton<gameMgr> {
             onTimePlayChg?.Invoke(n);
         };
 
-       input.ins.onPause += cb => togglePauseServerRpc();
-        if (IsServer)
+        _playerCnf.OnListChanged += (evt) => onPlayerCnfChg?.Invoke(evt);
+
+        input.ins.onPause += cb => togglePauseServerRpc();
+        if (IsServer) {
             _stage.Value = STAGE.WAITING;
-        else
+            NetworkManager.Singleton.OnClientConnectedCallback += onClientConnected;
+          
+        } else
             onStageChg?.Invoke(_stage.Value);
     }
+
+    public override void Awake() {
+        base.Awake();
+        _playerCnf = new();
+    }
+
+    //private void onPlayerCnfChg(NetworkListEvent<player.info> info) {
+
+    //}
+
+    private void onClientConnected(ulong cid) {
+        var obj = Instantiate(_playerPrefab);
+        obj.GetComponent<NetworkObject>().SpawnAsPlayerObject(cid, true);
+        var color = Color.yellow;
+        if (NetworkManager.Singleton.ConnectedClients.Count == 2)
+            color = Color.green;
+        if (NetworkManager.Singleton.ConnectedClients.Count == 3)
+            color = Color.blue;
+        if (NetworkManager.Singleton.ConnectedClients.Count == 4)
+            color = Color.red;
+        _playerCnf.Add(new player.info() { cid = cid, color = color });
+    }
+
 
     [ServerRpc(RequireOwnership = false)]
     public void togglePauseServerRpc() {
@@ -75,7 +109,8 @@ public class gameMgr : netSingleton<gameMgr> {
 
     public bool running() { return _stage.Value == STAGE.STARTED; }
     public  void Start() {
-        stage = new(STAGE.LOBBY); // STAGE.INITIAL;
+        Assert.IsNotNull(_playerPrefab);
+        stage = new(STAGE.INITIAL); //;
     }
 
 
@@ -140,21 +175,15 @@ public class gameMgr : netSingleton<gameMgr> {
 
     [ServerRpc(RequireOwnership = false)]
     public void setReadyServerRpc(ServerRpcParams p = default) {
-        _players[p.Receive.SenderClientId] = true;
-        setReadyClientRpc(NetworkManager.Singleton.ConnectedClients[p.Receive.SenderClientId].PlayerObject);
-        var allReady = true;
-        foreach (var cid in NetworkManager.Singleton.ConnectedClients) {
-            var kv = _players.TryGetValue(cid.Key, out var ready);
-            if (!kv || ready != true) {
-                allReady = false;
-                break;
-            }
+        bool allReady = true;
+        for (var i = 0; i < _playerCnf.Count; i++) {
+            if (_playerCnf[i].cid == p.Receive.SenderClientId) 
+                _playerCnf[i] = new player.info() { cid = _playerCnf[i].cid, color = _playerCnf[i] .color, ready = !_playerCnf[i] .ready};
+            allReady &= _playerCnf[i].ready;
+
         }
         if (allReady)
             _stage.Value = STAGE.COUNT;
-
-
-
     }
     [ClientRpc]
     private void setReadyClientRpc(NetworkObjectReference nid) {
