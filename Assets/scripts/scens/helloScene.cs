@@ -11,7 +11,7 @@ public class helloScene : MonoBehaviour {
 
     protected IEnumerator fade(int secs) {
         yield return new  WaitForSeconds(secs);
-        SceneManager.LoadScene(gameMgr.SCENE.MAIN.ToString());
+        SceneManager.LoadScene(gameMgr.SCENE.GAME.ToString());
     }
 
 

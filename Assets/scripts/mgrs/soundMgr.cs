@@ -5,7 +5,7 @@ public class soundMgr : monoSingleton<soundMgr>
 {
     // Start is called before the first frame update
     [SerializeField] soundCnf _cnf;
-    [SerializeField] float _music_vol = 0.5f;
+    //[SerializeField] float _music_vol = 0.5f;
     [SerializeField] float _effect_vol = 0.5f;
     [SerializeField] AudioSource _music;
 

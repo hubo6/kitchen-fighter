@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEngine.InputSystem.InputAction;
 using static UnityEngine.Rendering.DebugUI;
@@ -12,7 +13,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 
 
-public class gameMgr : netSingleton<gameMgr> {
+public class gameMgr : NetworkBehaviour {
     public enum SCENE {
         HELLO,
         MAIN,
@@ -40,7 +41,7 @@ public class gameMgr : netSingleton<gameMgr> {
     [SerializeField] float _score = 0;
     [SerializeField] player _playerPrefab;
     [SerializeField] public NetworkList<player.info> _playerCnf;
-
+    static gameMgr _ins;
 
     public override void OnNetworkSpawn() {
 
@@ -66,14 +67,25 @@ public class gameMgr : netSingleton<gameMgr> {
         if (IsServer) {
             _stage.Value = STAGE.WAITING;
             NetworkManager.Singleton.OnClientConnectedCallback += onClientConnected;
-          
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += onSceneLoaded;
         } else
             onStageChg?.Invoke(_stage.Value);
     }
 
-    public override void Awake() {
-        base.Awake();
-        _playerCnf = new();
+    private void onSceneLoaded(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut) {
+        if (clientsTimedOut.Count == 0)
+            _stage.Value = STAGE.COUNT;
+
+
+    }
+
+    public  void Awake() {
+        if (_ins == null) {
+            _ins = this;
+            _ins._playerCnf = new();
+            DontDestroyOnLoad(_ins);
+        }
+        
     }
 
     //private void onPlayerCnfChg(NetworkListEvent<player.info> info) {
@@ -106,13 +118,13 @@ public class gameMgr : netSingleton<gameMgr> {
 
     public float score { get => _score; set => _score = value; }
     public float[] timerStamp { get => _timerStamp; set => _timerStamp = value; }
+    public static gameMgr ins { get => _ins; set => _ins = value; }
 
     public bool running() { return _stage.Value == STAGE.STARTED; }
     public  void Start() {
-        Assert.IsNotNull(_playerPrefab);
-        stage = new(STAGE.INITIAL); //;
+        //Assert.IsNotNull(_playerPrefab);
+       // stage = new(STAGE.INITIAL); //;
     }
-
 
     public static void resetEnv() {
         Time.timeScale = 1f;
@@ -182,8 +194,8 @@ public class gameMgr : netSingleton<gameMgr> {
             allReady &= _playerCnf[i].ready;
 
         }
-        if (allReady)
-            _stage.Value = STAGE.COUNT;
+        if (allReady) 
+            NetworkManager.Singleton.SceneManager.LoadScene(gameMgr.SCENE.GAME.ToString(), LoadSceneMode.Single);
     }
     [ClientRpc]
     private void setReadyClientRpc(NetworkObjectReference nid) {

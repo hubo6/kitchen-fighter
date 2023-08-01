@@ -39,8 +39,10 @@ public class netSingleton<T> : NetworkBehaviour where T : Component {
     static T _ins;
 
     public virtual void Awake() {
-        if (_ins == null)
+        if (_ins == null) {
+            DontDestroyOnLoad(this);
             _ins = this as T;
+        }
     }
 
     public static T ins {

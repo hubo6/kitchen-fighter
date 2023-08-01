@@ -29,9 +29,12 @@ public class uiMgr : MonoBehaviour {
     [SerializeField] waitingListUI _waitingList;
     [SerializeField] clock _clock;
 
-
+    static uiMgr _ins;
 
     [SerializeField] Dictionary<UI_COMPONENT, GameObject> _components = new();
+
+    public static uiMgr ins { get => _ins; set => _ins = value; }
+
     // Start is called before the first frame update
     void Start() {
         //Assert.IsNotNull(_timer);
@@ -62,51 +65,62 @@ public class uiMgr : MonoBehaviour {
             _components.Add(UI_COMPONENT.SETTING, _setting.gameObject);
             hide();
         show(UI_COMPONENT.NET);
-        gameMgr.ins.onStageChg += (STAGE s) => {
-            if (s == STAGE.LOBBY) {
-                hide();
-                show(UI_COMPONENT.NET);
-                return;
-            }
+        
+    }
 
-            if (s == STAGE.WAITING) {
-                hide();
-                show(UI_COMPONENT.LOG_VIEW);
-                return;
-            }
+    void Awake() {
+        if (_ins == null) {
+            _ins = this;
+            DontDestroyOnLoad(_ins);
+            gameMgr.ins.onStageChg += _ins.onGameStageChged;
+        }
+       
+    }
 
-            if (s == STAGE.COUNT) {
-                hide();
-                show(UI_COMPONENT.TIMER);
-                return;
-            }
+    void onGameStageChged(STAGE s) {
+        if (s == STAGE.LOBBY) {
+            hide();
+            show(UI_COMPONENT.NET);
+            return;
+        }
 
-            if (s == STAGE.STARTED) {
-                hide();
-                show(UI_COMPONENT.CLOCK);
-                show(UI_COMPONENT.WAITING_LIST);
-                return;
-            }
+        if (s == STAGE.WAITING) {
+            hide();
+            show(UI_COMPONENT.LOG_VIEW);
+            return;
+        }
 
-            if (s == STAGE.PAUSED) {
-                hide();
-                show(UI_COMPONENT.PAUSE);
-                return;
-            }
+        if (s == STAGE.COUNT) {
+            hide();
+            show(UI_COMPONENT.TIMER);
+            return;
+        }
 
-            if (s == STAGE.END) {
-                return;
-            }
-        };
+        if (s == STAGE.STARTED) {
+            hide();
+            show(UI_COMPONENT.CLOCK);
+            show(UI_COMPONENT.WAITING_LIST);
+            return;
+        }
+
+        if (s == STAGE.PAUSED) {
+            hide();
+            show(UI_COMPONENT.PAUSE);
+            return;
+        }
+
+        if (s == STAGE.END) {
+            return;
+        }
     }
 
     void hide() {
         foreach (var obj in _components)
-            if (obj.Value.activeSelf)
+            if (obj.Value?.activeSelf ?? false)
                 obj.Value.SetActive(false);
     }
 
-    void show(UI_COMPONENT ui) {
+    public void show(UI_COMPONENT ui) {
         if (!_components.TryGetValue(ui, out var com))
             return;
         if (!com.activeSelf)
@@ -117,4 +131,8 @@ public class uiMgr : MonoBehaviour {
     void Update() {
 
     }
+
+    //private void OnDestroy() {
+    //    gameMgr.ins.onStageChg -= onGameStageChged;
+    //}
 }
